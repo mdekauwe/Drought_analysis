@@ -19,9 +19,9 @@ import matplotlib.ticker as mticker
 from cartopy.mpl.geoaxes import GeoAxes
 from mpl_toolkits.axes_grid1 import AxesGrid
 
-def main():
+def main(plot_dir):
 
-    fname = "djf.nc"
+    fname = "outputs/djf.nc"
     ds = xr.open_dataset(fname)
 
     fig = plt.figure(figsize=(20, 8))
@@ -56,7 +56,8 @@ def main():
     cbar = axgr.cbar_axes[0].colorbar(plims)
     cbar.ax.set_title("Transpiration\n(mm d$^{-1}$)", fontsize=16)
 
-    fig.savefig("DJF_transpiration.png", dpi=150, bbox_inches='tight',
+    ofname = os.path.join(plot_dir, "DJF_transpiration.png")
+    fig.savefig(ofname, dpi=150, bbox_inches='tight',
                 pad_inches=0.1)
 
 def plot_map(ax, var, year, cmap, i):
@@ -107,9 +108,13 @@ def plot_map(ax, var, year, cmap, i):
                 rotation='horizontal', rotation_mode='anchor',
                 transform=ax.transAxes, fontsize=16)
 
-    return img 
+    return img
 
 
 if __name__ == "__main__":
 
-    main()
+    plot_dir = "plots"
+    if not os.path.exists(plot_dir):
+        os.makedirs(plot_dir)
+
+    main(plot_dir)
