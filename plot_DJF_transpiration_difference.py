@@ -49,7 +49,10 @@ def main(fname_ctl, fname_hyd, plot_dir):
     for i, ax in enumerate(axgr):
         # add a subplot into the array of plots
         #ax = fig.add_subplot(rows, cols, i+1, projection=ccrs.PlateCarree())
-        plims = plot_map(ax, ds_ctl.TVeg[i,:,:,]-ds_hyd.TVeg[i,:,:,], year,
+
+        diff = ds_ctl.TVeg[i,:,:,]-ds_hyd.TVeg[i,:,:,]
+        diff = np.where(diff == 0.0, np.nan, diff)
+        plims = plot_map(ax, diff, year,
                          cmap, i)
 
         year += 1
