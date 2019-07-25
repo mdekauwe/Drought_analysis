@@ -51,7 +51,7 @@ def main(fname_ctl, fname_hyd, plot_dir):
         #ax = fig.add_subplot(rows, cols, i+1, projection=ccrs.PlateCarree())
 
         diff = ds_ctl.TVeg[i,:,:,]-ds_hyd.TVeg[i,:,:,]
-        diff = np.where(np.logical_or(diff <= 0.01, diff >= -0.01), np.nan, diff)
+        diff = np.where(np.logical_and(diff >= -0.01, diff <= 0.01), np.nan, diff)
         plims = plot_map(ax, diff, year, cmap, i)
 
         year += 1
