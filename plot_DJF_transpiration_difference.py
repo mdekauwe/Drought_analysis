@@ -29,7 +29,7 @@ def main(fname_ctl, fname_hyd, plot_dir):
     plt.rcParams['font.size'] = "14"
     plt.rcParams['font.sans-serif'] = "Helvetica"
 
-    cmap = plt.cm.viridis
+    cmap = plt.cm.RdBu
     projection = ccrs.PlateCarree()
     axes_class = (GeoAxes,
                   dict(map_projection=projection))
