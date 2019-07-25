@@ -52,8 +52,7 @@ def main(fname_ctl, fname_hyd, plot_dir):
 
         diff = ds_ctl.TVeg[i,:,:,]-ds_hyd.TVeg[i,:,:,]
         diff = np.where(np.logical_or(diff <= 0.01, diff >= -0.01), np.nan, diff)
-        plims = plot_map(ax, diff, year,
-                         cmap, i)
+        plims = plot_map(ax, diff, year, cmap, i)
 
         year += 1
 
@@ -66,7 +65,7 @@ def main(fname_ctl, fname_hyd, plot_dir):
                 pad_inches=0.1)
 
 def plot_map(ax, var, year, cmap, i):
-    vmin, vmax = -0.5, 0.5
+    vmin, vmax = -0.6, 0.6
     top, bottom = 90, -90
     left, right = -180, 180
     img = ax.imshow(var, origin='lower',
