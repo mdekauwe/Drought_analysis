@@ -19,9 +19,8 @@ import matplotlib.ticker as mticker
 from cartopy.mpl.geoaxes import GeoAxes
 from mpl_toolkits.axes_grid1 import AxesGrid
 
-def main(plot_dir):
+def main(fname, plot_dir):
 
-    fname = "outputs/djf.nc"
     ds = xr.open_dataset(fname)
 
     fig = plt.figure(figsize=(20, 8))
@@ -61,13 +60,14 @@ def main(plot_dir):
                 pad_inches=0.1)
 
 def plot_map(ax, var, year, cmap, i):
-
+    vmin, vmax = 0.0, 3.0
     top, bottom = 90, -90
     left, right = -180, 180
     img = ax.imshow(var, origin='lower',
                     transform=ccrs.PlateCarree(),
                     interpolation='nearest', cmap=cmap,
-                    extent=(left, right, bottom, top))
+                    extent=(left, right, bottom, top),
+                    vmin=vmin, vmax=vmax)
     ax.coastlines(resolution='10m', linewidth=1.0, color='black')
     ax.add_feature(cartopy.feature.OCEAN)
     ax.set_title("%d-%d" % (year, year+1), fontsize=16)
@@ -117,4 +117,6 @@ if __name__ == "__main__":
     if not os.path.exists(plot_dir):
         os.makedirs(plot_dir)
 
-    main(plot_dir)
+    fname = "outputs/djf.nc"
+
+    main(fname, plot_dir)
