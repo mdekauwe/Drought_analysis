@@ -6,7 +6,7 @@ __author__ = "Martin De Kauwe"
 __version__ = "1.0 (25.07.2019)"
 __email__ = "mdekauwe@gmail.com"
 
-
+import os
 import xarray as xr
 import matplotlib.pyplot as plt
 import numpy as np
@@ -69,10 +69,10 @@ def plot_map(ax, var, year, cmap, i):
                     extent=(left, right, bottom, top),
                     vmin=vmin, vmax=vmax)
     ax.coastlines(resolution='10m', linewidth=1.0, color='black')
-    ax.add_feature(cartopy.feature.OCEAN)
+    #ax.add_feature(cartopy.feature.OCEAN)
     ax.set_title("%d-%d" % (year, year+1), fontsize=16)
     ax.set_xlim(140, 154)
-    ax.set_ylim(-40, -28)
+    ax.set_ylim(-39.4, -28)
 
     if i == 0 or i >= 5:
 
@@ -118,5 +118,6 @@ if __name__ == "__main__":
         os.makedirs(plot_dir)
 
     fname = "outputs/djf.nc"
+    #fname = "../djf.nc"
 
     main(fname, plot_dir)
