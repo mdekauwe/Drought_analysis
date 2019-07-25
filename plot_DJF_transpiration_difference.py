@@ -30,7 +30,7 @@ def main(fname_ctl, fname_hyd, plot_dir):
     plt.rcParams['font.sans-serif'] = "Helvetica"
 
     #cmap = plt.cm.RdBu
-    cmap = plt.cm.get_cmap('RdBu', 8)
+    cmap = plt.cm.get_cmap('RdBu', 10) # discrete colour map
     projection = ccrs.PlateCarree()
     axes_class = (GeoAxes,
                   dict(map_projection=projection))
