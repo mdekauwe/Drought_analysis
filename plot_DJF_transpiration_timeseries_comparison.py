@@ -65,6 +65,6 @@ if __name__ == "__main__":
 
     fname_hyd = "outputs/djf.nc"
     fname_ctl = "../GSWP3_SE_aus_control/outputs/djf.nc"
-    fname_iveg = "outputs/all_yrs.nc"
+    fname_iveg = "../GSWP3_SE_aus_control/outputs/all_yrs.nc"
 
     main(fname_ctl, fname_hyd, fname_iveg, plot_dir)
