@@ -18,8 +18,6 @@ def main(fname_ctl, fname_hyd, fname_iveg, plot_dir):
     ds_ctl = xr.open_dataset(fname_ctl)
     ds_hyd = xr.open_dataset(fname_hyd)
 
-
-
     ctl = ds_ctl.TVeg
     hyd = ds_hyd.TVeg
 
@@ -50,7 +48,6 @@ def main(fname_ctl, fname_hyd, fname_iveg, plot_dir):
     ax.legend(numpoints=1, ncol=1, frameon=False, loc="best")
 
     ax.set_xticks(np.arange(11))
-
     ax.set_xticklabels(['2000-1', '2001-2', '2002-3', '2003-4', \
                         '2004-5', '2005-6', '2006-7', '2007-8',\
                         '2008-9', '2009-10'], rotation=45)
