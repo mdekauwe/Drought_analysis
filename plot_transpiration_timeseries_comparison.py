@@ -12,11 +12,13 @@ import matplotlib.pyplot as plt
 import numpy as np
 import sys
 
-def main(fname_ctl, fname_hyd, fname_iveg, plot_dir):
+def main(fname_ctl, fname_hyd, plot_dir):
 
-    ds_iveg = xr.open_dataset(fname_iveg)
+    ds_iveg = xr.open_dataset(fname_ctl)
     ds_ctl = xr.open_dataset(fname_ctl)
     ds_hyd = xr.open_dataset(fname_hyd)
+
+    time = ds_ctl.time
 
     ctl = ds_ctl.TVeg
     hyd = ds_hyd.TVeg
@@ -43,16 +45,17 @@ def main(fname_ctl, fname_hyd, fname_iveg, plot_dir):
 
     ax = fig.add_subplot(111)
 
-    ax.plot(hyd, ls="-", label="Hydraulics")
-    ax.plot(ctl, ls="-", label="Control")
+
+    ax.plot(time, hyd*86400, ls="-", label="Hydraulics")
+    ax.plot(time, ctl*86400, ls="-", label="Control")
     ax.legend(numpoints=1, ncol=1, frameon=False, loc="best")
+    ax.set_ylabel('E (mm d$^{-1}$)')
 
-    #ax.set_xticks(np.arange(11))
-    #ax.set_xticklabels(['2000-1', '2001-2', '2002-3', '2003-4', \
-    #                    '2004-5', '2005-6', '2006-7', '2007-8',\
-    #                    '2008-9', '2009-10'], rotation=45)
+    ax.set_ylim(0, 3.5)
+    from matplotlib.ticker import MaxNLocator
+    ax.yaxis.set_major_locator(MaxNLocator(5))
+    ax.xaxis.set_major_locator(MaxNLocator(10))
 
-    ax.set_ylim(0, 4.5)
     ofname = os.path.join(plot_dir, "Transpiration_timeseries.png")
     fig.savefig(ofname, dpi=150, bbox_inches='tight',
                 pad_inches=0.1)
@@ -65,6 +68,8 @@ if __name__ == "__main__":
 
     fname_hyd = "outputs/all_yrs.nc"
     fname_ctl = "../GSWP3_SE_aus_control/outputs/all_yrs.nc"
-    fname_iveg = "../GSWP3_SE_aus_control/outputs/all_yrs.nc"
 
-    main(fname_ctl, fname_hyd, fname_iveg, plot_dir)
+    #fname_hyd = "hyd/all_yrs.nc"
+    #fname_ctl = "ctl/all_yrs.nc"
+
+    main(fname_ctl, fname_hyd, plot_dir)

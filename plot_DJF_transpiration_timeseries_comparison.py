@@ -53,6 +53,7 @@ def main(fname_ctl, fname_hyd, fname_iveg, plot_dir):
                         '2008-9', '2009-10'], rotation=45)
 
     ax.set_ylim(0, 3.5)
+    ax.set_ylabel('E (mm d$^{-1}$)')
     ofname = os.path.join(plot_dir, "DJF_transpiration_timeseries.png")
     fig.savefig(ofname, dpi=150, bbox_inches='tight',
                 pad_inches=0.1)
