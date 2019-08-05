@@ -51,14 +51,6 @@ def main(grass_fname, ebf_fname, pch_fname, plot_dir):
         # add a subplot into the array of plots
         #ax = fig.add_subplot(rows, cols, i+1, projection=ccrs.PlateCarree())
 
-        print(ds_patch)
-        print(ds_patch.patchfrac.shape)
-        print(ds_grass.TVeg.shape)
-        print(ds_forest.TVeg.shape)
-
-        print(ds_grass.TVeg[i,:,:,].values)
-        print(ds_forest.TVeg[i,:,:,].values)
-        print(ds_patch.patchfrac[5,:,:].values)
         TVeg = (ds_grass.TVeg[i,:,:,].values * ds_patch.patchfrac[5,:,:].values) + \
                (ds_forest.TVeg[i,:,:,].values * ds_patch.patchfrac[1,:,:].values)
 
