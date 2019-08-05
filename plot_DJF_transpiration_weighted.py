@@ -19,7 +19,7 @@ import matplotlib.ticker as mticker
 from cartopy.mpl.geoaxes import GeoAxes
 from mpl_toolkits.axes_grid1 import AxesGrid
 
-def main(grass_fname, ebf_fname, pch_fname, fname, plot_dir):
+def main(grass_fname, ebf_fname, pch_fname, plot_dir):
 
     ds_grass = xr.open_dataset(grass_fname)
     ds_forest = xr.open_dataset(ebf_fname)
@@ -52,7 +52,7 @@ def main(grass_fname, ebf_fname, pch_fname, fname, plot_dir):
         #ax = fig.add_subplot(rows, cols, i+1, projection=ccrs.PlateCarree())
 
         TVeg = (ds_grass.TVeg[i,:,:,] * ds_patch.patchfrac[5,:,:]) + \
-               (ds_forest.TVeg[i,:,:,] * ds_patch.patchfrac[1,:,:])      
+               (ds_forest.TVeg[i,:,:,] * ds_patch.patchfrac[1,:,:])
 
         plims = plot_map(ax, TVeg, year, cmap, i)
 
