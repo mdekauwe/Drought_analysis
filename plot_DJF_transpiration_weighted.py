@@ -54,7 +54,7 @@ def main(grass_fname, ebf_fname, pch_fname, plot_dir):
         TVeg = (ds_grass.TVeg[i,:,:,].values * ds_patch.patchfrac[5,:,:].values) + \
                (ds_forest.TVeg[i,:,:,].values * ds_patch.patchfrac[1,:,:].values)
 
-        TVeg = ds_forest.TVeg[i,:,:,].values
+        TVeg = ds_patch.patchfrac[5,:,:].values
         #plims = plot_map(ax, TVeg, year, cmap, i)
         plims = plot_map(ax, TVeg, year, cmap, i)
 
