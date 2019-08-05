@@ -52,10 +52,10 @@ def main(grass_fname, ebf_fname, pch_fname, plot_dir):
         #ax = fig.add_subplot(rows, cols, i+1, projection=ccrs.PlateCarree())
 
         print(ds_patch)
-        print(ds_patch.patchfrac.shape)
+        print(ds_patch.patch.shape)
 
-        TVeg = (ds_grass.TVeg[i,:,:,] * ds_patch.patchfrac[5,:,:]) + \
-               (ds_forest.TVeg[i,:,:,] * ds_patch.patchfrac[1,:,:])
+        TVeg = (ds_grass.TVeg[i,:,:,] * ds_patch.patch[5,:,:]) + \
+               (ds_forest.TVeg[i,:,:,] * ds_patch.patch[1,:,:])
 
         plims = plot_map(ax, TVeg, year, cmap, i)
 
