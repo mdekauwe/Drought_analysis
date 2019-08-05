@@ -53,6 +53,8 @@ def main(grass_fname, ebf_fname, pch_fname, plot_dir):
 
         print(ds_patch)
         print(ds_patch.patchfrac.shape)
+        print(ds_grass.TVeg.shape)
+        print(ds_forest.TVeg.shape)
 
         TVeg = (ds_grass.TVeg[i,:,:,] * ds_patch.patchfrac[5,:,:]) + \
                (ds_forest.TVeg[i,:,:,] * ds_patch.patchfrac[1,:,:])
