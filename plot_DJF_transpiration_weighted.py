@@ -54,6 +54,8 @@ def main(grass_fname, ebf_fname, pch_fname, plot_dir):
         TVeg = (ds_grass.TVeg[i,:,:,].values * ds_patch.patchfrac[5,:,:].values) + \
                (ds_forest.TVeg[i,:,:,].values * ds_patch.patchfrac[1,:,:].values)
 
+        TVeg = ds_grass.TVeg[i,:,:,].values
+        #plims = plot_map(ax, TVeg, year, cmap, i)
         plims = plot_map(ax, TVeg, year, cmap, i)
 
         year += 1
@@ -61,7 +63,7 @@ def main(grass_fname, ebf_fname, pch_fname, plot_dir):
     cbar = axgr.cbar_axes[0].colorbar(plims)
     cbar.ax.set_title("Transpiration\n(mm d$^{-1}$)", fontsize=16)
 
-    ofname = os.path.join(plot_dir, "DJF_transpiration.png")
+    ofname = os.path.join(plot_dir, "DJF_transpiration_ctrl_weighted.png")
     fig.savefig(ofname, dpi=150, bbox_inches='tight',
                 pad_inches=0.1)
 
