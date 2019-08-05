@@ -25,6 +25,13 @@ def main(grass_fname, ebf_fname, pch_fname, plot_dir):
     ds_forest = xr.open_dataset(ebf_fname)
     ds_patch = xr.open_dataset(pch_fname)
 
+
+    right_half = ds_patch.patchfrac[:,:,360:720].values
+    left_half = ds_patch.patchfrac[:,:,0:360].values
+    reijig = np.ones((17,360,720))
+    reijig[:,:,0:360] = right_half
+    reijig[:,:,360:720] = left_half
+
     fig = plt.figure(figsize=(20, 8))
     plt.rcParams['font.family'] = "sans-serif"
     plt.rcParams['font.size'] = "14"
@@ -46,17 +53,18 @@ def main(grass_fname, ebf_fname, pch_fname, plot_dir):
                     cbar_size='5%',
                     label_mode='')  # note the empty label_mode
 
+
+
     year = 2000
     for i, ax in enumerate(axgr):
         # add a subplot into the array of plots
         #ax = fig.add_subplot(rows, cols, i+1, projection=ccrs.PlateCarree())
 
-        TVeg = (ds_grass.TVeg[i,:,:,].values * ds_patch.patchfrac[5,:,:].values) + \
-               (ds_forest.TVeg[i,:,:,].values * ds_patch.patchfrac[1,:,:].values)
+        TVeg = (ds_grass.TVeg[i,:,:,].values * reijig[5,:,:]) + \
+               (ds_forest.TVeg[i,:,:,].values * reijig[1,:,:])
 
-        TVeg = ds_patch.patchfrac[5,:,:].values
-        #plims = plot_map(ax, TVeg, year, cmap, i)
         plims = plot_map(ax, TVeg, year, cmap, i)
+
 
         year += 1
 
@@ -128,4 +136,9 @@ if __name__ == "__main__":
     grass_fname = "outputs/djf.nc"
     ebf_fname = "../GSWP3_SE_aus_control_ebf_patch/outputs/djf.nc"
     pch_fname = "/g/data1a/w35/Shared_data/gimms3g_AWAP_grid/nc_files/patch_frac/patch_frac_0.5.nc"
+
+    #grass_fname = "grass/djf.nc"
+    #ebf_fname = "ebf/djf.nc"
+    #pch_fname = "patch/patch_frac_0.5.nc"
+
     main(grass_fname, ebf_fname, pch_fname, plot_dir)
