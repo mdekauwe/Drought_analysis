@@ -22,7 +22,7 @@ from mpl_toolkits.axes_grid1 import AxesGrid
 def main(fname, plot_dir):
 
     ds = xr.open_dataset(fname)
-    
+
     fig = plt.figure(figsize=(20, 8))
     plt.rcParams['font.family'] = "sans-serif"
     plt.rcParams['font.size'] = "14"
@@ -48,7 +48,7 @@ def main(fname, plot_dir):
     for i, ax in enumerate(axgr):
         # add a subplot into the array of plots
         #ax = fig.add_subplot(rows, cols, i+1, projection=ccrs.PlateCarree())
-        plims = plot_map(ax, ds.TVeg[i,:,:,]*86400, month, cmap, i)
+        plims = plot_map(ax, ds.GPP[i,:,:,]*86400, month, cmap, i)
 
         month += 1
 
