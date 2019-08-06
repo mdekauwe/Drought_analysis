@@ -84,9 +84,9 @@ def plot_map(ax, var, month, cmap, i):
                           linewidth=0.5, color='black', alpha=0.5,
                           linestyle='--')
 
-    if i < 5:
+    if i < 6:
         gl.xlabels_bottom = False
-    if i > 5:
+    if i > 6:
         gl.ylabels_left = False
 
     gl.xlabels_top = False
@@ -103,7 +103,7 @@ def plot_map(ax, var, month, cmap, i):
         ax.text(-0.25, -0.25, 'Latitude', va='bottom', ha='center',
                 rotation='vertical', rotation_mode='anchor',
                 transform=ax.transAxes, fontsize=16)
-    if i == 7:
+    if i == 9:
         ax.text(0.5, -0.25, 'Longitude', va='bottom', ha='center',
                 rotation='horizontal', rotation_mode='anchor',
                 transform=ax.transAxes, fontsize=16)
