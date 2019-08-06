@@ -22,7 +22,7 @@ from mpl_toolkits.axes_grid1 import AxesGrid
 def main(fname, plot_dir):
 
     ds = xr.open_dataset(fname)
-    print(ds)
+    
     fig = plt.figure(figsize=(20, 8))
     plt.rcParams['font.family'] = "sans-serif"
     plt.rcParams['font.size'] = "14"
