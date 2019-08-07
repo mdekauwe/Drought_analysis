@@ -15,6 +15,7 @@ import sys
 def main(fname, plot_dir):
 
     ds = xr.open_dataset(fname)
+    print(ds)
 
     time = ds.time
     TVeg = ds.TVeg[:,100:127,634:670].values * 86400
@@ -22,12 +23,16 @@ def main(fname, plot_dir):
     iveg = ds.iveg[100:127,634:670].values
     gpp = ds.GPP[:,100:127,634:670].values
     qle = ds.Qle[:,100:127,634:670].values
-
+    Rainf = ds.Rainf[:,100:127,634:670].values * 86400
+    Tair = ds.Tair[:,100:127,634:670].values - 273.15
+    froot = ds.froot[:,100:127,634:670].values
     #plt.imshow(TVeg[1,:,:])
     #plt.imshow(LAI[1,:,:])
     #plt.imshow(iveg[:,:])
     #plt.imshow(gpp[0,:,:])
-    plt.imshow(qle[2,:,:])
+    #plt.imshow(qle[2,:,:])
+    #plt.imshow(Rainf[1,:,:])
+    plt.imshow(froot[2,:,:])
     plt.colorbar()
     plt.show()
     sys.exit()
