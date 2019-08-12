@@ -23,96 +23,31 @@ def main(fname, plot_dir):
 
     ds = xr.open_dataset(fname)
 
-    fig = plt.figure(figsize=(20, 8))
-    plt.rcParams['font.family'] = "sans-serif"
-    plt.rcParams['font.size'] = "14"
-    plt.rcParams['font.sans-serif'] = "Helvetica"
+    TVeg = ds.TVeg[:,101:125,639:668]
+    LAI = ds.LAI[:,101:125,639:668]
+    plt.scatter(22, 20, s=5, c='blue', marker='o')  # good
+    plt.scatter(23, 20, s=5, c='red', marker='o')   # bad
+    plt.imshow(TVeg[0,:,:] * 86400)
 
-    cmap = plt.cm.viridis
-    projection = ccrs.PlateCarree()
-    axes_class = (GeoAxes,
-                  dict(map_projection=projection))
-    rows = 1
-    cols = 1
-
-    axgr = AxesGrid(fig, 111, axes_class=axes_class,
-                    nrows_ncols=(rows, cols),
-                    axes_pad=0.6,
-                    cbar_location='right',
-                    cbar_mode='single',
-                    cbar_pad=0.5,
-                    cbar_size='5%',
-                    label_mode='')  # note the empty label_mode
-
-    month = 1
-    for i, ax in enumerate(axgr):
-        # add a subplot into the array of plots
-        #ax = fig.add_subplot(rows, cols, i+1, projection=ccrs.PlateCarree())
-        #plims = plot_map(ax, ds.TVeg[i,:,:,]*86400, month, cmap, i)
-        plims = plot_map(ax, ds.GPP[i,:,:,], month, cmap, i)
-
-        month += 1
-
-    cbar = axgr.cbar_axes[0].colorbar(plims)
-    cbar.ax.set_title("Transpiration\n(mm d$^{-1}$)", fontsize=16)
-
-    ofname = os.path.join(plot_dir, "Months_transpiration.png")
-    fig.savefig(ofname, dpi=150, bbox_inches='tight',
-                pad_inches=0.1)
-
-def plot_map(ax, var, month, cmap, i):
-    #vmin, vmax = 0.0, 3.0
-    vmin, vmax = 0.0, var.max()
-    top, bottom = 90, -90
-    left, right = -180, 180
-    img = ax.imshow(var, origin='lower',
-                    transform=ccrs.PlateCarree(),
-                    interpolation='nearest', cmap=cmap,
-                    extent=(left, right, bottom, top),
-                    vmin=vmin, vmax=vmax)
-    ax.coastlines(resolution='10m', linewidth=1.0, color='black')
-    #ax.add_feature(cartopy.feature.OCEAN)
-    ax.set_title("%d" % (month), fontsize=16)
-    ax.set_xlim(140, 154)
-    ax.set_ylim(-39.4, -28)
-
-    if i == 0 or i >= 5:
-
-        gl = ax.gridlines(crs=ccrs.PlateCarree(), draw_labels=True,
-                          linewidth=0.5, color='black', alpha=0.5,
-                          linestyle='--')
-    else:
-        gl = ax.gridlines(crs=ccrs.PlateCarree(), draw_labels=False,
-                          linewidth=0.5, color='black', alpha=0.5,
-                          linestyle='--')
-
-    if i < 6:
-        gl.xlabels_bottom = False
-    if i > 6:
-        gl.ylabels_left = False
-
-    gl.xlabels_top = False
-    gl.ylabels_right = False
-    gl.xlines = False
-    gl.ylines = False
-    gl.xformatter = LONGITUDE_FORMATTER
-    gl.yformatter = LATITUDE_FORMATTER
-
-    gl.xlocator = mticker.FixedLocator([141, 145,  149, 153])
-    gl.ylocator = mticker.FixedLocator([-29, -32, -35, -38])
-
-    if i == 0 :
-        ax.text(-0.25, -0.25, 'Latitude', va='bottom', ha='center',
-                rotation='vertical', rotation_mode='anchor',
-                transform=ax.transAxes, fontsize=16)
-    if i == 9:
-        ax.text(0.5, -0.25, 'Longitude', va='bottom', ha='center',
-                rotation='horizontal', rotation_mode='anchor',
-                transform=ax.transAxes, fontsize=16)
-    plt.show()
     plt.colorbar()
-    sys.exit()
-    return img
+    plt.show()
+
+    #(12, 24, 29)
+    #print(TVeg.shape)
+    good = TVeg[:,20,22]
+    bad = TVeg[:,20,23]
+    good = LAI[:,20,22]
+    bad = LAI[:,20,23]
+
+
+    print(bad)
+    #plt.plot(good * 86400, "-b", label="good")
+    #plt.plot(bad * 86400, "-r", label="bad")
+    plt.plot(good, "-b", label="good")
+    plt.plot(bad, "-r", label="bad")
+    plt.legend()
+    plt.show()
+
 
 
 if __name__ == "__main__":
