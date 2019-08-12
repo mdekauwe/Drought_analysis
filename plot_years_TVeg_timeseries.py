@@ -48,8 +48,8 @@ def main(fname, plot_dir):
     for i, ax in enumerate(axgr):
         # add a subplot into the array of plots
         #ax = fig.add_subplot(rows, cols, i+1, projection=ccrs.PlateCarree())
-        plims = plot_map(ax, ds.TVeg[i,:,:,]*86400, month, cmap, i)
-        #plims = plot_map(ax, ds.GPP[i,:,:,], month, cmap, i)
+        #plims = plot_map(ax, ds.TVeg[i,:,:,]*86400, month, cmap, i)
+        plims = plot_map(ax, ds.GPP[i,:,:,], month, cmap, i)
 
         month += 1
 
