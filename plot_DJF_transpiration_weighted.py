@@ -133,8 +133,8 @@ if __name__ == "__main__":
     if not os.path.exists(plot_dir):
         os.makedirs(plot_dir)
 
-    grass_fname = "outputs/djf.nc"
-    ebf_fname = "../GSWP3_SE_aus_control_ebf_patch/outputs/djf.nc"
+    ebf_fname = "outputs/djf.nc"
+    grass_fname = "../GSWP3_SE_aus_control_grass_patch/outputs/djf.nc"
     pch_fname = "/g/data1a/w35/Shared_data/gimms3g_AWAP_grid/nc_files/patch_frac/patch_frac_0.5.nc"
 
     #grass_fname = "grass/djf.nc"
