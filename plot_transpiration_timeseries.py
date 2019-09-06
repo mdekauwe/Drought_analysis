@@ -15,7 +15,7 @@ import sys
 def main(fname_hyd, plot_dir):
 
     ds_hyd = xr.open_dataset(fname_hyd)
-    time = ds_ctl.time
+    time = ds_hyd.time
     hyd = ds_hyd.TVeg
 
     hyd19 = np.where(ds_hyd["iveg"] == 19, hyd, np.nan)
