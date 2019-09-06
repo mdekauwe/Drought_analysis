@@ -63,5 +63,5 @@ if __name__ == "__main__":
         os.makedirs(plot_dir)
 
     fname_hyd = "outputs/djf.nc"
-    fname_iveg = "outputs/all_yrs.nc"
+    fname_iveg = "outputs/iveg.nc"
     main(fname_hyd, fname_iveg, plot_dir)

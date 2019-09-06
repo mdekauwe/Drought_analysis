@@ -12,14 +12,15 @@ import matplotlib.pyplot as plt
 import numpy as np
 import sys
 
-def main(fname_hyd, plot_dir):
+def main(fname_hyd, fname_iveg, plot_dir):
 
     ds_hyd = xr.open_dataset(fname_hyd)
+    ds_iveg = xr.open_dataset(fname_iveg)
     time = ds_hyd.time
     hyd = ds_hyd.TVeg
 
-    hyd19 = np.where(ds_hyd["iveg"] == 19, hyd, np.nan)
-    hyd20 = np.where(ds_hyd["iveg"] == 20, hyd, np.nan)
+    hyd19 = np.where(ds_iveg["iveg"] == 19, hyd, np.nan)
+    hyd20 = np.where(ds_iveg["iveg"] == 20, hyd, np.nan)
 
     hyd19 = np.nanmean(hyd19, axis=(1,2))
     hyd20 = np.nanmean(hyd20, axis=(1,2))
@@ -62,4 +63,5 @@ if __name__ == "__main__":
         os.makedirs(plot_dir)
 
     fname_hyd = "outputs/all_yrs.nc"
-    main(fname_hyd, plot_dir)
+    fname_iveg = "outputs/iveg.nc"
+    main(fname_hyd, fname_iveg, plot_dir)
