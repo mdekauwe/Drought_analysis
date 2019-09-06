@@ -12,20 +12,26 @@ import matplotlib.pyplot as plt
 import numpy as np
 import sys
 
-def main(fname_ctl, fname_hyd, fname_iveg, plot_dir):
+def main(fname_hyd, fname_ctl, fname_iveg, plot_dir):
 
+    ds_hyd = xr.open_dataset(fname_hyd)
     ds_iveg = xr.open_dataset(fname_iveg)
     ds_ctl = xr.open_dataset(fname_ctl)
-    ds_hyd = xr.open_dataset(fname_hyd)
 
-    ctl = ds_ctl.TVeg
     hyd = ds_hyd.TVeg
+    ctl = ds_ctl.TVeg
 
-    ctl = np.where(ds_iveg["iveg"] == 2, ctl, np.nan)
-    hyd = np.where(ds_iveg["iveg"] == 2, hyd, np.nan)
+    hyd19 = np.where(ds_iveg["iveg"] == 19, hyd, np.nan)
+    hyd20 = np.where(ds_iveg["iveg"] == 20, hyd, np.nan)
+    ctl19 = np.where(ds_iveg["iveg"] == 19, ctl, np.nan)
+    ctl20 = np.where(ds_iveg["iveg"] == 20, ctl, np.nan)
 
-    ctl = np.nanmean(ctl, axis=(1,2))
-    hyd = np.nanmean(hyd, axis=(1,2))
+    ctl19 = np.nanmean(ctl19, axis=(1,2))
+    ctl20 = np.nanmean(ctl20, axis=(1,2))
+    hyd19 = np.nanmean(hyd19, axis=(1,2))
+    hyd20 = np.nanmean(hyd20, axis=(1,2))
+
+
 
     width = 9
     height = 6
@@ -43,8 +49,10 @@ def main(fname_ctl, fname_hyd, fname_iveg, plot_dir):
 
     ax = fig.add_subplot(111)
 
-    ax.plot(hyd, ls="-", label="Hydraulics")
-    ax.plot(ctl, ls="-", label="Control")
+    ax.plot(hyd19, ls="-", label="HYD: WSF")
+    ax.plot(hyd20, ls="-", label="HYD: DSF")
+    ax.plot(ctl19, ls="--", label="CTL: WSF")
+    ax.plot(ctl20, ls="--", label="CTL: DSF")
     ax.legend(numpoints=1, ncol=1, frameon=False, loc="best")
 
     ax.set_xticks(np.arange(11))
@@ -52,9 +60,9 @@ def main(fname_ctl, fname_hyd, fname_iveg, plot_dir):
                         '2004-5', '2005-6', '2006-7', '2007-8',\
                         '2008-9', '2009-10'], rotation=45)
 
-    ax.set_ylim(0, 3.5)
+    #ax.set_ylim(0, 3.5)
     ax.set_ylabel('E (mm d$^{-1}$)')
-    ofname = os.path.join(plot_dir, "DJF_transpiration_timeseries.png")
+    ofname = os.path.join(plot_dir, "DJF_transpiration_timeseries_comparison.png")
     fig.savefig(ofname, dpi=150, bbox_inches='tight',
                 pad_inches=0.1)
 
@@ -66,6 +74,5 @@ if __name__ == "__main__":
 
     fname_hyd = "outputs/djf.nc"
     fname_ctl = "../GSWP3_SE_aus_control/outputs/djf.nc"
-    fname_iveg = "../GSWP3_SE_aus_control/outputs/all_yrs.nc"
-
-    main(fname_ctl, fname_hyd, fname_iveg, plot_dir)
+    fname_iveg = "outputs/iveg.nc"
+    main(fname_hyd, fname_ctl, fname_iveg, plot_dir)
