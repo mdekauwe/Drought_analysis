@@ -1,7 +1,5 @@
 #!/bin/bash
 
-cdo mergetime outputs/cable_out_*.nc outputs/all_yrs.nc
-
 cdo select,name=iveg outputs/cable_out_2000.nc outputs/tmp.nc
 
 # Fix the longitude issue in the CABLE output files...
