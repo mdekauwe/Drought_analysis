@@ -12,7 +12,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import sys
 
-def main(fname_hyd):
+def main(fname_hyd, plot_dir):
 
     ds_hyd = xr.open_dataset(fname_hyd)
     time = ds_ctl.time
