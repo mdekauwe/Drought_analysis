@@ -12,12 +12,24 @@ import numpy as np
 import sys
 import glob
 
-def interpolate_forcing(fpath, var, start_date, output_dir):
+def interpolate_forcing(fpath, var, output_dir):
 
     if not os.path.exists(output_dir):
         os.makedirs(output_dir)
 
     files = glob.glob(os.path.join(fpath, "%s/*.nc") % (var))
+    years = np.sort(np.asarray([int(f[-7:-3]) for f in files]))
+
+    last_year = years[-1]
+    start_date = "%d-01-01,00:00:00" % (years[0])
+    
+    for year in years:
+
+        fn = os.path.join(fpath, "GSWP3.BC.%s.3hrMap.%d.nc" % (var, year))
+
+        if year != last_year:
+            print(fn)
+
 
     #for
     #print(files)
@@ -53,6 +65,6 @@ if __name__ == "__main__":
     fpath = "/Users/mdekauwe/Desktop/GSWP3"
     output_dir = "/Users/mdekauwe/Desktop/test"
     vars = ["Tair"]
-    start_date = "1995-01-01,00:00:00"
+
     for var in vars:
-        interpolate_forcing(fpath, var, start_date, output_dir)
+        interpolate_forcing(fpath, var, output_dir)
