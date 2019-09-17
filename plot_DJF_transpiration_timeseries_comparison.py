@@ -68,7 +68,7 @@ def main(fname_hyd, fname_ctl, fname_iveg, plot_dir):
     ax1.set_xticks(np.arange(11))
     ax2.set_xticks(np.arange(11))
     ax3.set_xticks(np.arange(11))
-    a3.set_xticklabels(['2000-1', '2001-2', '2002-3', '2003-4', \
+    ax3.set_xticklabels(['2000-1', '2001-2', '2002-3', '2003-4', \
                         '2004-5', '2005-6', '2006-7', '2007-8',\
                         '2008-9', '2009-10'], rotation=45)
 
