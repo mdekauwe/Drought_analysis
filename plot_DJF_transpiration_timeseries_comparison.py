@@ -23,17 +23,21 @@ def main(fname_hyd, fname_ctl, fname_iveg, plot_dir):
 
     hyd19 = np.where(ds_iveg["iveg"] == 19, hyd, np.nan)
     hyd20 = np.where(ds_iveg["iveg"] == 20, hyd, np.nan)
+    hyd21 = np.where(ds_iveg["iveg"] == 21, hyd, np.nan)
     ctl19 = np.where(ds_iveg["iveg"] == 19, ctl, np.nan)
     ctl20 = np.where(ds_iveg["iveg"] == 20, ctl, np.nan)
+    ctl21 = np.where(ds_iveg["iveg"] == 21, ctl, np.nan)
 
     ctl19 = np.nanmean(ctl19, axis=(1,2))
     ctl20 = np.nanmean(ctl20, axis=(1,2))
+    ctl21 = np.nanmean(ctl21, axis=(1,2))
     hyd19 = np.nanmean(hyd19, axis=(1,2))
     hyd20 = np.nanmean(hyd20, axis=(1,2))
+    hyd21 = np.nanmean(hyd21, axis=(1,2))
 
 
 
-    width = 9
+    width = 10
     height = 6
     fig = plt.figure(figsize=(width, height))
     fig.subplots_adjust(hspace=0.05)
@@ -47,12 +51,16 @@ def main(fname_hyd, fname_ctl, fname_iveg, plot_dir):
     plt.rcParams['xtick.labelsize'] = 16
     plt.rcParams['ytick.labelsize'] = 16
 
-    ax = fig.add_subplot(111)
+    ax1 = fig.add_subplot(131)
+    ax2 = fig.add_subplot(132)
+    ax3 = fig.add_subplot(133)
 
-    ax.plot(hyd19, ls="-", label="HYD: WSF")
-    ax.plot(hyd20, ls="-", label="HYD: DSF")
-    ax.plot(ctl19, ls="--", label="CTL: WSF")
-    ax.plot(ctl20, ls="--", label="CTL: DSF")
+    ax1.plot(hyd19, ls="-", label="HYD: WSF")
+    ax1.plot(ctl19, ls="-", label="CTL: WSF")
+    ax2.plot(hyd20, ls="-", label="HYD: DSF")
+    ax2.plot(ctl20, ls="-", label="CTL: DSF")
+    ax3.plot(hyd21, ls="-", label="HYD: SAW")
+    ax3.plot(ctl21, ls="-", label="CTL: SAW")
     ax.legend(numpoints=1, ncol=1, frameon=False, loc="best")
 
     ax.set_xticks(np.arange(11))
@@ -73,6 +81,7 @@ if __name__ == "__main__":
         os.makedirs(plot_dir)
 
     fname_hyd = "outputs/djf.nc"
-    fname_ctl = "../GSWP3_SE_aus_control/outputs/djf.nc"
+    #fname_ctl = "../GSWP3_SE_aus_control/outputs/djf.nc"
+    fname_ctl = "../GSWP3_SE_aus_control_ebf_patch/outputs/djf.nc"
     fname_iveg = "outputs/iveg.nc"
     main(fname_hyd, fname_ctl, fname_iveg, plot_dir)
