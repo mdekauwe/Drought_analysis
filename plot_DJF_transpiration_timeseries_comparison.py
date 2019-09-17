@@ -61,15 +61,19 @@ def main(fname_hyd, fname_ctl, fname_iveg, plot_dir):
     ax2.plot(ctl20, ls="-", label="CTL: DSF")
     ax3.plot(hyd21, ls="-", label="HYD: SAW")
     ax3.plot(ctl21, ls="-", label="CTL: SAW")
-    ax.legend(numpoints=1, ncol=1, frameon=False, loc="best")
+    ax1.legend(numpoints=1, ncol=1, frameon=False, loc="best")
+    ax2.legend(numpoints=1, ncol=1, frameon=False, loc="best")
+    ax3.legend(numpoints=1, ncol=1, frameon=False, loc="best")
 
-    ax.set_xticks(np.arange(11))
-    ax.set_xticklabels(['2000-1', '2001-2', '2002-3', '2003-4', \
+    ax1.set_xticks(np.arange(11))
+    ax2.set_xticks(np.arange(11))
+    ax3.set_xticks(np.arange(11))
+    a3.set_xticklabels(['2000-1', '2001-2', '2002-3', '2003-4', \
                         '2004-5', '2005-6', '2006-7', '2007-8',\
                         '2008-9', '2009-10'], rotation=45)
 
     #ax.set_ylim(0, 3.5)
-    ax.set_ylabel('E (mm d$^{-1}$)')
+    ax2.set_ylabel('E (mm d$^{-1}$)')
     ofname = os.path.join(plot_dir, "DJF_transpiration_timeseries_comparison.png")
     fig.savefig(ofname, dpi=150, bbox_inches='tight',
                 pad_inches=0.1)
