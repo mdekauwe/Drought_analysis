@@ -53,9 +53,9 @@ def main(fname, plot_dir):
         year += 1
 
     cbar = axgr.cbar_axes[0].colorbar(plims)
-    cbar.ax.set_title("Transpiration\n(mm d$^{-1}$)", fontsize=16)
+    cbar.ax.set_title("LAI\n(m$^{2}$ m$^{-2}$)", fontsize=16)
 
-    ofname = os.path.join(plot_dir, "DJF_transpiration.png")
+    ofname = os.path.join(plot_dir, "DJF_lai.png")
     fig.savefig(ofname, dpi=150, bbox_inches='tight',
                 pad_inches=0.1)
 
