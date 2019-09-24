@@ -18,21 +18,38 @@ import sys
 import matplotlib.ticker as mticker
 from cartopy.mpl.geoaxes import GeoAxes
 from mpl_toolkits.axes_grid1 import AxesGrid
+from calendar import monthrange
 
 def main(fname, plot_dir):
 
     ds = xr.open_dataset(fname)
 
-    plc = ds.plc[:,0,:].values
-    plc = np.nanmean(plc, axis=0)
-    plc = np.where(plc >= 88., 88, plc)
+    nmonths, nrows, ncols = ds.Rainf.shape
+
+    cmi = np.zeros((nmonths, nrows, ncols))
+    cnt = 0
+    sec_2_day = 86400.0
+    for year in np.arange(2000, 2010):
+        for month in np.arange(1, 13):
+            days_in_month = monthrange(year, month)[1]
+            conv = sec_2_day * days_in_month
+            cmi[cnt,:,:] = (ds.Rainf[cnt,:,:] * conv) - \
+                            (ds.Evap[cnt,:,:] * conv)
+
+
+            cnt = cnt + 1
+
+    cmi = np.sum(cmi, axis=0)
+
+    # just keep deficit areas
+    cmi = np.where(cmi >= 300., np.nan, cmi)
 
     fig = plt.figure(figsize=(9, 6))
     plt.rcParams['font.family'] = "sans-serif"
     plt.rcParams['font.size'] = "14"
     plt.rcParams['font.sans-serif'] = "Helvetica"
 
-    cmap = plt.cm.get_cmap('viridis', 4) # discrete colour map
+    cmap = plt.cm.get_cmap('viridis', 5) # discrete colour map
 
     projection = ccrs.PlateCarree()
     axes_class = (GeoAxes, dict(map_projection=projection))
@@ -52,19 +69,20 @@ def main(fname, plot_dir):
     for i, ax in enumerate(axgr):
         # add a subplot into the array of plots
         #ax = fig.add_subplot(rows, cols, i+1, projection=ccrs.PlateCarree())
-        plims = plot_map(ax, plc, cmap, i)
+        plims = plot_map(ax, cmi, cmap, i)
         #plims = plot_map(ax, ds.plc[0,0,:,:], cmap, i)
 
 
     cbar = axgr.cbar_axes[0].colorbar(plims)
-    cbar.ax.set_title("Min PLC\n(%)", fontsize=16)
+    cbar.ax.set_title("CMI", fontsize=16)
 
-    ofname = os.path.join(plot_dir, "plc.png")
+    ofname = os.path.join(plot_dir, "cmi.png")
     fig.savefig(ofname, dpi=150, bbox_inches='tight',
                 pad_inches=0.1)
 
 def plot_map(ax, var, cmap, i):
-    vmin, vmax = 0, 80 #88
+    print(np.nanmin(var), np.nanmax(var))
+    vmin, vmax = -600, 300
     top, bottom = 90, -90
     left, right = -180, 180
     img = ax.imshow(var, origin='lower',
@@ -112,6 +130,6 @@ if __name__ == "__main__":
     if not os.path.exists(plot_dir):
         os.makedirs(plot_dir)
 
-    fname = "outputs/all_yrs_plc.nc"
+    fname = "outputs/all_yrs_CMI.nc"
 
     main(fname, plot_dir)
