@@ -24,6 +24,7 @@ def main(fname, plot_dir):
 
     ds = xr.open_dataset(fname)
 
+    """
     nmonths, nrows, ncols = ds.Rainf.shape
 
     cmi = np.zeros((nmonths, nrows, ncols))
@@ -40,6 +41,54 @@ def main(fname, plot_dir):
             cnt = cnt + 1
 
     cmi = np.sum(cmi, axis=0)
+    """
+
+    nmonths, nrows, ncols = ds.Rainf.shape
+    nyears = 10
+    pet = np.zeros((nyears,nrows,ncols))
+    ppt = np.zeros((nyears,nrows,ncols))
+    sec_2_day = 86400.0
+    count = 0.0
+    for year in np.arange(2000, 2010):
+        #print(year)
+        for month in np.arange(1, 13):
+
+            days_in_month = monthrange(year, month)[1]
+            conv = sec_2_day * days_in_month
+
+            if year == 2000 and month >= 7:
+
+                pet[yr_count,:,:] += ds.PET[count,:,:] * conv
+                ppt[yr_count,:,:] += ds.Rainf[count,:,:] * conv
+
+
+
+                mth_count += 1
+
+            elif year > 2000 and year <= 2009:
+
+                pet[yr_count,:,:] += ds.PET[count,:,:] * conv
+                ppt[yr_count,:,:] += ds.Rainf[count,:,:] * conv
+                mth_count += 1
+
+            elif year == 2009 and month <= 6:
+
+                pet[yr_count,:,:] += ds.PET[count,:,:] * conv
+                ppt[yr_count,:,:] += ds.Rainf[count,:,:] * conv
+                mth_count += 1
+
+
+
+            if mth_count == 13:
+                mth_count = 1
+                yr_count += 1
+
+
+            count += 1
+
+    ppt = np.mean(ds_ppt.precip[0:count,:,:], axis=0)
+    pet = np.mean(ds_pet.PET[0:count,:,:], axis=0)
+    cmi = ppt - pet
 
     # just keep deficit areas
     #cmi = np.where(cmi >= 300., np.nan, cmi)
