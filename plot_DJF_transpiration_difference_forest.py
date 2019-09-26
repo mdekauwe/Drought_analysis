@@ -66,7 +66,7 @@ def main(fname_ctl, fname_hyd, plot_dir):
                 pad_inches=0.1)
 
 def plot_map(ax, var, year, cmap, i):
-    vmin, vmax = -2.0, 2.0
+    vmin, vmax = -1.5, 1.5
     top, bottom = 90, -90
     left, right = -180, 180
     img = ax.imshow(var, origin='lower',
