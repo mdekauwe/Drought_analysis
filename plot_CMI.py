@@ -45,6 +45,7 @@ def main(fname, plot_dir):
 
     nmonths, nrows, ncols = ds.Rainf.shape
     nyears = 10
+    mth_count = 1
     pet = np.zeros((nyears,nrows,ncols))
     ppt = np.zeros((nyears,nrows,ncols))
     sec_2_day = 86400.0
