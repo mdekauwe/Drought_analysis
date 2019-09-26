@@ -42,7 +42,7 @@ def main(fname, plot_dir):
     cmi = np.sum(cmi, axis=0)
 
     # just keep deficit areas
-    cmi = np.where(cmi >= 300., np.nan, cmi)
+    #cmi = np.where(cmi >= 300., np.nan, cmi)
 
     fig = plt.figure(figsize=(9, 6))
     plt.rcParams['font.family'] = "sans-serif"
