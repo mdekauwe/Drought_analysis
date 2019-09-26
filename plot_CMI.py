@@ -69,7 +69,7 @@ def main(fname, plot_dir):
     for i, ax in enumerate(axgr):
         # add a subplot into the array of plots
         #ax = fig.add_subplot(rows, cols, i+1, projection=ccrs.PlateCarree())
-        plims = plot_map(ax, cmi/10, cmap, i)
+        plims = plot_map(ax, cmi, cmap, i)
         #plims = plot_map(ax, ds.plc[0,0,:,:], cmap, i)
 
 
@@ -82,7 +82,7 @@ def main(fname, plot_dir):
 
 def plot_map(ax, var, cmap, i):
     print(np.nanmin(var), np.nanmax(var))
-    vmin, vmax = -100, 100
+    vmin, vmax = -800, 800
     top, bottom = 90, -90
     left, right = -180, 180
     img = ax.imshow(var, origin='lower',
