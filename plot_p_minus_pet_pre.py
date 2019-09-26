@@ -111,7 +111,7 @@ def main(pet_fname, ppt_fname, plot_dir):
 
 
     cbar = axgr.cbar_axes[0].colorbar(plims)
-    cbar.ax.set_title("P-PET", fontsize=16)
+    cbar.ax.set_title("P-PET\n(mm y$^{-1}$)", fontsize=16)
 
     ofname = os.path.join(plot_dir, "p_minus_pet_pre.png")
     fig.savefig(ofname, dpi=150, bbox_inches='tight',
