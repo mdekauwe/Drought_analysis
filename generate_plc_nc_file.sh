@@ -10,4 +10,4 @@ cdo sellonlatbox,-180,180,-90,90 outputs/all_yrs_plc.nc outputs/all_yrs_fixed_lo
 mv outputs/all_yrs_fixed_long.nc outputs/all_yrs_plc.nc
 
 # get minimum PLC
-cdo min outputs/all_yrs_plc.nc outputs/min_plc.nc
+cdo timmin outputs/all_yrs_plc.nc outputs/min_plc.nc
