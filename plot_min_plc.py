@@ -32,7 +32,7 @@ def main(fname, plot_dir):
     plt.rcParams['font.size'] = "14"
     plt.rcParams['font.sans-serif'] = "Helvetica"
 
-    cmap = plt.cm.get_cmap('viridis', 4) # discrete colour map
+    cmap = plt.cm.get_cmap('YlOrRd', 6) # discrete colour map
 
     projection = ccrs.PlateCarree()
     axes_class = (GeoAxes, dict(map_projection=projection))
