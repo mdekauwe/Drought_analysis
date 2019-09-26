@@ -60,7 +60,7 @@ def main(fname, plot_dir):
 
             if year == 2000 and month >= 7:
 
-                pet[yr_count,:,:] += ds.PET[count,:,:] * conv
+                pet[yr_count,:,:] += ds.Evap[count,:,:] * conv
                 ppt[yr_count,:,:] += ds.Rainf[count,:,:] * conv
 
 
