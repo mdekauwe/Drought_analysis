@@ -69,12 +69,12 @@ def main(fname, plot_dir):
     for i, ax in enumerate(axgr):
         # add a subplot into the array of plots
         #ax = fig.add_subplot(rows, cols, i+1, projection=ccrs.PlateCarree())
-        plims = plot_map(ax, cmi, cmap, i)
+        plims = plot_map(ax, cmi/10, cmap, i)
         #plims = plot_map(ax, ds.plc[0,0,:,:], cmap, i)
 
 
     cbar = axgr.cbar_axes[0].colorbar(plims)
-    cbar.ax.set_title("P-AET\n(mm 10 y$^{-1}$)", fontsize=16)
+    cbar.ax.set_title("P-AET\n(mm y$^{-1}$)", fontsize=16)
 
     ofname = os.path.join(plot_dir, "cmi.png")
     fig.savefig(ofname, dpi=150, bbox_inches='tight',
