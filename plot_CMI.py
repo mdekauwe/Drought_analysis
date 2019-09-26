@@ -49,7 +49,7 @@ def main(fname, plot_dir):
     plt.rcParams['font.size'] = "14"
     plt.rcParams['font.sans-serif'] = "Helvetica"
 
-    cmap = plt.cm.get_cmap('viridis', 5) # discrete colour map
+    cmap = plt.cm.get_cmap('BrBG', 5) # discrete colour map
 
     projection = ccrs.PlateCarree()
     axes_class = (GeoAxes, dict(map_projection=projection))
@@ -74,7 +74,7 @@ def main(fname, plot_dir):
 
 
     cbar = axgr.cbar_axes[0].colorbar(plims)
-    cbar.ax.set_title("CMI", fontsize=16)
+    cbar.ax.set_title("P-AET", fontsize=16)
 
     ofname = os.path.join(plot_dir, "cmi.png")
     fig.savefig(ofname, dpi=150, bbox_inches='tight',
