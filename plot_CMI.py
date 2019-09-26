@@ -42,15 +42,15 @@ def main(fname, plot_dir):
 
     cmi = np.sum(cmi, axis=0)
     """
-
+    #"""
     nmonths, nrows, ncols = ds.Rainf.shape
     nyears = 10
     mth_count = 1
     yr_count = 0
-    pet = np.zeros((nyears,nrows,ncols))
+    aet = np.zeros((nyears,nrows,ncols))
     ppt = np.zeros((nyears,nrows,ncols))
     sec_2_day = 86400.0
-    count = 0.0
+    count = 0
     for year in np.arange(2000, 2010):
         #print(year)
         for month in np.arange(1, 13):
@@ -60,7 +60,7 @@ def main(fname, plot_dir):
 
             if year == 2000 and month >= 7:
 
-                pet[yr_count,:,:] += ds.Evap[count,:,:] * conv
+                aet[yr_count,:,:] += ds.Evap[count,:,:] * conv
                 ppt[yr_count,:,:] += ds.Rainf[count,:,:] * conv
 
 
@@ -69,13 +69,13 @@ def main(fname, plot_dir):
 
             elif year > 2000 and year <= 2009:
 
-                pet[yr_count,:,:] += ds.Evap[count,:,:] * conv
+                aet[yr_count,:,:] += ds.Evap[count,:,:] * conv
                 ppt[yr_count,:,:] += ds.Rainf[count,:,:] * conv
                 mth_count += 1
 
             elif year == 2009 and month <= 6:
 
-                pet[yr_count,:,:] += ds.Evap[count,:,:] * conv
+                aet[yr_count,:,:] += ds.Evap[count,:,:] * conv
                 ppt[yr_count,:,:] += ds.Rainf[count,:,:] * conv
                 mth_count += 1
 
@@ -88,9 +88,10 @@ def main(fname, plot_dir):
 
             count += 1
 
-    ppt = np.mean(ds_ppt, axis=0)
-    pet = np.mean(ds_pet, axis=0)
-    cmi = ppt - pet
+    ppt = np.sum(ppt, axis=0)
+    aet = np.sum(aet, axis=0)
+    cmi = ppt - aet
+    #"""
 
     # just keep deficit areas
     #cmi = np.where(cmi >= 300., np.nan, cmi)
@@ -126,6 +127,7 @@ def main(fname, plot_dir):
 
     cbar = axgr.cbar_axes[0].colorbar(plims)
     cbar.ax.set_title("P-AET\n(mm y$^{-1}$)", fontsize=16)
+    cbar.ax.set_yticklabels([' ', '-40', '-20', '0', '20', '<=420'])
 
     ofname = os.path.join(plot_dir, "cmi.png")
     fig.savefig(ofname, dpi=150, bbox_inches='tight',
@@ -133,7 +135,7 @@ def main(fname, plot_dir):
 
 def plot_map(ax, var, cmap, i):
     print(np.nanmin(var), np.nanmax(var))
-    vmin, vmax = -100, 100
+    vmin, vmax = -50, 50
     top, bottom = 90, -90
     left, right = -180, 180
     img = ax.imshow(var, origin='lower',
