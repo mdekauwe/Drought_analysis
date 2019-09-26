@@ -69,13 +69,13 @@ def main(fname, plot_dir):
 
             elif year > 2000 and year <= 2009:
 
-                pet[yr_count,:,:] += ds.PET[count,:,:] * conv
+                pet[yr_count,:,:] += ds.Evap[count,:,:] * conv
                 ppt[yr_count,:,:] += ds.Rainf[count,:,:] * conv
                 mth_count += 1
 
             elif year == 2009 and month <= 6:
 
-                pet[yr_count,:,:] += ds.PET[count,:,:] * conv
+                pet[yr_count,:,:] += ds.Evap[count,:,:] * conv
                 ppt[yr_count,:,:] += ds.Rainf[count,:,:] * conv
                 mth_count += 1
 
@@ -88,8 +88,8 @@ def main(fname, plot_dir):
 
             count += 1
 
-    ppt = np.mean(ds_ppt.precip[0:count,:,:], axis=0)
-    pet = np.mean(ds_pet.PET[0:count,:,:], axis=0)
+    ppt = np.mean(ds_ppt, axis=0)
+    pet = np.mean(ds_pet, axis=0)
     cmi = ppt - pet
 
     # just keep deficit areas
