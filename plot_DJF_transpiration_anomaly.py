@@ -128,4 +128,4 @@ if __name__ == "__main__":
     fname_hyd = "outputs/djf.nc"
     fname_clim = "../GSWP3_SE_aus_hydraulics_ebf_clim/outputs/djf.nc"
 
-    main(fname_ctl, fname_hyd, plot_dir)
+    main(fname_clim, fname_hyd, plot_dir)
