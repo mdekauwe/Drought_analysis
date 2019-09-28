@@ -23,11 +23,10 @@ def main(fname, plot_dir):
 
     ds = xr.open_dataset(fname)
 
-    plc = ds.plc[0,0,:,:].values
+    #plc = ds.plc[0,0,:,:].values
 
-    #plc = ds.plc[:,0,:].values
-    #plc = np.nanmean(plc, axis=0)
-    #plc = np.where(plc >= 88., 88, plc)
+    plc = ds.plc[:,0,:].values
+    plc = np.nanmean(plc, axis=0)
 
     fig = plt.figure(figsize=(9, 6))
     plt.rcParams['font.family'] = "sans-serif"
@@ -114,6 +113,7 @@ if __name__ == "__main__":
     if not os.path.exists(plot_dir):
         os.makedirs(plot_dir)
 
-    fname = "outputs/min_plc.nc"
+    #fname = "outputs/min_plc.nc"
+    fname = "outputs/all_yrs_plc.nc"
 
     main(fname, plot_dir)
