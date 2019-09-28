@@ -24,7 +24,7 @@ def main(fname_clim, fname_hyd, plot_dir):
     ds_clim = xr.open_dataset(fname_clim)
     ds_hyd = xr.open_dataset(fname_hyd)
 
-    clim = np.mean(ds_ctl.TVeg[:,:,:,], axis=0)
+    clim = np.mean(ds_clim.TVeg[:,:,:,], axis=0)
 
     fig = plt.figure(figsize=(20, 8))
     plt.rcParams['font.family'] = "sans-serif"
