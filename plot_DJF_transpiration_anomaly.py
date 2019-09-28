@@ -53,7 +53,7 @@ def main(fname_clim, fname_hyd, plot_dir):
         # add a subplot into the array of plots
         #ax = fig.add_subplot(rows, cols, i+1, projection=ccrs.PlateCarree())
 
-        diff = clim[:,:,]-ds_hyd.TVeg[i,:,:,]
+        diff = ds_hyd.TVeg[i,:,:,]-clim[:,:,]
         diff = np.where(np.logical_and(diff >= -0.05, diff <= 0.05), np.nan, diff)
         plims = plot_map(ax, diff, year, cmap, i)
 
@@ -63,7 +63,7 @@ def main(fname_clim, fname_hyd, plot_dir):
     cbar.ax.set_title("Transpiration\n(mm d$^{-1}$)", fontsize=16)
 
     ofname = os.path.join(plot_dir,
-                          "DJF_transpiration_anomaly_clim_minus_hyd_forest.png")
+                          "DJF_transpiration_anomaly_hyd_minus_clim_forest.png")
     fig.savefig(ofname, dpi=150, bbox_inches='tight',
                 pad_inches=0.1)
 
