@@ -23,6 +23,10 @@ from calendar import monthrange
 def main(fname, plot_dir):
 
     ds = xr.open_dataset(fname)
+    lat = ds.y.values
+    lon = ds.x.values
+    bottom, top = lat[0], lat[-1]
+    left, right = lon[0], lon[-1]
 
     """
     nmonths, nrows, ncols = ds.Rainf.shape
@@ -121,7 +125,7 @@ def main(fname, plot_dir):
     for i, ax in enumerate(axgr):
         # add a subplot into the array of plots
         #ax = fig.add_subplot(rows, cols, i+1, projection=ccrs.PlateCarree())
-        plims = plot_map(ax, cmi / 10, cmap, i)
+        plims = plot_map(ax, cmi / 10, cmap, i, top, bottom, left, right)
         #plims = plot_map(ax, ds.plc[0,0,:,:], cmap, i)
 
 
@@ -133,11 +137,11 @@ def main(fname, plot_dir):
     fig.savefig(ofname, dpi=150, bbox_inches='tight',
                 pad_inches=0.1)
 
-def plot_map(ax, var, cmap, i):
+def plot_map(ax, var, cmap, i, top, bottom, left, right):
     print(np.nanmin(var), np.nanmax(var))
     vmin, vmax = -50, 50
-    top, bottom = 90, -90
-    left, right = -180, 180
+    #top, bottom = 90, -90
+    #left, right = -180, 180
     img = ax.imshow(var, origin='lower',
                     transform=ccrs.PlateCarree(),
                     interpolation='nearest', cmap=cmap,
