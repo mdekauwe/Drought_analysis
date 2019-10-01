@@ -1,6 +1,6 @@
 #!/bin/bash
 
-conda deactivate sci
+conda deactivate
 module use /g/data3/hh5/public/modules
 module load conda
 
