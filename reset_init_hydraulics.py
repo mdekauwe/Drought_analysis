@@ -22,6 +22,10 @@ def main(restart_dir, year):
     ds = xr.open_dataset(fn)
 
     ds['plc'][:] = 0.0
+    ds['psi_leaf_prev'][:] = -0.1
+    ds['psi_stem_prev'][:] = -0.1
+    ds['weighted_psi_soil'][:] = -0.1
+    ds['tot_bg_resist'][:] = 1E-09
 
     ofname = "temp.nc"
     ds.to_netcdf(ofname)
