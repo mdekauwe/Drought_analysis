@@ -64,7 +64,7 @@ def main(fname, plot_dir):
     ofname = os.path.join(plot_dir, "DJF_transpiration.png")
     fig.savefig(ofname, dpi=150, bbox_inches='tight',
                 pad_inches=0.1)
-    plt.show()
+    #plt.show()
 
 def plot_map(ax, var, year, cmap, i, top, bottom, left, right):
     vmin, vmax = 0.0, 3.0
