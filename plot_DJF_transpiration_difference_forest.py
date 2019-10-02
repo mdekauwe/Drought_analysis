@@ -68,7 +68,7 @@ def main(fname_ctl, fname_hyd, plot_dir):
 
     ofname = os.path.join(plot_dir,
                           "DJF_transpiration_difference_ctl_minus_hyd_forest.png")
-    fig.savefig(ofname, dpi=150, bbox_inches='tight',
+    fig.savefig(ofname, dpi=300, bbox_inches='tight',
                 pad_inches=0.1)
 
 def plot_map(ax, var, year, cmap, i, top, bottom, left, right):
