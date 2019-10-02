@@ -72,6 +72,7 @@ def main(fname_ctl, fname_hyd, plot_dir):
                 pad_inches=0.1)
 
 def plot_map(ax, var, year, cmap, i, top, bottom, left, right):
+    print(np.nanmin(var), np.nanmax(var))
     vmin, vmax = -1.5, 1.5
     #top, bottom = 90, -90
     #left, right = -180, 180
