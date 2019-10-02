@@ -130,6 +130,6 @@ if __name__ == "__main__":
         os.makedirs(plot_dir)
 
     fname_hyd = "outputs/djf.nc"
-    fname_ctl = "../GSWP3_SE_aus_control_ebf_patch/outputs/djf.nc"
+    fname_ctl = "../AWAP_SE_aus_control_ebf_patch/outputs/djf.nc"
 
     main(fname_ctl, fname_hyd, plot_dir)
