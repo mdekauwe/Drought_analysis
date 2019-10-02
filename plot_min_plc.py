@@ -26,7 +26,7 @@ def main(fname, plot_dir):
     lon = ds.x.values
     bottom, top = lat[0], lat[-1]
     left, right = lon[0], lon[-1]
-    
+
     plc = ds.plc[:,0,:,:].values
     plc = np.nanmean(plc, axis=0)
 
@@ -117,8 +117,4 @@ if __name__ == "__main__":
 
     #fname = "outputs/min_plc.nc"
     fname = "outputs/all_yrs_plc.nc"
-<<<<<<< HEAD
-=======
-
->>>>>>> f6120688210e27d2fab1dbe0dccc9ce7fcc0f05f
     main(fname, plot_dir)
