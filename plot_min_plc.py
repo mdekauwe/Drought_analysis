@@ -28,7 +28,8 @@ def main(fname, plot_dir):
     left, right = lon[0], lon[-1]
 
     plc = ds.plc[:,0,:,:].values
-    plc = np.nanmean(plc, axis=0)
+    #plc = np.nanmean(plc, axis=0)
+    plc = np.median(plc, axis=0)
 
     fig = plt.figure(figsize=(9, 6))
     plt.rcParams['font.family'] = "sans-serif"
@@ -65,6 +66,7 @@ def main(fname, plot_dir):
     ofname = os.path.join(plot_dir, "plc.png")
     fig.savefig(ofname, dpi=150, bbox_inches='tight',
                 pad_inches=0.1)
+    plt.show()
 
 def plot_map(ax, var, cmap, i, top, bottom, left, right):
     vmin, vmax = 0, 80 #88
