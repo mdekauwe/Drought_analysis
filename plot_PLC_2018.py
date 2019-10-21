@@ -18,6 +18,7 @@ import sys
 import matplotlib.ticker as mticker
 from cartopy.mpl.geoaxes import GeoAxes
 from mpl_toolkits.axes_grid1 import AxesGrid
+from calendar import monthrange
 
 def main(fname, plot_dir):
 
@@ -27,9 +28,12 @@ def main(fname, plot_dir):
     bottom, top = lat[0], lat[-1]
     left, right = lon[0], lon[-1]
 
-    plc = ds.plc[:,0,:,:].values
-    #plc = np.nanmean(plc, axis=0)
-    plc = np.median(plc, axis=0)
+
+    plc = ds.plc[48-13:(48-13)+6,0,:,:].values
+    plc = np.nanmean(plc, axis=0)
+
+    # just keep deficit areas
+    #cmi = np.where(cmi >= 300., np.nan, cmi)
 
     fig = plt.figure(figsize=(9, 6))
     plt.rcParams['font.family'] = "sans-serif"
@@ -61,15 +65,16 @@ def main(fname, plot_dir):
 
 
     cbar = axgr.cbar_axes[0].colorbar(plims)
-    cbar.ax.set_title("Min PLC\n(%)", fontsize=16)
+    cbar.ax.set_title("Mean PLC\n(%)", fontsize=16)
+    #cbar.ax.set_yticklabels([' ', '-60', '-30', '0', '30', '<=1490'])
 
-    ofname = os.path.join(plot_dir, "plc.png")
+    ofname = os.path.join(plot_dir, "plc_2018.png")
     fig.savefig(ofname, dpi=300, bbox_inches='tight',
                 pad_inches=0.1)
-    plt.show()
 
 def plot_map(ax, var, cmap, i, top, bottom, left, right):
-    vmin, vmax = 0, 80 #88
+    print(np.nanmin(var), np.nanmax(var))
+    vmin, vmax = 0, 80
     #top, bottom = 90, -90
     #left, right = -180, 180
     img = ax.imshow(var, origin='lower',
@@ -82,6 +87,7 @@ def plot_map(ax, var, cmap, i, top, bottom, left, right):
 
     ax.set_xlim(140, 154)
     ax.set_ylim(-39.4, -28)
+    ax.set_title("DJF-MAM - 2017-2018", fontsize=16)
 
     if i == 0 or i >= 5:
 
@@ -117,6 +123,5 @@ if __name__ == "__main__":
     if not os.path.exists(plot_dir):
         os.makedirs(plot_dir)
 
-    #fname = "outputs/min_plc.nc"
     fname = "outputs/all_yrs_plc.nc"
     main(fname, plot_dir)

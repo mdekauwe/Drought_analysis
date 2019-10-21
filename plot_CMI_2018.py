@@ -18,6 +18,7 @@ import sys
 import matplotlib.ticker as mticker
 from cartopy.mpl.geoaxes import GeoAxes
 from mpl_toolkits.axes_grid1 import AxesGrid
+from calendar import monthrange
 
 def main(fname, plot_dir):
 
@@ -27,16 +28,51 @@ def main(fname, plot_dir):
     bottom, top = lat[0], lat[-1]
     left, right = lon[0], lon[-1]
 
-    plc = ds.plc[:,0,:,:].values
-    #plc = np.nanmean(plc, axis=0)
-    plc = np.median(plc, axis=0)
+    #"""
+    nmonths, nrows, ncols = ds.Rainf.shape
+    nyears = 1
+    yr_count = 0
+    aet = np.zeros((nrows,ncols))
+    ppt = np.zeros((nrows,ncols))
+    sec_2_day = 86400.0
+    count = 0
+    for year in np.arange(2015, 2019):
+        print(year)
+        for month in np.arange(1, 13):
+
+            days_in_month = monthrange(year, month)[1]
+            conv = sec_2_day * days_in_month
+
+            if year == 2017 and month == 12:
+
+                aet[:,:] += ds.Evap[count,:,:] * conv
+                ppt[:,:] += ds.Rainf[count,:,:] * conv
+
+
+            elif year == 2018 and month < 6:
+
+                aet[:,:] += ds.Evap[count,:,:] * conv
+                ppt[:,:] += ds.Rainf[count,:,:] * conv
+
+            if month == 12:
+                yr_count += 1
+
+
+            count += 1
+
+
+    cmi = ppt - aet
+    #"""
+
+    # just keep deficit areas
+    #cmi = np.where(cmi >= 300., np.nan, cmi)
 
     fig = plt.figure(figsize=(9, 6))
     plt.rcParams['font.family'] = "sans-serif"
     plt.rcParams['font.size'] = "14"
     plt.rcParams['font.sans-serif'] = "Helvetica"
 
-    cmap = plt.cm.get_cmap('YlOrRd', 6) # discrete colour map
+    cmap = plt.cm.get_cmap('BrBG', 10) # discrete colour map
 
     projection = ccrs.PlateCarree()
     axes_class = (GeoAxes, dict(map_projection=projection))
@@ -56,20 +92,21 @@ def main(fname, plot_dir):
     for i, ax in enumerate(axgr):
         # add a subplot into the array of plots
         #ax = fig.add_subplot(rows, cols, i+1, projection=ccrs.PlateCarree())
-        plims = plot_map(ax, plc, cmap, i, top, bottom, left, right)
+        plims = plot_map(ax, cmi , cmap, i, top, bottom, left, right)
         #plims = plot_map(ax, ds.plc[0,0,:,:], cmap, i)
 
 
     cbar = axgr.cbar_axes[0].colorbar(plims)
-    cbar.ax.set_title("Min PLC\n(%)", fontsize=16)
+    cbar.ax.set_title("P-AET\n(mm y$^{-1}$)", fontsize=16)
+    cbar.ax.set_yticklabels(['-300', '-150', '0', '150', '<=640'])
 
-    ofname = os.path.join(plot_dir, "plc.png")
+    ofname = os.path.join(plot_dir, "cmi.png")
     fig.savefig(ofname, dpi=300, bbox_inches='tight',
                 pad_inches=0.1)
-    plt.show()
 
 def plot_map(ax, var, cmap, i, top, bottom, left, right):
-    vmin, vmax = 0, 80 #88
+    print(np.nanmin(var), np.nanmax(var))
+    vmin, vmax = -300, 300
     #top, bottom = 90, -90
     #left, right = -180, 180
     img = ax.imshow(var, origin='lower',
@@ -82,8 +119,9 @@ def plot_map(ax, var, cmap, i, top, bottom, left, right):
 
     ax.set_xlim(140, 154)
     ax.set_ylim(-39.4, -28)
+    ax.set_title("DJF-MAM - 2017-2018", fontsize=16)
 
-    if i == 0 or i >= 5:
+    if i <= 5:
 
         gl = ax.gridlines(crs=ccrs.PlateCarree(), draw_labels=True,
                           linewidth=0.5, color='black', alpha=0.5,
@@ -92,11 +130,6 @@ def plot_map(ax, var, cmap, i, top, bottom, left, right):
         gl = ax.gridlines(crs=ccrs.PlateCarree(), draw_labels=False,
                           linewidth=0.5, color='black', alpha=0.5,
                           linestyle='--')
-
-    #if i < 5:
-    #s    gl.xlabels_bottom = False
-    if i > 5:
-        gl.ylabels_left = False
 
     gl.xlabels_top = False
     gl.ylabels_right = False
@@ -108,6 +141,17 @@ def plot_map(ax, var, cmap, i, top, bottom, left, right):
     gl.xlocator = mticker.FixedLocator([141, 145,  149, 153])
     gl.ylocator = mticker.FixedLocator([-29, -32, -35, -38])
 
+
+    if i == 0 :
+        ax.text(-0.1, 0.5, 'Latitude', va='bottom', ha='center',
+                rotation='vertical', rotation_mode='anchor',
+                transform=ax.transAxes, fontsize=16)
+    if i == 0:
+        ax.text(0.5, -0.1, 'Longitude', va='bottom', ha='center',
+                rotation='horizontal', rotation_mode='anchor',
+                transform=ax.transAxes, fontsize=16)
+
+
     return img
 
 
@@ -117,6 +161,6 @@ if __name__ == "__main__":
     if not os.path.exists(plot_dir):
         os.makedirs(plot_dir)
 
-    #fname = "outputs/min_plc.nc"
-    fname = "outputs/all_yrs_plc.nc"
+    fname = "outputs/all_yrs_CMI.nc"
+
     main(fname, plot_dir)

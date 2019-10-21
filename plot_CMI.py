@@ -131,15 +131,15 @@ def main(fname, plot_dir):
 
     cbar = axgr.cbar_axes[0].colorbar(plims)
     cbar.ax.set_title("P-AET\n(mm y$^{-1}$)", fontsize=16)
-    cbar.ax.set_yticklabels([' ', '-40', '-20', '0', '20', '<=420'])
+    cbar.ax.set_yticklabels([' ', '-60', '-30', '0', '30', '<=1000'])
 
     ofname = os.path.join(plot_dir, "cmi.png")
-    fig.savefig(ofname, dpi=150, bbox_inches='tight',
+    fig.savefig(ofname, dpi=300, bbox_inches='tight',
                 pad_inches=0.1)
 
 def plot_map(ax, var, cmap, i, top, bottom, left, right):
     print(np.nanmin(var), np.nanmax(var))
-    vmin, vmax = -50, 50
+    vmin, vmax = -75, 75
     #top, bottom = 90, -90
     #left, right = -180, 180
     img = ax.imshow(var, origin='lower',
