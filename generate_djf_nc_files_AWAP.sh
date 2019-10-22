@@ -1,6 +1,6 @@
 #!/bin/bash
 
-cdo mergetime outputs/cable_out_*.nc outputs/all_yrs.nc
+cdo mergetime outputs/cable_out_*.nc outputs/all_yrs_plc.nc
 
 cdo select,name=TVeg,LAI,GPP outputs/all_yrs.nc outputs/tmp_all_yrs.nc
 mv outputs/tmp_all_yrs.nc outputs/all_yrs.nc
