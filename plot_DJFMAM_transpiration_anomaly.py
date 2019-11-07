@@ -54,7 +54,7 @@ def main(fname, plot_dir):
     for i, ax in enumerate(axgr):
         # add a subplot into the array of plots
         #ax = fig.add_subplot(rows, cols, i+1, projection=ccrs.PlateCarree())
-        plims = plot_map(ax, ds.TVeg[count-1,:,:,]-ds.TVeg[count,:,:,], year, cmap, i, top, bottom,
+        plims = plot_map(ax, ds.TVeg[count,:,:,]-ds.TVeg[count-1,:,:,], year, cmap, i, top, bottom,
                          left, right)
 
         year += 1
