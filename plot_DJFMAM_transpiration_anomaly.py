@@ -83,7 +83,7 @@ def plot_map(ax, var, year, cmap, i, top, bottom, left, right):
                     vmin=vmin, vmax=vmax)
     ax.coastlines(resolution='10m', linewidth=1.0, color='black')
     #ax.add_feature(cartopy.feature.OCEAN)
-    ax.set_title("DJFMAM: 2016-2017 - 2017/2018", fontsize=16)
+    ax.set_title("DJFMAM: 2017/2018 - 2016/2017", fontsize=16)
     ax.set_xlim(140, 154)
     ax.set_ylim(-39.4, -28)
 
