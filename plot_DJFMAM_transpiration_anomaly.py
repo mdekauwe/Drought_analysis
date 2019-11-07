@@ -68,7 +68,7 @@ def main(fname, plot_dir):
     #plt.show()
 
 def plot_map(ax, var, year, cmap, i, top, bottom, left, right):
-    vmin, vmax = -2.5, 2.5
+    vmin, vmax = -1.2, 1.2
     print(np.nanmin(var), np.nanmax(var))
     #top, bottom = 90, -90
     #left, right = -180, 180
