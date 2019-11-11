@@ -33,6 +33,13 @@ def main(plot_dir):
     plc_dsf_all = np.zeros(0)
     plc_grw_all = np.zeros(0)
     plc_saw_all =  np.zeros(0)
+
+    plc_rf_sigma = np.zeros(0)
+    plc_wsf_sigma = np.zeros(0)
+    plc_dsf_sigma = np.zeros(0)
+    plc_grw_sigma = np.zeros(0)
+    plc_saw_sigma =  np.zeros(0)
+
     sw_rf_all = np.zeros(0)
     sw_wsf_all = np.zeros(0)
     sw_dsf_all = np.zeros(0)
@@ -112,6 +119,13 @@ def main(plot_dir):
         plc_grw = np.mean(plc_grw, axis=1)
         plc_saw = np.mean(plc_saw, axis=1)
 
+
+        sw_rf_sig = np.std(sw_rf, axis=1)
+        sw_wsf_sig = np.std(sw_wsf, axis=1)
+        sw_dsf_sig = np.std(sw_dsf, axis=1)
+        sw_grw_sig = np.std(sw_grw, axis=1)
+        sw_saw_sig = np.std(sw_saw, axis=1)
+
         sw_rf = np.mean(sw_rf, axis=1)
         sw_wsf = np.mean(sw_wsf, axis=1)
         sw_dsf = np.mean(sw_dsf, axis=1)
@@ -123,6 +137,15 @@ def main(plot_dir):
         plc_dsf_all = np.append(plc_dsf_all, plc_dsf)
         plc_grw_all = np.append(plc_grw_all, plc_grw)
         plc_saw_all = np.append(plc_saw_all, plc_saw)
+
+        plc_rf_sigma = np.append(plc_rf_sigma, plc_rf_sig)
+        plc_wsf_sigma = np.append(plc_wsf_sigma, plc_wsf_sig)
+        plc_dsf_sigma = np.append(plc_dsf_sigma, plc_dsf_sig)
+        plc_grw_sigma = np.append(plc_grw_sigma, plc_grw_sig)
+        plc_saw_sigma = np.append(plc_saw_sigma, plc_saw_sig)
+
+
+
 
         sw_rf_all = np.append(sw_rf_all, sw_rf)
         sw_wsf_all = np.append(sw_wsf_all, sw_wsf)
@@ -181,6 +204,18 @@ def main(plot_dir):
     ax.plot(dates, plc_grw_all, label="GRW", color=colours[3], lw=2)
     ax.plot(dates, plc_saw_all, label="SAW", color=colours[0], lw=2)
 
+    ax.fill_between(dates, plc_rf_all+plc_rf_sigma, plc_rf_all-plc_rf_sigma,
+                    facecolor=colours[6], alpha=0.5)
+    ax.fill_between(dates, plc_wsf_all+plc_wsf_sigma, plc_wsf_all-plc_wsf_sigma,
+                    facecolor=colours[6], alpha=0.5)
+    ax.fill_between(dates, plc_dsf_all+plc_dsf_sigma, plc_dsf_all-plc_dsf_sigma,
+                    facecolor=colours[6], alpha=0.5)
+    ax.fill_between(dates, plc_grw_all+plc_grw_sigma, plc_grw_all-plc_grw_sigma,
+                    facecolor=colours[6], alpha=0.5)
+    ax.fill_between(dates, plc_saw_all+plc_saw_sigma, plc_saw_all-plc_saw_sigma,
+                    facecolor=colours[6], alpha=0.5)
+
+
     ax.axhline(y=88.0, ls="--", lw=2, color="black", label="$\Psi$$_{crit}$")
     ax.set_ylim(-5, 90)
 
@@ -188,8 +223,8 @@ def main(plot_dir):
     ax.legend(numpoints=1, loc="best", ncol=2)
 
     odir = "plots"
-    plt.savefig(os.path.join(odir, "plc_timeseries.pdf"), bbox_inches='tight',
-                pad_inches=0.1)
+    plt.savefig(os.path.join(odir, "plc_timeseries.png"), dpi=300,
+                bbox_inches='tight', pad_inches=0.1)
 
     plt.show()
 
