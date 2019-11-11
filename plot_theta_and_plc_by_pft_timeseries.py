@@ -150,6 +150,16 @@ def main(plot_dir):
     periods = (end_yr - start_yr) * 12
     dates = pd.date_range('01/01/%d' % (start_yr), periods=periods, freq ='M')
 
+    #from matplotlib.pyplot import cm
+    #colours = cm.Set2(np.linspace(0, 1, 5))
+    #colours = cm.get_cmap('Set2')
+
+
+    import seaborn as sns
+    sns.set_style("ticks")
+    colours = sns.color_palette("Set2", 8)
+
+
     fig = plt.figure(figsize=(9,6))
     fig.subplots_adjust(hspace=0.1)
     fig.subplots_adjust(wspace=0.05)
@@ -165,14 +175,17 @@ def main(plot_dir):
 
     ax = fig.add_subplot(111)
 
-    ax.plot(dates, plc_rf_all, label="RF")
-    ax.plot(dates, plc_wsf_all, label="WSF")
-    ax.plot(dates, plc_dsf_all, label="DSF")
-    ax.plot(dates, plc_grw_all, label="GRW")
-    ax.plot(dates, plc_saw_all, label="SAW")
+    ax.plot(dates, plc_rf_all, label="RF", color=colours[6], lw=2)
+    ax.plot(dates, plc_wsf_all, label="WSF", color=colours[1], lw=2)
+    ax.plot(dates, plc_dsf_all, label="DSF", color=colours[2], lw=2)
+    ax.plot(dates, plc_grw_all, label="GRW", color=colours[3], lw=2)
+    ax.plot(dates, plc_saw_all, label="SAW", color=colours[0], lw=2)
+
+    ax.axhline(y=88.0, ls="--", lw=2, color="black", label="$\Psi$$_{crit}$")
+    ax.set_ylim(-2, 90)
 
     ax.set_ylabel("Loss of hydraulic conductivity (%)")
-    ax.legend(numpoints=1, loc="best")
+    ax.legend(numpoints=1, loc="best", ncol=2)
 
     odir = "/Users/mdekauwe/Desktop"
     plt.savefig(os.path.join(odir, "plc_timeseries.pdf"), bbox_inches='tight',
