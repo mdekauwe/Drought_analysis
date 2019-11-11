@@ -208,13 +208,13 @@ def main(plot_dir):
     ax.fill_between(dates, plc_rf_all+plc_rf_sigma, plc_rf_all-plc_rf_sigma,
                     facecolor=colours[6], alpha=0.5)
     ax.fill_between(dates, plc_wsf_all+plc_wsf_sigma, plc_wsf_all-plc_wsf_sigma,
-                    facecolor=colours[6], alpha=0.5)
+                    facecolor=colours[1], alpha=0.5)
     ax.fill_between(dates, plc_dsf_all+plc_dsf_sigma, plc_dsf_all-plc_dsf_sigma,
-                    facecolor=colours[6], alpha=0.5)
+                    facecolor=colours[2], alpha=0.5)
     ax.fill_between(dates, plc_grw_all+plc_grw_sigma, plc_grw_all-plc_grw_sigma,
-                    facecolor=colours[6], alpha=0.5)
+                    facecolor=colours[3], alpha=0.5)
     ax.fill_between(dates, plc_saw_all+plc_saw_sigma, plc_saw_all-plc_saw_sigma,
-                    facecolor=colours[6], alpha=0.5)
+                    facecolor=colours[0], alpha=0.5)
 
 
     ax.axhline(y=88.0, ls="--", lw=2, color="black", label="$\Psi$$_{crit}$")
