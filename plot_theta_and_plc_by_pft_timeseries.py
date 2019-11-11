@@ -221,7 +221,7 @@ def main(plot_dir):
     ax.set_ylim(-5, 90)
 
     ax.set_ylabel("Loss of hydraulic conductivity (%)")
-    ax.legend(numpoints=1, loc=(0.01, 0.6), ncol=1, frameon=False)
+    ax.legend(numpoints=1, loc=(0.01, 0.5), ncol=1, frameon=False)
 
     import datetime
     ax.set_xlim([datetime.date(2000,7,1), datetime.date(2010, 1, 1)])
