@@ -54,7 +54,7 @@ def main(fname, plot_dir):
     for i, ax in enumerate(axgr):
         # add a subplot into the array of plots
         #ax = fig.add_subplot(rows, cols, i+1, projection=ccrs.PlateCarree())
-        plims = plot_map(ax, ds.TVeg[count-1,:,:,]-ds.TVeg[count,:,:,], year, cmap, i, top, bottom,
+        plims = plot_map(ax, ds.TVeg[count,:,:,]-ds.TVeg[count-1,:,:,], year, cmap, i, top, bottom,
                          left, right)
 
         year += 1
@@ -68,7 +68,7 @@ def main(fname, plot_dir):
     #plt.show()
 
 def plot_map(ax, var, year, cmap, i, top, bottom, left, right):
-    vmin, vmax = -2.5, 2.5
+    vmin, vmax = -1.2, 1.2
     print(np.nanmin(var), np.nanmax(var))
     #top, bottom = 90, -90
     #left, right = -180, 180
@@ -83,7 +83,7 @@ def plot_map(ax, var, year, cmap, i, top, bottom, left, right):
                     vmin=vmin, vmax=vmax)
     ax.coastlines(resolution='10m', linewidth=1.0, color='black')
     #ax.add_feature(cartopy.feature.OCEAN)
-    ax.set_title("DJFMAM: 2016-2017 - 2017/2018", fontsize=16)
+    ax.set_title("DJFMAM: 2017/2018 - 2016/2017", fontsize=16)
     ax.set_xlim(140, 154)
     ax.set_ylim(-39.4, -28)
 

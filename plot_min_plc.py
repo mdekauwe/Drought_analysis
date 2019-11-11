@@ -28,15 +28,22 @@ def main(fname, plot_dir):
     left, right = lon[0], lon[-1]
 
     plc = ds.plc[:,0,:,:].values
+
     #plc = np.nanmean(plc, axis=0)
-    plc = np.median(plc, axis=0)
+    #plt.imshow(plc[:,:])
+    #plt.imshow(plc[10,:,:])
+    #plt.colorbar()
+    #plt.show()
+    #sys.exit()
+    plc = np.nanmean(plc, axis=0)
+    #plc = np.nanmax(plc, axis=0)
 
     fig = plt.figure(figsize=(9, 6))
     plt.rcParams['font.family'] = "sans-serif"
     plt.rcParams['font.size'] = "14"
     plt.rcParams['font.sans-serif'] = "Helvetica"
 
-    cmap = plt.cm.get_cmap('YlOrRd', 6) # discrete colour map
+    cmap = plt.cm.get_cmap('YlOrRd', 9) # discrete colour map
 
     projection = ccrs.PlateCarree()
     axes_class = (GeoAxes, dict(map_projection=projection))
