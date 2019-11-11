@@ -142,8 +142,8 @@ def main(plot_dir):
     ax.set_xlabel(" ")
 
     odir = "/Users/mdekauwe/Desktop"
-    plt.savefig(os.path.join(odir,
-                "plc.png"), dpi=300, bbox_inches='tight', pad_inches=0.1)
+    plt.savefig(os.path.join(odir, "plc_boxplot.pdf"),
+                bbox_inches='tight', pad_inches=0.1)
     plt.show()
     sys.exit()
 
