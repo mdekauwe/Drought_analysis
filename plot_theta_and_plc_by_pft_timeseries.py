@@ -182,7 +182,7 @@ def main(plot_dir):
     ax.plot(dates, plc_saw_all, label="SAW", color=colours[0], lw=2)
 
     ax.axhline(y=88.0, ls="--", lw=2, color="black", label="$\Psi$$_{crit}$")
-    ax.set_ylim(-2, 90)
+    ax.set_ylim(-5, 90)
 
     ax.set_ylabel("Loss of hydraulic conductivity (%)")
     ax.legend(numpoints=1, loc="best", ncol=2)
