@@ -121,11 +121,11 @@ def main(plot_dir):
         plc_saw = np.mean(plc_saw, axis=1)
 
 
-        sw_rf_sig = np.std(sw_rf, axis=1)
-        sw_wsf_sig = np.std(sw_wsf, axis=1)
-        sw_dsf_sig = np.std(sw_dsf, axis=1)
-        sw_grw_sig = np.std(sw_grw, axis=1)
-        sw_saw_sig = np.std(sw_saw, axis=1)
+        plc_rf_sig = np.std(plc_rf, axis=1)
+        plc_wsf_sig = np.std(plc_wsf, axis=1)
+        plc_dsf_sig = np.std(plc_dsf, axis=1)
+        plc_grw_sig = np.std(plc_grw, axis=1)
+        plc_saw_sig = np.std(plc_saw, axis=1)
 
         sw_rf = np.mean(sw_rf, axis=1)
         sw_wsf = np.mean(sw_wsf, axis=1)
