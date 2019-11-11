@@ -53,7 +53,8 @@ def main(plot_dir):
     #for year in np.arange(2000, 2001):
     #for year in np.arange(2000, 2002):
 
-        fdir = "/Users/mdekauwe/Desktop/outputs"
+        #fdir = "/Users/mdekauwe/Desktop/outputs"
+        fdir = "outputs"
 
         fname = os.path.join(fdir, "cable_out_%d.nc" % (year))
         ds = xr.open_dataset(fname)
