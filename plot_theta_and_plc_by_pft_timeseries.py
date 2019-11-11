@@ -175,9 +175,9 @@ def main(plot_dir):
     ax.legend(numpoints=1, loc="best")
 
     odir = "/Users/mdekauwe/Desktop"
-    plt.savefig(os.path.join(odir,
-                "plc.png"), dpi=300, bbox_inches='tight', pad_inches=0.1)
-    
+    plt.savefig(os.path.join(odir, "plc_timeseries.pdf"), bbox_inches='tight',
+                pad_inches=0.1)
+
     plt.show()
 
 
