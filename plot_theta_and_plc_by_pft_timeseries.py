@@ -199,11 +199,11 @@ def main(plot_dir):
 
     ax = fig.add_subplot(111)
 
-    ax.plot(dates, plc_rf_all, label="RF", color=colours[6], lw=2)
+    ax.plot(dates, plc_rf_all, label="RF", color=colours[0], lw=2)
     ax.plot(dates, plc_wsf_all, label="WSF", color=colours[1], lw=2)
     ax.plot(dates, plc_dsf_all, label="DSF", color=colours[2], lw=2)
     ax.plot(dates, plc_grw_all, label="GRW", color=colours[3], lw=2)
-    ax.plot(dates, plc_saw_all, label="SAW", color=colours[0], lw=2)
+    ax.plot(dates, plc_saw_all, label="SAW", color=colours[4], lw=2)
 
     #ax.fill_between(dates, plc_rf_all+plc_rf_sigma, plc_rf_all-plc_rf_sigma,
     #                facecolor=colours[6], alpha=0.5)
