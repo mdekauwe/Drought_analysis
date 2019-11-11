@@ -159,7 +159,7 @@ def main(plot_dir):
 
     plt.rcParams['axes.labelsize'] = 14
     plt.rcParams['font.size'] = 14
-    plt.rcParams['legend.fontsize'] = 14
+    plt.rcParams['legend.fontsize'] = 12
     plt.rcParams['xtick.labelsize'] = 14
     plt.rcParams['ytick.labelsize'] = 14
 
@@ -172,11 +172,14 @@ def main(plot_dir):
     ax.plot(dates, plc_saw_all, label="SAW")
 
     ax.set_ylabel("Loss of hydraulic conductivity (%)")
+    ax.legend(numpoints=1, loc="best")
 
-    plt.legend()
-
+    odir = "/Users/mdekauwe/Desktop"
+    plt.savefig(os.path.join(odir,
+                "plc.png"), dpi=300, bbox_inches='tight', pad_inches=0.1)
+    
     plt.show()
-    sys.exit()
+
 
 
 
