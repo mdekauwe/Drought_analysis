@@ -221,7 +221,7 @@ def main(plot_dir):
     ax.set_ylim(-5, 90)
 
     ax.set_ylabel("Loss of hydraulic conductivity (%)")
-    ax.legend(numpoints=1, loc="best", ncol=2)
+    ax.legend(numpoints=1, loc="best", ncol=1)
 
     odir = "plots"
     plt.savefig(os.path.join(odir, "plc_timeseries.png"), dpi=300,
