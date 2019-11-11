@@ -40,7 +40,7 @@ def main(plot_dir):
     sw_saw_all = np.zeros(0)
 
     start_yr = 2000
-    end_yr = 2007
+    end_yr = 2010
 
     for year in np.arange(start_yr, end_yr):
     #for year in np.arange(2000, 2001):
