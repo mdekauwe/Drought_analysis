@@ -40,6 +40,18 @@ def main(plot_dir):
     plc_grw_sigma = np.zeros(0)
     plc_saw_sigma =  np.zeros(0)
 
+    plc_rf_min_all = np.zeros(0)
+    plc_wsf_min_all = np.zeros(0)
+    plc_dsf_min_all = np.zeros(0)
+    plc_grw_min_all = np.zeros(0)
+    plc_saw_min_all = np.zeros(0)
+
+    plc_rf_max_all = np.zeros(0)
+    plc_wsf_max_all = np.zeros(0)
+    plc_dsf_max_all = np.zeros(0)
+    plc_grw_max_all = np.zeros(0)
+    plc_saw_max_all = np.zeros(0)
+
     sw_rf_all = np.zeros(0)
     sw_wsf_all = np.zeros(0)
     sw_dsf_all = np.zeros(0)
@@ -120,12 +132,24 @@ def main(plot_dir):
         plc_grw_sig = np.std(plc_grw, axis=1)
         plc_saw_sig = np.std(plc_saw, axis=1)
 
-        plc_rf = np.mean(plc_rf, axis=1)
-        plc_wsf = np.mean(plc_wsf, axis=1)
-        plc_dsf = np.mean(plc_dsf, axis=1)
-        plc_grw = np.mean(plc_grw, axis=1)
-        plc_saw = np.mean(plc_saw, axis=1)
+        plc_rf_max = np.amax(plc_rf, axis=1)
+        plc_wsf_max = np.amax(plc_wsf, axis=1)
+        plc_dsf_max = np.amax(plc_dsf, axis=1)
+        plc_grw_max = np.amax(plc_grw, axis=1)
+        plc_saw_max = np.amax(plc_saw, axis=1)
 
+        plc_rf_min = np.amin(plc_rf, axis=1)
+        plc_wsf_min = np.amin(plc_wsf, axis=1)
+        plc_dsf_min = np.amin(plc_dsf, axis=1)
+        plc_grw_min = np.amin(plc_grw, axis=1)
+        plc_saw_min = np.amin(plc_saw, axis=1)
+
+
+        plc_rf_mu = np.mean(plc_rf, axis=1)
+        plc_wsf_mu = np.mean(plc_wsf, axis=1)
+        plc_dsf_mu = np.mean(plc_dsf, axis=1)
+        plc_grw_mu = np.mean(plc_grw, axis=1)
+        plc_saw_mu = np.mean(plc_saw, axis=1)
 
         sw_rf = np.mean(sw_rf, axis=1)
         sw_wsf = np.mean(sw_wsf, axis=1)
@@ -133,11 +157,11 @@ def main(plot_dir):
         sw_grw = np.mean(sw_grw, axis=1)
         sw_saw = np.mean(sw_saw, axis=1)
 
-        plc_rf_all = np.append(plc_rf_all, plc_rf)
-        plc_wsf_all = np.append(plc_wsf_all, plc_wsf)
-        plc_dsf_all = np.append(plc_dsf_all, plc_dsf)
-        plc_grw_all = np.append(plc_grw_all, plc_grw)
-        plc_saw_all = np.append(plc_saw_all, plc_saw)
+        plc_rf_all = np.append(plc_rf_all, plc_rf_mu)
+        plc_wsf_all = np.append(plc_wsf_all, plc_wsf_mu)
+        plc_dsf_all = np.append(plc_dsf_all, plc_dsf_mu)
+        plc_grw_all = np.append(plc_grw_all, plc_grw_mu)
+        plc_saw_all = np.append(plc_saw_all, plc_saw_mu)
 
         plc_rf_sigma = np.append(plc_rf_sigma, plc_rf_sig)
         plc_wsf_sigma = np.append(plc_wsf_sigma, plc_wsf_sig)
@@ -145,7 +169,17 @@ def main(plot_dir):
         plc_grw_sigma = np.append(plc_grw_sigma, plc_grw_sig)
         plc_saw_sigma = np.append(plc_saw_sigma, plc_saw_sig)
 
+        plc_rf_min_all = np.append(plc_rf_min_all, plc_rf_min)
+        plc_wsf_min_all = np.append(plc_wsf_min_all, plc_wsf_min)
+        plc_dsf_min_all = np.append(plc_dsf_min_all, plc_dsf_min)
+        plc_grw_min_all = np.append(plc_grw_min_all, plc_grw_min)
+        plc_saw_min_all = np.append(plc_saw_min_all, plc_saw_min)
 
+        plc_rf_max_all = np.append(plc_rf_max_all, plc_rf_max)
+        plc_wsf_max_all = np.append(plc_wsf_max_all, plc_wsf_max)
+        plc_dsf_max_all = np.append(plc_dsf_max_all, plc_dsf_max)
+        plc_grw_max_all = np.append(plc_grw_max_all, plc_grw_max)
+        plc_saw_max_all = np.append(plc_saw_max_all, plc_saw_max)
 
 
         sw_rf_all = np.append(sw_rf_all, sw_rf)
@@ -205,6 +239,17 @@ def main(plot_dir):
     ax.plot(dates, plc_grw_all, label="GRW", color=colours[3], lw=2)
     ax.plot(dates, plc_saw_all, label="SAW", color=colours[4], lw=2)
 
+    #ax.fill_between(dates, plc_rf_all+plc_rf_max_all, plc_rf_all-plc_rf_min_all,
+    #                facecolor=colours[6], alpha=0.5)
+    #ax.fill_between(dates, plc_wsf_all+plc_wsf_max_all, plc_wsf_all-plc_wsf_min_all,
+    #                facecolor=colours[1], alpha=0.5)
+    #ax.fill_between(dates, plc_dsf_all+plc_dsf_max_all, plc_dsf_all-plc_dsf_min_all,
+    #                facecolor=colours[2], alpha=0.5)
+    #ax.fill_between(dates, plc_grw_all+plc_grw_max_all, plc_grw_all-plc_grw_min_all,
+    #                facecolor=colours[3], alpha=0.5)
+    #ax.fill_between(dates, plc_saw_all+plc_saw_max_all, plc_saw_all-plc_saw_min_all,
+    #                facecolor=colours[0], alpha=0.5)
+    print(plc_rf_all)
     #ax.fill_between(dates, plc_rf_all+plc_rf_sigma, plc_rf_all-plc_rf_sigma,
     #                facecolor=colours[6], alpha=0.5)
     #ax.fill_between(dates, plc_wsf_all+plc_wsf_sigma, plc_wsf_all-plc_wsf_sigma,
