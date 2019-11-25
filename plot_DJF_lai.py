@@ -22,18 +22,27 @@ from mpl_toolkits.axes_grid1 import AxesGrid
 def main(fname, plot_dir):
 
     ds = xr.open_dataset(fname)
+    lat = ds.y.values
+    lon = ds.x.values
+    bottom, top = lat[0], lat[-1]
+    left, right = lon[0], lon[-1]
 
+    #plt.imshow(ds.LAI[0,:,:,])
+    #plt.colorbar()
+    #plt.show()
+    #sys.exit()
     fig = plt.figure(figsize=(20, 8))
     plt.rcParams['font.family'] = "sans-serif"
     plt.rcParams['font.size'] = "14"
     plt.rcParams['font.sans-serif'] = "Helvetica"
 
-    cmap = plt.cm.viridis
+    #cmap = plt.cm.viridis
+    cmap = plt.cm.Greens
     projection = ccrs.PlateCarree()
     axes_class = (GeoAxes,
                   dict(map_projection=projection))
-    rows = 2
-    cols = 5
+    rows = 1
+    cols = 1
 
     axgr = AxesGrid(fig, 111, axes_class=axes_class,
                     nrows_ncols=(rows, cols),
@@ -48,7 +57,8 @@ def main(fname, plot_dir):
     for i, ax in enumerate(axgr):
         # add a subplot into the array of plots
         #ax = fig.add_subplot(rows, cols, i+1, projection=ccrs.PlateCarree())
-        plims = plot_map(ax, ds.LAI[i,:,:,], year, cmap, i)
+        plims = plot_map(ax, ds.LAI[i,:,:,], year, cmap, i, top, bottom,
+                         left, right)
 
         year += 1
 
@@ -59,10 +69,9 @@ def main(fname, plot_dir):
     fig.savefig(ofname, dpi=150, bbox_inches='tight',
                 pad_inches=0.1)
 
-def plot_map(ax, var, year, cmap, i):
-    vmin, vmax = 0.0, 3.0
-    top, bottom = 90, -90
-    left, right = -180, 180
+def plot_map(ax, var, year, cmap, i, top, bottom, left, right):
+    vmin, vmax = 0.0, 5.0
+    print(np.nanmax(var))
     img = ax.imshow(var, origin='lower',
                     transform=ccrs.PlateCarree(),
                     interpolation='nearest', cmap=cmap,
@@ -70,7 +79,7 @@ def plot_map(ax, var, year, cmap, i):
                     vmin=vmin, vmax=vmax)
     ax.coastlines(resolution='10m', linewidth=1.0, color='black')
     #ax.add_feature(cartopy.feature.OCEAN)
-    ax.set_title("%d-%d" % (year, year+1), fontsize=16)
+    #ax.set_title("%d-%d" % (year, year+1), fontsize=16)
     ax.set_xlim(140, 154)
     ax.set_ylim(-39.4, -28)
 
@@ -84,8 +93,7 @@ def plot_map(ax, var, year, cmap, i):
                           linewidth=0.5, color='black', alpha=0.5,
                           linestyle='--')
 
-    if i < 5:
-        gl.xlabels_bottom = False
+
     if i > 5:
         gl.ylabels_left = False
 
@@ -100,11 +108,11 @@ def plot_map(ax, var, year, cmap, i):
     gl.ylocator = mticker.FixedLocator([-29, -32, -35, -38])
 
     if i == 0 :
-        ax.text(-0.25, -0.25, 'Latitude', va='bottom', ha='center',
+        ax.text(-0.1, 0.5, 'Latitude', va='bottom', ha='center',
                 rotation='vertical', rotation_mode='anchor',
                 transform=ax.transAxes, fontsize=16)
-    if i == 7:
-        ax.text(0.5, -0.25, 'Longitude', va='bottom', ha='center',
+    if i == 0:
+        ax.text(0.5, -0.1, 'Longitude', va='bottom', ha='center',
                 rotation='horizontal', rotation_mode='anchor',
                 transform=ax.transAxes, fontsize=16)
 

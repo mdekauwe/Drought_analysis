@@ -24,4 +24,4 @@ mv outputs/tmp_all_yrs.nc outputs/all_yrs.nc
 cdo sellonlatbox,112,154,-44,-10 outputs/all_yrs.nc outputs/all_yrs_fixed_long.nc
 mv outputs/all_yrs_fixed_long.nc outputs/all_yrs.nc
 
-cdo mulc,86400 -timselmean,3,11,9 outputs/all_yrs.nc outputs/djf_lai.nc
+cdo timselmean,3,11,9 outputs/all_yrs.nc outputs/djf_lai.nc
