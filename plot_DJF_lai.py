@@ -37,7 +37,8 @@ def main(fname, plot_dir):
     plt.rcParams['font.sans-serif'] = "Helvetica"
 
     #cmap = plt.cm.viridis
-    cmap = plt.cm.Greens
+    #cmap = plt.cm.Greens
+    cmap = plt.cm.YlGn
     projection = ccrs.PlateCarree()
     axes_class = (GeoAxes,
                   dict(map_projection=projection))
