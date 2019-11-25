@@ -17,7 +17,7 @@ cdo mulc,86400 -timselmean,3,11,9 outputs/all_yrs.nc outputs/djf.nc
 
 
 cdo mergetime outputs/cable_out_*.nc outputs/all_yrs.nc
-cdo select,name=TVeg,LAI,GPP outputs/all_yrs.nc outputs/tmp_all_yrs.nc
+cdo select,name=TVeg,LAI,GPP,Fwsoil outputs/all_yrs.nc outputs/tmp_all_yrs.nc
 mv outputs/tmp_all_yrs.nc outputs/all_yrs.nc
 
 # Fix the longitude issue in the CABLE output files...
