@@ -124,7 +124,7 @@ def main(plot_dir):
     colours = sns.color_palette("Set2", 8)
 
 
-    fig = plt.figure(figsize=(9,12))
+    fig = plt.figure(figsize=(9,10))
     fig.subplots_adjust(hspace=0.1)
     fig.subplots_adjust(wspace=0.2)
     plt.rcParams['text.usetex'] = False
@@ -145,15 +145,15 @@ def main(plot_dir):
     ax1.fill_between(dates, fw_wsf_all+fw_wsf_sigma, fw_wsf_all-fw_wsf_sigma,
                     facecolor=colours[2], alpha=0.5)
 
-    ax2.plot(dates, lwp_wsf_all, label="Leaf", color=colours[0], lw=2)
+    ax2.plot(dates, lwp_wsf_all, label="$\Psi$$_{l}$", color=colours[0], lw=2)
     #ax.fill_between(dates, lwp_wsf_all+lwp_wsf_sigma, lwp_wsf_all-lwp_wsf_sigma,
     #                facecolor=colours[0], alpha=0.5)
 
-    ax2.plot(dates, xwp_wsf_all, label="Stem", color=colours[1], lw=2)
+    ax2.plot(dates, xwp_wsf_all, label="$\Psi$$_{x}$", color=colours[1], lw=2)
     #ax.fill_between(dates, xwp_wsf_all+xwp_wsf_sigma, xwp_wsf_all-xwp_wsf_sigma,
     #                facecolor=colours[1], alpha=0.5)
 
-    ax2.plot(dates, swp_wsf_all, label="Soil", color=colours[2], lw=2)
+    ax2.plot(dates, swp_wsf_all, label="$\Psi$$_{s,weight}$", color=colours[2], lw=2)
     #ax.fill_between(dates, swp_wsf_all+swp_wsf_sigma, swp_wsf_all-swp_wsf_sigma,
     #                facecolor=colours[2], alpha=0.5)
 
