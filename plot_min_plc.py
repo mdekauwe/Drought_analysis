@@ -37,13 +37,14 @@ def main(fname, plot_dir):
     #sys.exit()
     plc = np.nanmean(plc, axis=0)
     #plc = np.nanmax(plc, axis=0)
+    #plc = np.nanmedian(plc, axis=0)
 
     fig = plt.figure(figsize=(9, 6))
     plt.rcParams['font.family'] = "sans-serif"
     plt.rcParams['font.size'] = "14"
     plt.rcParams['font.sans-serif'] = "Helvetica"
 
-    cmap = plt.cm.get_cmap('YlOrRd', 6) # discrete colour map
+    cmap = plt.cm.get_cmap('YlOrRd', 8) # discrete colour map
 
     projection = ccrs.PlateCarree()
     axes_class = (GeoAxes, dict(map_projection=projection))
@@ -68,7 +69,7 @@ def main(fname, plot_dir):
 
 
     cbar = axgr.cbar_axes[0].colorbar(plims)
-    cbar.ax.set_title("Min PLC\n(%)", fontsize=16)
+    cbar.ax.set_title("%", fontsize=16)
 
     ofname = os.path.join(plot_dir, "plc.png")
     fig.savefig(ofname, dpi=300, bbox_inches='tight',
