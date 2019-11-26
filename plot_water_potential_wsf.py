@@ -124,7 +124,7 @@ def main(plot_dir):
     colours = sns.color_palette("Set2", 8)
 
 
-    fig = plt.figure(figsize=(16,6))
+    fig = plt.figure(figsize=(9,12))
     fig.subplots_adjust(hspace=0.1)
     fig.subplots_adjust(wspace=0.2)
     plt.rcParams['text.usetex'] = False
@@ -137,8 +137,8 @@ def main(plot_dir):
     plt.rcParams['xtick.labelsize'] = 14
     plt.rcParams['ytick.labelsize'] = 14
 
-    ax1 = fig.add_subplot(121)
-    ax2 = fig.add_subplot(122)
+    ax1 = fig.add_subplot(211)
+    ax2 = fig.add_subplot(212)
 
     ax1.plot(dates, fw_wsf_all, label="WSF", color=colours[2], lw=2)
 
@@ -164,6 +164,7 @@ def main(plot_dir):
     import datetime
     ax1.set_xlim([datetime.date(2000,7,1), datetime.date(2010, 1, 1)])
     ax2.set_xlim([datetime.date(2000,7,1), datetime.date(2010, 1, 1)])
+    plt.setp(ax1.get_xticklabels(), visible=False)
 
     odir = "/Users/mdekauwe/Dropbox/Drought_risk_paper/figures/figs"
     plt.savefig(os.path.join(odir, "Fwsoil_vs_water_potentials_WSF.pdf"),
