@@ -26,7 +26,7 @@ def main(fname, plot_dir):
     lon = ds.x.values
     bottom, top = lat[0], lat[-1]
     left, right = lon[0], lon[-1]
-
+    
     #plt.imshow(ds.LAI[0,:,:,])
     #plt.colorbar()
     #plt.show()

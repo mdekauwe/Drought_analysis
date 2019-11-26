@@ -114,7 +114,7 @@ def main(pet_fname, ppt_fname, plot_dir):
     cbar.ax.set_title("P-PET\n(mm y$^{-1}$)", fontsize=16)
 
     ofname = os.path.join(plot_dir, "p_minus_pet_pre.png")
-    fig.savefig(ofname, dpi=150, bbox_inches='tight',
+    fig.savefig(ofname, dpi=300, bbox_inches='tight',
                 pad_inches=0.1)
 
 def plot_map(ax, var, cmap, i, top, bottom, left, right):
@@ -158,6 +158,10 @@ def plot_map(ax, var, cmap, i, top, bottom, left, right):
     gl.xlocator = mticker.FixedLocator([141, 145,  149, 153])
     gl.ylocator = mticker.FixedLocator([-29, -32, -35, -38])
 
+    props = dict(boxstyle='round', facecolor='white', alpha=0.0, ec="white")
+    ax.text(0.95, 0.05, "(a)", transform=ax.transAxes, fontsize=12,
+             verticalalignment='top', bbox=props)
+
     return img
 
 
@@ -167,6 +171,6 @@ if __name__ == "__main__":
     if not os.path.exists(plot_dir):
         os.makedirs(plot_dir)
 
-    pet_fname = "/Users/mdekauwe/Desktop/PET/raw/ANUCLIM_PriestleyTaylor_PET_monthly_mean_1990_2010_NDVI.nc"
-    ppt_fname = "/Users/mdekauwe/Desktop/PET/raw/ANUCLIM_precip_monthly_1990_2010_NDVI_res.nc"
+    pet_fname = "/Users/mdekauwe/research/SE_AUS_drought_risk_paper/P_minus_PET/ANUCLIM_PriestleyTaylor_PET_monthly_mean_1990_2010_NDVI.nc"
+    ppt_fname = "/Users/mdekauwe/research/SE_AUS_drought_risk_paper/P_minus_PET/ANUCLIM_precip_monthly_1990_2010_NDVI_res.nc"
     main(pet_fname, ppt_fname, plot_dir)
