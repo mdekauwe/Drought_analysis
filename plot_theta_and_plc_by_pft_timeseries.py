@@ -239,27 +239,27 @@ def main(plot_dir):
     ax.plot(dates, plc_grw_all, label="GRW", color=colours[3], lw=2)
     ax.plot(dates, plc_saw_all, label="SAW", color=colours[4], lw=2)
 
-    ax.fill_between(dates, plc_rf_all+plc_rf_max_all, plc_rf_all-plc_rf_min_all,
-                    facecolor=colours[6], alpha=0.5)
-    ax.fill_between(dates, plc_wsf_all+plc_wsf_max_all, plc_wsf_all-plc_wsf_min_all,
-                    facecolor=colours[1], alpha=0.5)
-    ax.fill_between(dates, plc_dsf_all+plc_dsf_max_all, plc_dsf_all-plc_dsf_min_all,
-                    facecolor=colours[2], alpha=0.5)
-    ax.fill_between(dates, plc_grw_all+plc_grw_max_all, plc_grw_all-plc_grw_min_all,
-                    facecolor=colours[3], alpha=0.5)
-    ax.fill_between(dates, plc_saw_all+plc_saw_max_all, plc_saw_all-plc_saw_min_all,
-                    facecolor=colours[0], alpha=0.5)
-
-    #ax.fill_between(dates, plc_rf_all+plc_rf_sigma, plc_rf_all-plc_rf_sigma,
+    #ax.fill_between(dates, plc_rf_all+plc_rf_max_all, plc_rf_all-plc_rf_min_all,
     #                facecolor=colours[6], alpha=0.5)
-    #ax.fill_between(dates, plc_wsf_all+plc_wsf_sigma, plc_wsf_all-plc_wsf_sigma,
+    #ax.fill_between(dates, plc_wsf_all+plc_wsf_max_all, plc_wsf_all-plc_wsf_min_all,
     #                facecolor=colours[1], alpha=0.5)
-    #ax.fill_between(dates, plc_dsf_all+plc_dsf_sigma, plc_dsf_all-plc_dsf_sigma,
+    #ax.fill_between(dates, plc_dsf_all+plc_dsf_max_all, plc_dsf_all-plc_dsf_min_all,
     #                facecolor=colours[2], alpha=0.5)
-    #ax.fill_between(dates, plc_grw_all+plc_grw_sigma, plc_grw_all-plc_grw_sigma,
+    #ax.fill_between(dates, plc_grw_all+plc_grw_max_all, plc_grw_all-plc_grw_min_all,
     #                facecolor=colours[3], alpha=0.5)
-    #ax.fill_between(dates, plc_saw_all+plc_saw_sigma, plc_saw_all-plc_saw_sigma,
+    #ax.fill_between(dates, plc_saw_all+plc_saw_max_all, plc_saw_all-plc_saw_min_all,
     #                facecolor=colours[0], alpha=0.5)
+
+    ax.fill_between(dates, plc_rf_all+plc_rf_sigma, plc_rf_all-plc_rf_sigma,
+                    facecolor=colours[6], alpha=0.5)
+    ax.fill_between(dates, plc_wsf_all+plc_wsf_sigma, plc_wsf_all-plc_wsf_sigma,
+                    facecolor=colours[1], alpha=0.5)
+    ax.fill_between(dates, plc_dsf_all+plc_dsf_sigma, plc_dsf_all-plc_dsf_sigma,
+                    facecolor=colours[2], alpha=0.5)
+    ax.fill_between(dates, plc_grw_all+plc_grw_sigma, plc_grw_all-plc_grw_sigma,
+                    facecolor=colours[3], alpha=0.5)
+    ax.fill_between(dates, plc_saw_all+plc_saw_sigma, plc_saw_all-plc_saw_sigma,
+                    facecolor=colours[0], alpha=0.5)
 
 
     ax.axhline(y=88.0, ls="--", lw=2, color="black", label="$\Psi$$_{crit}$")
