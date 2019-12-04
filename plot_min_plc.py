@@ -45,6 +45,7 @@ def main(fname, plot_dir):
     plt.rcParams['font.sans-serif'] = "Helvetica"
 
     cmap = plt.cm.get_cmap('YlOrRd', 8) # discrete colour map
+    #cmap = plt.cm.YlOrRd
 
     projection = ccrs.PlateCarree()
     axes_class = (GeoAxes, dict(map_projection=projection))
