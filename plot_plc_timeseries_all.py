@@ -109,7 +109,7 @@ def main(plot_dir):
     colours = sns.color_palette("Set2", 8)
 
 
-    fig = plt.figure(figsize=(15,6))
+    fig = plt.figure(figsize=(6,9))
     fig.subplots_adjust(hspace=0.1)
     fig.subplots_adjust(wspace=0.05)
     plt.rcParams['text.usetex'] = False
@@ -122,8 +122,8 @@ def main(plot_dir):
     plt.rcParams['xtick.labelsize'] = 14
     plt.rcParams['ytick.labelsize'] = 14
 
-    ax1 = fig.add_subplot(211)
-    ax2 = fig.add_subplot(212)
+    ax1 = fig.add_subplot(511)
+    ax2 = fig.add_subplot(512)
     ax3 = fig.add_subplot(513)
     ax4 = fig.add_subplot(514)
     ax5 = fig.add_subplot(515)

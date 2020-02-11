@@ -106,7 +106,7 @@ def main(plot_dir):
     colours = sns.color_palette("Set2", 8)
 
 
-    fig = plt.figure(figsize=(15,6))
+    fig = plt.figure(figsize=(6,9))
     fig.subplots_adjust(hspace=0.1)
     fig.subplots_adjust(wspace=0.05)
     plt.rcParams['text.usetex'] = False
@@ -119,28 +119,90 @@ def main(plot_dir):
     plt.rcParams['xtick.labelsize'] = 14
     plt.rcParams['ytick.labelsize'] = 14
 
-    ax1 = fig.add_subplot(211)
-    ax2 = fig.add_subplot(212)
+    ax1 = fig.add_subplot(511)
+    ax2 = fig.add_subplot(512)
     ax3 = fig.add_subplot(513)
     ax4 = fig.add_subplot(514)
     ax5 = fig.add_subplot(515)
 
 
     data = plc_rf_all.reshape(nyears * nmonths * len(idx_rf))
+    data = data[~np.isnan(data)]
     index = np.arange(len(data))
     df = pd.DataFrame(data=data, index=index, columns=["PLC"], dtype='float')
-    print(df)
-    sns.distplot(df.PLC, ax=ax1, rug=True, norm_hist=True,
-                 kde_kws={"label": "KDE"})
+    sns.distplot(df.PLC, ax=ax1, norm_hist=True, kde_kws={"label": "KDE"})
+
+    data = plc_wsf_all.reshape(nyears * nmonths * len(idx_wsf))
+    data = data[~np.isnan(data)]
+    index = np.arange(len(data))
+    df = pd.DataFrame(data=data, index=index, columns=["PLC"], dtype='float')
+    sns.distplot(df.PLC, ax=ax2, norm_hist=True)
+
+    data = plc_dsf_all.reshape(nyears * nmonths * len(idx_dsf))
+    data = data[~np.isnan(data)]
+    index = np.arange(len(data))
+    df = pd.DataFrame(data=data, index=index, columns=["PLC"], dtype='float')
+    sns.distplot(df.PLC, ax=ax3, norm_hist=True)
+
+    data = plc_grw_all.reshape(nyears * nmonths * len(idx_grw))
+    data = data[~np.isnan(data)]
+    index = np.arange(len(data))
+    df = pd.DataFrame(data=data, index=index, columns=["PLC"], dtype='float')
+    sns.distplot(df.PLC, ax=ax4, norm_hist=True)
+
+    data = plc_saw_all.reshape(nyears * nmonths * len(idx_saw))
+    data = data[~np.isnan(data)]
+    index = np.arange(len(data))
+    df = pd.DataFrame(data=data, index=index, columns=["PLC"], dtype='float')
+    sns.distplot(df.PLC, ax=ax5, norm_hist=True)
+
+    ax1.set_xlim(-5, 90)
+    ax2.set_xlim(-5, 90)
+    ax3.set_xlim(-5, 90)
+    ax4.set_xlim(-5, 90)
+    ax5.set_xlim(-5, 90)
+
+    #ax1.set_ylim(0.0, 0.45)
+    #ax2.set_ylim(0.0, 0.45)
+    #ax3.set_ylim(0.0, 0.45)
+    #ax4.set_ylim(0.0, 0.45)
+    #ax5.set_ylim(0.0, 0.45)
+    from matplotlib.ticker import MaxNLocator
+    ax1.yaxis.set_major_locator(MaxNLocator(3))
+    ax1.xaxis.set_major_locator(MaxNLocator(5))
+    ax1.tick_params(direction='in', length=4)
+
+    ax2.yaxis.set_major_locator(MaxNLocator(3))
+    ax2.xaxis.set_major_locator(MaxNLocator(5))
+    ax2.tick_params(direction='in', length=4)
+
+    ax3.yaxis.set_major_locator(MaxNLocator(3))
+    ax3.xaxis.set_major_locator(MaxNLocator(5))
+    ax3.tick_params(direction='in', length=4)
+
+    ax4.yaxis.set_major_locator(MaxNLocator(3))
+    ax4.xaxis.set_major_locator(MaxNLocator(5))
+    ax4.tick_params(direction='in', length=4)
+
+    ax5.yaxis.set_major_locator(MaxNLocator(3))
+    ax5.xaxis.set_major_locator(MaxNLocator(5))
+    ax5.tick_params(direction='in', length=4)
+
+    plt.setp(ax1.get_xticklabels(), visible=False)
+    plt.setp(ax2.get_xticklabels(), visible=False)
+    plt.setp(ax3.get_xticklabels(), visible=False)
+    plt.setp(ax4.get_xticklabels(), visible=False)
+
+    ax1.set_xlabel(" ")
+    ax2.set_xlabel(" ")
+    ax3.set_xlabel(" ")
+    ax4.set_xlabel(" ")
+
+    odir = "plots"
+    plt.savefig(os.path.join(odir, "plc_timeseries_hist.pdf"),
+                bbox_inches='tight', pad_inches=0.1)
 
     plt.show()
-    sys.exit()
-
-    #odir = "plots"
-    #plt.savefig(os.path.join(odir, "plc_timeseries_hist.pdf"),
-    #            bbox_inches='tight', pad_inches=0.1)
-
-    #plt.show()
 
 
 
