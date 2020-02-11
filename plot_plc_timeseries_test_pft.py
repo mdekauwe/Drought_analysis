@@ -272,7 +272,7 @@ def main(plot_dir):
     ax.set_xlim([datetime.date(2000,7,1), datetime.date(2010, 1, 1)])
 
     odir = "plots"
-    plt.savefig(os.path.join(odir, "plc_timeseries_test.pdf"),,
+    plt.savefig(os.path.join(odir, "plc_timeseries_test.pdf"),
                 bbox_inches='tight', pad_inches=0.1)
 
     plt.show()
