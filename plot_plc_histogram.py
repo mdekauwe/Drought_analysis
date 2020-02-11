@@ -95,9 +95,6 @@ def main(plot_dir):
         nyear += 1
         cnt += 12
 
-    periods = (end_yr - start_yr + 1) * 12
-    print(periods)
-    dates = pd.date_range('01/01/%d' % (start_yr), periods=periods, freq ='M')
 
     #from matplotlib.pyplot import cm
     #colours = cm.Set2(np.linspace(0, 1, 5))
@@ -128,50 +125,22 @@ def main(plot_dir):
     ax4 = fig.add_subplot(514)
     ax5 = fig.add_subplot(515)
 
-    print(len(idx_rf))
-    print( plc_rf_all.shape)
-    for i in range(len(idx_rf)):
-        ax1.plot(dates, plc_rf_all[:,i], alpha=0.05, color=colours[0], lw=0.5)
 
-    for i in range(len(idx_wsf)):
-        ax2.plot(dates, plc_wsf_all[:,i], alpha=0.05, color=colours[1], lw=0.5)
-
-    for i in range(len(idx_dsf)):
-        ax3.plot(dates, plc_dsf_all[:,i], alpha=0.05, color=colours[2], lw=0.5)
-
-    for i in range(len(idx_grw)):
-        ax4.plot(dates, plc_grw_all[:,i], alpha=0.05, color=colours[3], lw=0.5)
-
-    for i in range(len(idx_saw)):
-        ax5.plot(dates, plc_saw_all[:,i], alpha=0.05, color=colours[4], lw=0.5)
-
-    #ax1.axhline(y=88.0, ls="--", lw=2, color="black", label="$\Psi$$_{crit}$")
-    ax1.set_ylim(-5, 90)
-    ax2.set_ylim(-5, 90)
-    ax3.set_ylim(-5, 90)
-    ax4.set_ylim(-5, 90)
-    ax5.set_ylim(-5, 90)
-
-    ax3.set_ylabel("Loss of hydraulic\nconductivity (%)")
-    #ax.legend(numpoints=1, loc=(0.01, 0.65), ncol=1, frameon=False)
-
-    import datetime
-    ax1.set_xlim([datetime.date(2000,7,1), datetime.date(2010, 1, 1)])
-    ax2.set_xlim([datetime.date(2000,7,1), datetime.date(2010, 1, 1)])
-    ax3.set_xlim([datetime.date(2000,7,1), datetime.date(2010, 1, 1)])
-    ax4.set_xlim([datetime.date(2000,7,1), datetime.date(2010, 1, 1)])
-    ax5.set_xlim([datetime.date(2000,7,1), datetime.date(2010, 1, 1)])
-
-    plt.setp(ax1.get_xticklabels(), visible=False)
-    plt.setp(ax2.get_xticklabels(), visible=False)
-    plt.setp(ax3.get_xticklabels(), visible=False)
-    plt.setp(ax4.get_xticklabels(), visible=False)
-
-    odir = "plots"
-    plt.savefig(os.path.join(odir, "plc_timeseries_all.pdf"),
-                bbox_inches='tight', pad_inches=0.1)
+    data = plc_rf_all.reshape(nyears * nmonths * len(idx_rf))
+    index = np.arange(len(data))
+    df = pd.DataFrame(data=data, index=index, columns=["PLC"], dtype='float')
+    print(df)
+    sns.distplot(df.PLC, ax=ax1, rug=True, norm_hist=True,
+                 kde_kws={"label": "KDE"})
 
     plt.show()
+    sys.exit()
+
+    #odir = "plots"
+    #plt.savefig(os.path.join(odir, "plc_timeseries_hist.pdf"),
+    #            bbox_inches='tight', pad_inches=0.1)
+
+    #plt.show()
 
 
 
