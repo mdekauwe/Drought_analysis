@@ -44,7 +44,7 @@ def main(fname, plot_dir):
     plt.rcParams['font.size'] = "14"
     plt.rcParams['font.sans-serif'] = "Helvetica"
 
-    cmap = plt.cm.get_cmap('YlOrRd', 8) # discrete colour map
+    cmap = plt.cm.get_cmap('YlOrRd', 9) # discrete colour map
     #cmap = plt.cm.YlOrRd
 
     projection = ccrs.PlateCarree()
@@ -78,7 +78,7 @@ def main(fname, plot_dir):
     plt.show()
 
 def plot_map(ax, var, cmap, i, top, bottom, left, right):
-    vmin, vmax = 0, 80 #88
+    vmin, vmax = 0, 90 #88
     #top, bottom = 90, -90
     #left, right = -180, 180
     img = ax.imshow(var, origin='lower',
