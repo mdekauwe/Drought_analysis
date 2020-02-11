@@ -125,7 +125,6 @@ def main(plot_dir):
             plc_saw[:,i] = plc_vals[:,row,col]
             sw_saw[:,i] = sw[:,row,col]
 
-
         plc_rf_sig = np.nanstd(plc_rf, axis=1)
         plc_wsf_sig = np.nanstd(plc_wsf, axis=1)
         plc_dsf_sig = np.nanstd(plc_dsf, axis=1)

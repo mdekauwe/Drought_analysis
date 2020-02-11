@@ -57,9 +57,85 @@ def main(plot_dir):
     sw_dsf_all = np.zeros(0)
     sw_grw_all = np.zeros(0)
     sw_saw_all = np.zeros(0)
+    sw_rf_all4 = np.zeros(0)
+    lai_rf_all = np.zeros(0)
+    psi_leaf_rf_all = np.zeros(0)
+    weighted_psi_soil_rf_all = np.zeros(0)
+    rain_rf_all = np.zeros(0)
 
     start_yr = 2000
     end_yr = 2010
+
+    for year in np.arange(start_yr, end_yr):
+        fdir = "outputs"
+        fname = os.path.join(fdir, "cable_out_%d.nc" % (year))
+        ds = xr.open_dataset(fname)
+
+
+        iveg = ds["iveg"][:,:].values
+        plc_vals = ds["plc"][:,0,:,:].values
+        lai_vals = ds["LAI"][:,:,:].values
+        psi_leaf_vals = ds["psi_leaf"][:,0,:,:].values
+        weighted_psi_soil_vals = ds["weighted_psi_soil"][:,0,:,:].values
+        Rainf_vals = ds["Rainf"][:,:,:].values
+
+
+        SoilMoist1 = ds["SoilMoist"][:,0,:,:].values * zse[0]
+        SoilMoist2 = ds["SoilMoist"][:,1,:,:].values * zse[1]
+        SoilMoist3 = ds["SoilMoist"][:,2,:,:].values * zse[2]
+        SoilMoist4 = ds["SoilMoist"][:,3,:,:].values * zse[3]
+        SoilMoist5 = ds["SoilMoist"][:,4,:,:].values * zse[4]
+        SoilMoist6 = ds["SoilMoist"][:,5,:,:].values * zse[5]
+        sw = (SoilMoist1 + SoilMoist2 + SoilMoist3 + \
+                SoilMoist4 + SoilMoist5 + SoilMoist6 ) / np.sum(zse)
+
+        sw4 = (SoilMoist1 + SoilMoist2 + SoilMoist3 + \
+                SoilMoist4) / np.sum(zse[0:4])
+
+        idx_rf = np.argwhere(iveg == 18.0)
+        idx_wsf = np.argwhere(iveg == 19.0)
+        idx_dsf = np.argwhere(iveg == 20.0)
+        idx_grw = np.argwhere(iveg == 21.0)
+        idx_saw = np.argwhere(iveg == 22.0)
+
+
+        plc_rf = np.zeros((12,len(idx_rf)))
+        sw_rf = np.zeros((12,len(idx_rf)))
+        lai_rf = np.zeros((12,len(idx_rf)))
+        for i in range(len(idx_rf)):
+            (row, col) = idx_rf[i]
+            plc_rf[:,i] = plc_vals[:,row,col]
+            sw_rf[:,i] = sw[:,row,col]
+            #if np.nanmax(plc_vals[:,row,col]) >= 88:
+            if np.nanmax(plc_vals[:,row,col]) <= 20:
+                print(row, col)
+        row = 313
+        col = 815
+
+        #row = 268
+        #col = 806
+
+        plc_rf_all = np.append(plc_rf_all, plc_vals[:,row,col])
+        sw_rf_all = np.append(sw_rf_all, sw[:,row,col])
+        sw_rf_all4 = np.append(sw_rf_all4, sw4[:,row,col])
+        lai_rf_all = np.append(lai_rf_all, lai_vals[:,row,col])
+        psi_leaf_rf_all = np.append(psi_leaf_rf_all, psi_leaf_vals[:,row,col])
+        weighted_psi_soil_rf_all = np.append(weighted_psi_soil_rf_all, weighted_psi_soil_vals[:,row,col])
+        rain_rf_all = np.append(rain_rf_all, Rainf_vals[:,row,col])
+    fig, axs = plt.subplots(5)
+    print(np.sum(rain_rf_all * 86400 * 30), np.sum(rain_rf_all * 86400 * 30) / 10)
+    axs[0].plot(rain_rf_all * 86400 * 30.)
+    axs[1].plot(plc_rf_all)
+    axs[2].plot(sw_rf_all)
+    axs[2].plot(sw_rf_all4)
+    axs[3].plot(psi_leaf_rf_all)
+    axs[4].plot(weighted_psi_soil_rf_all)
+
+    plt.show()
+    sys.exit()
+
+
+
 
     for year in np.arange(start_yr, end_yr):
     #for year in np.arange(2000, 2001):
@@ -90,12 +166,20 @@ def main(plot_dir):
         idx_grw = np.argwhere(iveg == 21.0)
         idx_saw = np.argwhere(iveg == 22.0)
 
+
+
         plc_rf = np.zeros((12,len(idx_rf)))
         sw_rf = np.zeros((12,len(idx_rf)))
         for i in range(len(idx_rf)):
             (row, col) = idx_rf[i]
             plc_rf[:,i] = plc_vals[:,row,col]
             sw_rf[:,i] = sw[:,row,col]
+
+            if np.nanmax(plc_vals[:,row,col]) > 80:
+                print(row, col)
+                print( np.nanmax(plc_vals[:,row,col]), np.nanmean(plc_vals[:,row,col] ) )
+                sys.exit()
+
 
         plc_wsf = np.zeros((12,len(idx_wsf)))
         sw_wsf = np.zeros((12,len(idx_wsf)))
@@ -124,6 +208,16 @@ def main(plot_dir):
             (row, col) = idx_saw[i]
             plc_saw[:,i] = plc_vals[:,row,col]
             sw_saw[:,i] = sw[:,row,col]
+
+        #print(year)
+        #print(plc_rf.shape)
+
+        #for i in range(204):
+        #    plt.title(year)
+        #    plt.plot(plc_rf[:,i], color="black", ls="-", alpha=0.1, )
+        #plt.show()
+
+
 
 
         plc_rf_sig = np.nanstd(plc_rf, axis=1)
@@ -205,6 +299,10 @@ def main(plot_dir):
     #plt.scatter(sw_dsf_all, plc_dsf_all, label="DSF")
     #plt.scatter(sw_grw_all, plc_grw_all, label="GRW")
     #plt.scatter(sw_saw_all, plc_saw_all, label="SAW")
+
+
+    sys.exit()
+
     periods = (end_yr - start_yr) * 12
     dates = pd.date_range('01/01/%d' % (start_yr), periods=periods, freq ='M')
 
