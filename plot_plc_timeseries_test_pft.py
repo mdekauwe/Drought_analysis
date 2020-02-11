@@ -126,11 +126,11 @@ def main(plot_dir):
             sw_saw[:,i] = sw[:,row,col]
 
 
-        plc_rf_sig = np.std(plc_rf, axis=1)
-        plc_wsf_sig = np.std(plc_wsf, axis=1)
-        plc_dsf_sig = np.std(plc_dsf, axis=1)
-        plc_grw_sig = np.std(plc_grw, axis=1)
-        plc_saw_sig = np.std(plc_saw, axis=1)
+        plc_rf_sig = np.nanstd(plc_rf, axis=1)
+        plc_wsf_sig = np.nanstd(plc_wsf, axis=1)
+        plc_dsf_sig = np.nanstd(plc_dsf, axis=1)
+        plc_grw_sig = np.nanstd(plc_grw, axis=1)
+        plc_saw_sig = np.nanstd(plc_saw, axis=1)
 
         plc_rf_max = np.amax(plc_rf, axis=1)
         plc_wsf_max = np.amax(plc_wsf, axis=1)
@@ -239,8 +239,8 @@ def main(plot_dir):
     #ax.plot(dates, plc_grw_all, label="GRW", color=colours[3], lw=2)
     #ax.plot(dates, plc_saw_all, label="SAW", color=colours[4], lw=2)
 
-    ax.fill_between(dates, plc_rf_all+plc_rf_max_all, plc_rf_all-plc_rf_min_all,
-                    facecolor=colours[6], alpha=0.5)
+    #ax.fill_between(dates, plc_rf_all+plc_rf_max_all, plc_rf_all-plc_rf_min_all,
+    #                facecolor=colours[6], alpha=0.5)
     #ax.fill_between(dates, plc_wsf_all+plc_wsf_max_all, plc_wsf_all-plc_wsf_min_all,
     #                facecolor=colours[1], alpha=0.5)
     #ax.fill_between(dates, plc_dsf_all+plc_dsf_max_all, plc_dsf_all-plc_dsf_min_all,
@@ -250,8 +250,8 @@ def main(plot_dir):
     #ax.fill_between(dates, plc_saw_all+plc_saw_max_all, plc_saw_all-plc_saw_min_all,
     #                facecolor=colours[0], alpha=0.5)
 
-    #ax.fill_between(dates, plc_rf_all+plc_rf_sigma, plc_rf_all-plc_rf_sigma,
-    #                facecolor=colours[6], alpha=0.5)
+    ax.fill_between(dates, plc_rf_all+plc_rf_sigma, plc_rf_all-plc_rf_sigma,
+                    facecolor=colours[6], alpha=0.5)
     #ax.fill_between(dates, plc_wsf_all+plc_wsf_sigma, plc_wsf_all-plc_wsf_sigma,
     #                facecolor=colours[1], alpha=0.5)
     #ax.fill_between(dates, plc_dsf_all+plc_dsf_sigma, plc_dsf_all-plc_dsf_sigma,

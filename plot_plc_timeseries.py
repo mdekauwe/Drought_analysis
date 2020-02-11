@@ -126,11 +126,11 @@ def main(plot_dir):
             sw_saw[:,i] = sw[:,row,col]
 
 
-        plc_rf_sig = np.std(plc_rf, axis=1)
-        plc_wsf_sig = np.std(plc_wsf, axis=1)
-        plc_dsf_sig = np.std(plc_dsf, axis=1)
-        plc_grw_sig = np.std(plc_grw, axis=1)
-        plc_saw_sig = np.std(plc_saw, axis=1)
+        plc_rf_sig = np.nanstd(plc_rf, axis=1)
+        plc_wsf_sig = np.nanstd(plc_wsf, axis=1)
+        plc_dsf_sig = np.nanstd(plc_dsf, axis=1)
+        plc_grw_sig = np.nanstd(plc_grw, axis=1)
+        plc_saw_sig = np.nanstd(plc_saw, axis=1)
 
         plc_rf_max = np.amax(plc_rf, axis=1)
         plc_wsf_max = np.amax(plc_wsf, axis=1)
