@@ -144,18 +144,18 @@ def main(plot_dir):
         plc_grw_min = np.amin(plc_grw, axis=1)
         plc_saw_min = np.amin(plc_saw, axis=1)
 
+        
+        plc_rf_mu = np.nanmean(plc_rf, axis=1)
+        plc_wsf_mu = np.nanmean(plc_wsf, axis=1)
+        plc_dsf_mu = np.nanmean(plc_dsf, axis=1)
+        plc_grw_mu = np.nanmean(plc_grw, axis=1)
+        plc_saw_mu = np.nanmean(plc_saw, axis=1)
 
-        plc_rf_mu = np.mean(plc_rf, axis=1)
-        plc_wsf_mu = np.mean(plc_wsf, axis=1)
-        plc_dsf_mu = np.mean(plc_dsf, axis=1)
-        plc_grw_mu = np.mean(plc_grw, axis=1)
-        plc_saw_mu = np.mean(plc_saw, axis=1)
-
-        sw_rf = np.mean(sw_rf, axis=1)
-        sw_wsf = np.mean(sw_wsf, axis=1)
-        sw_dsf = np.mean(sw_dsf, axis=1)
-        sw_grw = np.mean(sw_grw, axis=1)
-        sw_saw = np.mean(sw_saw, axis=1)
+        sw_rf = np.nanmean(sw_rf, axis=1)
+        sw_wsf = np.nanmean(sw_wsf, axis=1)
+        sw_dsf = np.nanmean(sw_dsf, axis=1)
+        sw_grw = np.nanmean(sw_grw, axis=1)
+        sw_saw = np.nanmean(sw_saw, axis=1)
 
         plc_rf_all = np.append(plc_rf_all, plc_rf_mu)
         plc_wsf_all = np.append(plc_wsf_all, plc_wsf_mu)
@@ -232,7 +232,7 @@ def main(plot_dir):
     plt.rcParams['ytick.labelsize'] = 14
 
     ax = fig.add_subplot(111)
-
+    print(plc_rf_all)
     ax.plot(dates, plc_rf_all, label="RF", color=colours[0], lw=2)
     ax.plot(dates, plc_wsf_all, label="WSF", color=colours[1], lw=2)
     ax.plot(dates, plc_dsf_all, label="DSF", color=colours[2], lw=2)
