@@ -234,13 +234,13 @@ def main(plot_dir):
     ax = fig.add_subplot(111)
 
     ax.plot(dates, plc_rf_all, label="RF", color=colours[0], lw=2)
-    ax.plot(dates, plc_wsf_all, label="WSF", color=colours[1], lw=2)
-    ax.plot(dates, plc_dsf_all, label="DSF", color=colours[2], lw=2)
-    ax.plot(dates, plc_grw_all, label="GRW", color=colours[3], lw=2)
-    ax.plot(dates, plc_saw_all, label="SAW", color=colours[4], lw=2)
+    #ax.plot(dates, plc_wsf_all, label="WSF", color=colours[1], lw=2)
+    #ax.plot(dates, plc_dsf_all, label="DSF", color=colours[2], lw=2)
+    #ax.plot(dates, plc_grw_all, label="GRW", color=colours[3], lw=2)
+    #ax.plot(dates, plc_saw_all, label="SAW", color=colours[4], lw=2)
 
-    #ax.fill_between(dates, plc_rf_all+plc_rf_max_all, plc_rf_all-plc_rf_min_all,
-    #                facecolor=colours[6], alpha=0.5)
+    ax.fill_between(dates, plc_rf_all+plc_rf_max_all, plc_rf_all-plc_rf_min_all,
+                    facecolor=colours[6], alpha=0.5)
     #ax.fill_between(dates, plc_wsf_all+plc_wsf_max_all, plc_wsf_all-plc_wsf_min_all,
     #                facecolor=colours[1], alpha=0.5)
     #ax.fill_between(dates, plc_dsf_all+plc_dsf_max_all, plc_dsf_all-plc_dsf_min_all,
@@ -272,7 +272,7 @@ def main(plot_dir):
     ax.set_xlim([datetime.date(2000,7,1), datetime.date(2010, 1, 1)])
 
     odir = "plots"
-    plt.savefig(os.path.join(odir, "plc_timeseries.pdf"),
+    plt.savefig(os.path.join(odir, "plc_timeseries_test.pdf"),,
                 bbox_inches='tight', pad_inches=0.1)
 
     plt.show()
