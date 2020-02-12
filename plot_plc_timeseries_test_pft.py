@@ -141,10 +141,11 @@ def main(plot_dir):
             if np.nanmax(plc_vals[:,row,col]) >= 88:
             #if np.nanmax(plc_vals[:,row,col]) <= 20:
                 print(row, col)
-        
+
         row = 310
         col = 806
-
+        #row = 288
+        #col = 772
 
         plc_dsf_all = np.append(plc_dsf_all, plc_vals[:,row,col])
         sw_dsf_all = np.append(sw_dsf_all, sw[:,row,col])
