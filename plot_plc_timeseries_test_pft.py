@@ -63,6 +63,13 @@ def main(plot_dir):
     weighted_psi_soil_rf_all = np.zeros(0)
     rain_rf_all = np.zeros(0)
 
+    sw_dsf_all4 = np.zeros(0)
+    sw_dsf_all = np.zeros(0)
+    lai_dsf_all = np.zeros(0)
+    psi_leaf_dsf_all = np.zeros(0)
+    weighted_psi_soil_dsf_all = np.zeros(0)
+    rain_dsf_all = np.zeros(0)
+
     start_yr = 2000
     end_yr = 2010
 
@@ -98,7 +105,7 @@ def main(plot_dir):
         idx_grw = np.argwhere(iveg == 21.0)
         idx_saw = np.argwhere(iveg == 22.0)
 
-
+        """
         plc_rf = np.zeros((12,len(idx_rf)))
         sw_rf = np.zeros((12,len(idx_rf)))
         lai_rf = np.zeros((12,len(idx_rf)))
@@ -109,11 +116,11 @@ def main(plot_dir):
             #if np.nanmax(plc_vals[:,row,col]) >= 88:
             if np.nanmax(plc_vals[:,row,col]) <= 20:
                 print(row, col)
-        row = 313
-        col = 815
+        #row = 313
+        #col = 815
 
-        #row = 268
-        #col = 806
+        row = 268
+        col = 806
 
         plc_rf_all = np.append(plc_rf_all, plc_vals[:,row,col])
         sw_rf_all = np.append(sw_rf_all, sw[:,row,col])
@@ -122,14 +129,51 @@ def main(plot_dir):
         psi_leaf_rf_all = np.append(psi_leaf_rf_all, psi_leaf_vals[:,row,col])
         weighted_psi_soil_rf_all = np.append(weighted_psi_soil_rf_all, weighted_psi_soil_vals[:,row,col])
         rain_rf_all = np.append(rain_rf_all, Rainf_vals[:,row,col])
+        """
+
+        plc_dsf = np.zeros((12,len(idx_dsf)))
+        sw_dsf = np.zeros((12,len(idx_dsf)))
+        lai_dsf = np.zeros((12,len(idx_dsf)))
+        for i in range(len(idx_dsf)):
+            (row, col) = idx_dsf[i]
+            plc_dsf[:,i] = plc_vals[:,row,col]
+            sw_dsf[:,i] = sw[:,row,col]
+            if np.nanmax(plc_vals[:,row,col]) >= 88:
+            #if np.nanmax(plc_vals[:,row,col]) <= 20:
+                print(row, col)
+        
+        row = 310
+        col = 806
+
+
+        plc_dsf_all = np.append(plc_dsf_all, plc_vals[:,row,col])
+        sw_dsf_all = np.append(sw_dsf_all, sw[:,row,col])
+        sw_dsf_all4 = np.append(sw_dsf_all4, sw4[:,row,col])
+        lai_dsf_all = np.append(lai_dsf_all, lai_vals[:,row,col])
+        psi_leaf_dsf_all = np.append(psi_leaf_dsf_all, psi_leaf_vals[:,row,col])
+        weighted_psi_soil_dsf_all = np.append(weighted_psi_soil_dsf_all, weighted_psi_soil_vals[:,row,col])
+        rain_dsf_all = np.append(rain_dsf_all, Rainf_vals[:,row,col])
+
+
+    """
     fig, axs = plt.subplots(5)
-    print(np.sum(rain_rf_all * 86400 * 30), np.sum(rain_rf_all * 86400 * 30) / 10)
+    print(np.sum(rain_rf_all * 86400 * 30), np.sum(rain_rf_all * 86400 * 30) / 11)
     axs[0].plot(rain_rf_all * 86400 * 30.)
     axs[1].plot(plc_rf_all)
     axs[2].plot(sw_rf_all)
     axs[2].plot(sw_rf_all4)
     axs[3].plot(psi_leaf_rf_all)
     axs[4].plot(weighted_psi_soil_rf_all)
+    """
+
+    fig, axs = plt.subplots(5)
+    print(np.sum(rain_dsf_all * 86400 * 30), np.sum(rain_dsf_all * 86400 * 30) / 11)
+    axs[0].plot(rain_dsf_all * 86400 * 30.)
+    axs[1].plot(plc_dsf_all)
+    axs[2].plot(sw_dsf_all)
+    axs[2].plot(sw_dsf_all4)
+    axs[3].plot(psi_leaf_dsf_all)
+    axs[4].plot(weighted_psi_soil_dsf_all)
 
     plt.show()
     sys.exit()
