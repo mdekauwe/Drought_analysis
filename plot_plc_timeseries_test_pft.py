@@ -83,6 +83,7 @@ def main(plot_dir):
 
         # pick PFT
         idx = idx_grw
+        #idx = idx_saw
         plc_pix = np.zeros((12,len(idx)))
         sw_pix = np.zeros((12,len(idx)))
         lai_pix = np.zeros((12,len(idx)))
@@ -93,13 +94,19 @@ def main(plot_dir):
             if np.nanmax(plc_vals[:,row,col]) >= 88:
             #if np.nanmax(plc_vals[:,row,col]) <= 20:
                 print(row, col)
+                #get_lat_lon(row, col)
         # dsf pixel
         #row = 219
         #col = 601
 
         # grw pixel
-        row = 188
-        col = 666
+        row = 186
+        col = 664
+
+        # saw pixel
+        #row = 320
+        #col = 563
+
         get_lat_lon(row, col)
 
         plc_all = np.append(plc_all, plc_vals[:,row,col])
@@ -112,18 +119,31 @@ def main(plot_dir):
         rain_all = np.append(rain_all, Rainf_vals[:,row,col])
 
 
-    fig, axs = plt.subplots(5, figsize=(8,10))
+    fig, axs = plt.subplots(6, figsize=(8,10))
     print(np.sum(rain_all * 86400 * 30), np.sum(rain_all * 86400 * 30) / 11)
     axs[0].plot(rain_all * 86400 * 30.)
     axs[1].plot(plc_all)
+    axs[1].axhline(y=88, color="black", ls="--")
+
     axs[1].set_ylim(0, 90)
-    axs[2].plot(sw_all)
+    axs[2].plot(sw_all, label="all layers")
     axs[2].plot(sw_all4, label="top 4 layers")
     axs[2].legend(numpoints=1, loc="best")
+    print(psi_leaf_all)
+    print(" ")
+    print(psi_stem_all)
     axs[3].plot(psi_leaf_all, label="leaf")
     axs[3].plot(psi_stem_all, label="stem")
     axs[3].legend(numpoints=1, loc="best")
     axs[4].plot(weighted_psi_soil_all)
+    axs[5].plot(lai_all)
+
+    axs[0].set_ylabel("PPT (mm month$^{-1}$)")
+    axs[1].set_ylabel("PLC (%)")
+    axs[2].set_ylabel("SWC (m$^{3}$ m$^{-3}$)")
+    axs[3].set_ylabel("$\psi$ (MPa)")
+    axs[4].set_ylabel("$\psi$$_{soil}$ (MPa)")
+    axs[5].set_ylabel("LAI (m$^{2}$ m$^{-2}$)")
 
     plt.show()
     sys.exit()

@@ -19,7 +19,7 @@ import matplotlib.ticker as mticker
 from cartopy.mpl.geoaxes import GeoAxes
 from mpl_toolkits.axes_grid1 import AxesGrid
 
-def main(fname, plot_dir):
+def main(fname, lai_fname, plot_dir):
 
     ds = xr.open_dataset(fname)
     lat = ds.y.values
@@ -28,6 +28,10 @@ def main(fname, plot_dir):
     left, right = lon[0], lon[-1]
 
     plc = ds.plc[:,0,:,:].values
+
+    dsx = xr.open_dataset(lai_fname)
+    lai = dsx["LAI"][:,:,:].values
+    lai = np.max(lai, axis=0)
 
     #plc = np.nanmean(plc, axis=0)
     #plt.imshow(plc[:,:])
@@ -38,6 +42,8 @@ def main(fname, plot_dir):
     plc = np.nanmean(plc, axis=0)
     #plc = np.nanmax(plc, axis=0)
     #plc = np.nanmedian(plc, axis=0)
+
+    plc = np.where(lai<0.05, np.nan, plc)
 
     fig = plt.figure(figsize=(9, 6))
     plt.rcParams['font.family'] = "sans-serif"
@@ -128,4 +134,5 @@ if __name__ == "__main__":
 
     #fname = "outputs/min_plc.nc"
     fname = "outputs/all_yrs_plc.nc"
-    main(fname, plot_dir)
+    lai_fname = "outputs/cable_out_2000.nc"
+    main(fname, lai_fname, plot_dir)
