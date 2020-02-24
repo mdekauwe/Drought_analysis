@@ -21,6 +21,13 @@ from mpl_toolkits.axes_grid1 import AxesGrid
 from calendar import monthrange
 import pandas as pd
 
+
+def get_lat_lon(row, col):
+
+    lat = -44.025 + (row * 0.05)
+    lon = 111.975 + (col * 0.05)
+    print(lat, lon)
+
 def main(plot_dir):
 
 
@@ -75,7 +82,7 @@ def main(plot_dir):
         idx_saw = np.argwhere(iveg == 22.0)
 
         # pick PFT
-        idx = idx_dsf
+        idx = idx_grw
         plc_pix = np.zeros((12,len(idx)))
         sw_pix = np.zeros((12,len(idx)))
         lai_pix = np.zeros((12,len(idx)))
@@ -86,12 +93,15 @@ def main(plot_dir):
             if np.nanmax(plc_vals[:,row,col]) >= 88:
             #if np.nanmax(plc_vals[:,row,col]) <= 20:
                 print(row, col)
+        # dsf pixel
+        #row = 219
+        3col = 601
 
-        row = 219
-        col = 601
-        #row = 288
-        #col = 772
-
+        # grw pixel
+        row = 188
+        col = 666
+        get_lat_lon(row, col)
+        
         plc_all = np.append(plc_all, plc_vals[:,row,col])
         sw_all = np.append(sw_all, sw[:,row,col])
         sw_all4 = np.append(sw_all4, sw4[:,row,col])
@@ -102,18 +112,18 @@ def main(plot_dir):
         rain_all = np.append(rain_all, Rainf_vals[:,row,col])
 
 
-    fig, axs = plt.subplots(5, figsize=(8,15))
-    print(np.sum(rain_dsf_all * 86400 * 30), np.sum(rain_dsf_all * 86400 * 30) / 11)
-    axs[0].plot(rain_dsf_all * 86400 * 30.)
-    axs[1].plot(plc_dsf_all)
+    fig, axs = plt.subplots(5, figsize=(8,10))
+    print(np.sum(rain_all * 86400 * 30), np.sum(rain_all * 86400 * 30) / 11)
+    axs[0].plot(rain_all * 86400 * 30.)
+    axs[1].plot(plc_all)
     axs[1].set_ylim(0, 90)
-    axs[2].plot(sw_dsf_all)
-    axs[2].plot(sw_dsf_all4, label="top 4 layers")
+    axs[2].plot(sw_all)
+    axs[2].plot(sw_all4, label="top 4 layers")
     axs[2].legend(numpoints=1, loc="best")
-    axs[3].plot(psi_leaf_dsf_all, label="leaf")
-    axs[3].plot(psi_stem_dsf_all, label="stem")
+    axs[3].plot(psi_leaf_all, label="leaf")
+    axs[3].plot(psi_stem_all, label="stem")
     axs[3].legend(numpoints=1, loc="best")
-    axs[4].plot(weighted_psi_soil_dsf_all)
+    axs[4].plot(weighted_psi_soil_all)
 
     plt.show()
     sys.exit()
