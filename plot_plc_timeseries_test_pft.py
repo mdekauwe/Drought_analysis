@@ -95,13 +95,13 @@ def main(plot_dir):
                 print(row, col)
         # dsf pixel
         #row = 219
-        3col = 601
+        #col = 601
 
         # grw pixel
         row = 188
         col = 666
         get_lat_lon(row, col)
-        
+
         plc_all = np.append(plc_all, plc_vals[:,row,col])
         sw_all = np.append(sw_all, sw[:,row,col])
         sw_all4 = np.append(sw_all4, sw4[:,row,col])
