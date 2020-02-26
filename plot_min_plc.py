@@ -19,7 +19,7 @@ import matplotlib.ticker as mticker
 from cartopy.mpl.geoaxes import GeoAxes
 from mpl_toolkits.axes_grid1 import AxesGrid
 
-def main(fname, lai_fname, plot_dir):
+def main(fname, lai_fname, plot_dir, plc_type=None):
 
     ds = xr.open_dataset(fname)
     lat = ds.y.values
@@ -29,9 +29,9 @@ def main(fname, lai_fname, plot_dir):
 
     plc = ds.plc[:,0,:,:].values
 
-    dsx = xr.open_dataset(lai_fname)
-    lai = dsx["LAI"][:,:,:].values
-    lai = np.max(lai, axis=0)
+    #dsx = xr.open_dataset(lai_fname)
+    #lai = dsx["LAI"][:,:,:].values
+    #lai = np.max(lai, axis=0)
 
     #plc = np.nanmean(plc, axis=0)
     #plt.imshow(plc[:,:])
@@ -39,11 +39,14 @@ def main(fname, lai_fname, plot_dir):
     #plt.colorbar()
     #plt.show()
     #sys.exit()
-    plc = np.nanmean(plc, axis=0)
-    #plc = np.nanmax(plc, axis=0)
-    #plc = np.nanmedian(plc, axis=0)
+    if plc_type == "mean":
+        plc = np.nanmean(plc, axis=0)
+    elif plc_type == "max":
+        plc = np.nanmax(plc, axis=0)
+    elif plc_type == "median":
+        plc = np.nanmedian(plc, axis=0)
 
-    plc = np.where(lai<0.05, np.nan, plc)
+    #plc = np.where(lai<0.05, np.nan, plc)
 
     fig = plt.figure(figsize=(9, 6))
     plt.rcParams['font.family'] = "sans-serif"
@@ -78,7 +81,13 @@ def main(fname, lai_fname, plot_dir):
     cbar = axgr.cbar_axes[0].colorbar(plims)
     cbar.ax.set_title("%", fontsize=16)
 
-    ofname = os.path.join(plot_dir, "plc.png")
+    if plc_type == "mean":
+        ofname = os.path.join(plot_dir, "plc_mean.png")
+    elif plc_type == "max":
+        ofname = os.path.join(plot_dir, "plc_max.png")
+    elif plc_type == "median":
+        ofname = os.path.join(plot_dir, "plc_median.png")
+
     fig.savefig(ofname, dpi=300, bbox_inches='tight',
                 pad_inches=0.1)
     plt.show()
@@ -135,4 +144,6 @@ if __name__ == "__main__":
     #fname = "outputs/min_plc.nc"
     fname = "outputs/all_yrs_plc.nc"
     lai_fname = "outputs/cable_out_2000.nc"
-    main(fname, lai_fname, plot_dir)
+    main(fname, lai_fname, plot_dir, plc_type="mean")
+    main(fname, lai_fname, plot_dir, plc_type="max")
+    main(fname, lai_fname, plot_dir, plc_type="median")
