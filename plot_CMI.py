@@ -45,18 +45,15 @@ def main(fname, plot_dir):
             cnt = cnt + 1
 
     cmi = np.sum(cmi, axis=0)
-    """
+
     #"""
     nmonths, nrows, ncols = ds.Rainf.shape
-    nyears = 10
-    mth_count = 1
-    yr_count = 0
-    aet = np.zeros((nyears,nrows,ncols))
-    ppt = np.zeros((nyears,nrows,ncols))
+    aet = np.zeros((nrows,ncols))
+    ppt = np.zeros((nrows,ncols))
     sec_2_day = 86400.0
     count = 0
-    for year in np.arange(2000, 2010):
-        #print(year)
+    for year in np.arange(2000, 2011):
+        print(year)
         for month in np.arange(1, 13):
 
             days_in_month = monthrange(year, month)[1]
@@ -64,37 +61,26 @@ def main(fname, plot_dir):
 
             if year == 2000 and month >= 7:
 
-                aet[yr_count,:,:] += ds.Evap[count,:,:] * conv
-                ppt[yr_count,:,:] += ds.Rainf[count,:,:] * conv
+                aet[:,:] += (ds.Evap[count,:,:] * conv)
+                ppt[:,:] += (ds.Rainf[count,:,:] * conv)
 
-
-
-                mth_count += 1
 
             elif year > 2000 and year <= 2009:
 
-                aet[yr_count,:,:] += ds.Evap[count,:,:] * conv
-                ppt[yr_count,:,:] += ds.Rainf[count,:,:] * conv
-                mth_count += 1
+                aet[:,:] += ds.Evap[count,:,:] * conv
+                ppt[:,:] += ds.Rainf[count,:,:] * conv
 
-            elif year == 2009 and month <= 6:
+            elif year == 2010 and month <= 6:
 
-                aet[yr_count,:,:] += ds.Evap[count,:,:] * conv
-                ppt[yr_count,:,:] += ds.Rainf[count,:,:] * conv
-                mth_count += 1
+                aet[:,:] += ds.Evap[count,:,:] * conv
+                ppt[:,:] += ds.Rainf[count,:,:] * conv
 
-
-
-            if mth_count == 13:
-                mth_count = 1
-                yr_count += 1
 
 
             count += 1
 
-    ppt = np.sum(ppt, axis=0)
-    aet = np.sum(aet, axis=0)
-    cmi = ppt - aet
+
+    cmi = ppt #- aet
     #"""
 
     # just keep deficit areas
@@ -105,7 +91,7 @@ def main(fname, plot_dir):
     plt.rcParams['font.size'] = "14"
     plt.rcParams['font.sans-serif'] = "Helvetica"
 
-    cmap = plt.cm.get_cmap('BrBG', 10) # discrete colour map
+    cmap = plt.cm.get_cmap('BrBG', 6) # discrete colour map
 
     projection = ccrs.PlateCarree()
     axes_class = (GeoAxes, dict(map_projection=projection))
@@ -130,8 +116,8 @@ def main(fname, plot_dir):
 
 
     cbar = axgr.cbar_axes[0].colorbar(plims)
-    cbar.ax.set_title("P-AET\n(mm y$^{-1}$)", fontsize=16)
-    cbar.ax.set_yticklabels([' ', '-60', '-30', '0', '30', '<=1000'])
+    cbar.ax.set_title("P-AET\n(mm yr$^{-1}$)", fontsize=16)
+    #cbar.ax.set_yticklabels([' ', '-60', '-30', '0', '30', '<=1000'])
 
     ofname = os.path.join(plot_dir, "cmi.png")
     fig.savefig(ofname, dpi=300, bbox_inches='tight',
@@ -139,7 +125,10 @@ def main(fname, plot_dir):
 
 def plot_map(ax, var, cmap, i, top, bottom, left, right):
     print(np.nanmin(var), np.nanmax(var))
-    vmin, vmax = -75, 75
+    #vmin, vmax = -30, 30
+
+    vmin, vmax = 0, 500
+
     #top, bottom = 90, -90
     #left, right = -180, 180
     img = ax.imshow(var, origin='lower',
