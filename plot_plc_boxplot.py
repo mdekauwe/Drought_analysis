@@ -142,13 +142,14 @@ def main(plot_dir):
     ax.set_ylabel("Loss of hydraulic conductivity (%)")
     ax.set_xlabel(" ")
 
-    odir = "/Users/mdekauwe/Desktop"
-    plt.savefig(os.path.join(odir, "plc_boxplot.png"), dpi=300,
-                bbox_inches='tight', pad_inches=0.1)
+    ofname = os.path.join(plot_dir, "plc_boxplot.png")
+    fig.savefig(ofname, dpi=300, bbox_inches='tight',
+                pad_inches=0.1)
+
     #plt.savefig(os.path.join(odir, "plc_boxplot.pdf"),
     #            bbox_inches='tight', pad_inches=0.1)
-    plt.show()
-    sys.exit()
+    #plt.show()
+    
 
     #plt.boxplot(sw_rf_all, plc_rf_all, label="RF")
     #plt.scatter(sw_wsf_all, plc_wsf_all, label="WSF")
