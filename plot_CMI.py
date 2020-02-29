@@ -120,7 +120,7 @@ def main(fname, plot_dir):
     cbar.ax.set_yticklabels([' ', '$\minus$40', '$\minus$20', '0', '20', '40-1300'])
 
     ofname = os.path.join(plot_dir, "cmi.png")
-    fig.savefig(ofname, dpi=300, bbox_inches='tight',
+    fig.savefig(ofname, dpi=150, bbox_inches='tight',
                 pad_inches=0.1)
 
 def plot_map(ax, var, cmap, i, top, bottom, left, right):
