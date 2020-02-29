@@ -29,7 +29,8 @@ def main(plot_dir):
     #for year in np.arange(2000, 2001):
     #for year in np.arange(2000, 2002):
 
-        fdir = "/Users/mdekauwe/Desktop/outputs"
+        #fdir = "/Users/mdekauwe/Desktop/outputs"
+        fdir = "outputs"
 
         fname = os.path.join(fdir, "cable_out_%d.nc" % (year))
         ds = xr.open_dataset(fname)
@@ -149,17 +150,13 @@ def main(plot_dir):
     plt.show()
     sys.exit()
 
-    plt.boxplot(sw_rf_all, plc_rf_all, label="RF")
-    plt.scatter(sw_wsf_all, plc_wsf_all, label="WSF")
-    plt.scatter(sw_dsf_all, plc_dsf_all, label="DSF")
-    plt.scatter(sw_grw_all, plc_grw_all, label="GRW")
-    plt.scatter(sw_saw_all, plc_saw_all, label="SAW")
+    #plt.boxplot(sw_rf_all, plc_rf_all, label="RF")
+    #plt.scatter(sw_wsf_all, plc_wsf_all, label="WSF")
+    #plt.scatter(sw_dsf_all, plc_dsf_all, label="DSF")
+    #plt.scatter(sw_grw_all, plc_grw_all, label="GRW")
+    #plt.scatter(sw_saw_all, plc_saw_all, label="SAW")
 
-    plt.legend()
-
-    plt.show()
-    sys.exit()
-
+    #plt.legend()
 
 
 if __name__ == "__main__":
