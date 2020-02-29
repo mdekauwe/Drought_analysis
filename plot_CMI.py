@@ -80,7 +80,7 @@ def main(fname, plot_dir):
             count += 1
 
 
-    cmi = ppt #- aet
+    cmi = ppt - aet
     #"""
 
     # just keep deficit areas
@@ -91,7 +91,7 @@ def main(fname, plot_dir):
     plt.rcParams['font.size'] = "14"
     plt.rcParams['font.sans-serif'] = "Helvetica"
 
-    cmap = plt.cm.get_cmap('BrBG', 6) # discrete colour map
+    cmap = plt.cm.get_cmap('BrBG', 10) # discrete colour map
 
     projection = ccrs.PlateCarree()
     axes_class = (GeoAxes, dict(map_projection=projection))
@@ -117,7 +117,7 @@ def main(fname, plot_dir):
 
     cbar = axgr.cbar_axes[0].colorbar(plims)
     cbar.ax.set_title("P-AET\n(mm yr$^{-1}$)", fontsize=16)
-    #cbar.ax.set_yticklabels([' ', '-60', '-30', '0', '30', '<=1000'])
+    cbar.ax.set_yticklabels([' ', '$\minus$40', '$\minus$20', '0', '20', '40-1300'])
 
     ofname = os.path.join(plot_dir, "cmi.png")
     fig.savefig(ofname, dpi=300, bbox_inches='tight',
@@ -125,9 +125,8 @@ def main(fname, plot_dir):
 
 def plot_map(ax, var, cmap, i, top, bottom, left, right):
     print(np.nanmin(var), np.nanmax(var))
-    #vmin, vmax = -30, 30
+    vmin, vmax = -50, 50
 
-    vmin, vmax = 0, 500
 
     #top, bottom = 90, -90
     #left, right = -180, 180
