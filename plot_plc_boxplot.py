@@ -120,7 +120,7 @@ def main(plot_dir):
     #colours = ["#97adee"]*8
     colours = ["#E4E6D7"]*8
 
-    fig = plt.figure(figsize=(9,4.5))
+    fig = plt.figure(figsize=(9,6))
     fig.subplots_adjust(hspace=0.1)
     fig.subplots_adjust(wspace=0.05)
     plt.rcParams['text.usetex'] = False
@@ -143,13 +143,13 @@ def main(plot_dir):
     ax.set_xlabel(" ")
 
     ofname = os.path.join(plot_dir, "plc_boxplot.png")
-    fig.savefig(ofname, dpi=300, bbox_inches='tight',
+    fig.savefig(ofname, dpi=150, bbox_inches='tight',
                 pad_inches=0.1)
 
     #plt.savefig(os.path.join(odir, "plc_boxplot.pdf"),
     #            bbox_inches='tight', pad_inches=0.1)
     #plt.show()
-    
+
 
     #plt.boxplot(sw_rf_all, plc_rf_all, label="RF")
     #plt.scatter(sw_wsf_all, plc_wsf_all, label="WSF")
