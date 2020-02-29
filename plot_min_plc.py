@@ -90,7 +90,7 @@ def main(fname, lai_fname, plot_dir, plc_type=None):
 
     fig.savefig(ofname, dpi=300, bbox_inches='tight',
                 pad_inches=0.1)
-    plt.show()
+    #plt.show()
 
 def plot_map(ax, var, cmap, i, top, bottom, left, right):
     vmin, vmax = 0, 90 #88
@@ -146,4 +146,4 @@ if __name__ == "__main__":
     lai_fname = "outputs/cable_out_2000.nc"
     main(fname, lai_fname, plot_dir, plc_type="mean")
     main(fname, lai_fname, plot_dir, plc_type="max")
-    main(fname, lai_fname, plot_dir, plc_type="median")
+    #main(fname, lai_fname, plot_dir, plc_type="median")
