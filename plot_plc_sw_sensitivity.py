@@ -176,17 +176,18 @@ def main(plot_dir):
     """
     for i in range(len(idx_dsf)):
         ax3.scatter(sw_dsf_all[:,i], plc_dsf_all[:,i], marker=".",
-                 alpha=0.05, color=colours[2], rasterized=True)
+                    alpha=0.05, color=colours[2], rasterized=True)
 
 
     for i in range(len(idx_grw)):
-        ax4.plot(sw_grw_all[:,i], plc_grw_all[:,i], marker=".",
-                 alpha=0.05, color=colours[3], rasterized=True)
-    """
-    for i in range(len(idx_saw)):
-        ax5.plot(sw_saw_all[:,i], plc_saw_all[:,i], marker=".",
-                 alpha=0.05, color=colours[4], rasterized=True)
+        ax4.scatter(sw_grw_all[:,i], plc_grw_all[:,i], marker=".",
+                    alpha=0.05, color=colours[3], rasterized=True)
 
+    for i in range(len(idx_saw)):
+        ax5.scatter(sw_saw_all[:,i], plc_saw_all[:,i], marker=".",
+                    alpha=0.05, color=colours[4], rasterized=True)
+    """
+    
     ax1.set_ylim(-5, 90)
     ax2.set_ylim(-5, 90)
     ax3.set_ylim(-5, 90)
