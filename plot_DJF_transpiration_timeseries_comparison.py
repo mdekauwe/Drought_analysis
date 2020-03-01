@@ -12,21 +12,20 @@ import matplotlib.pyplot as plt
 import numpy as np
 import sys
 
-def main(fname_hyd, fname_ctl, fname_iveg, plot_dir):
+def main(fname_hyd, fname_ctl, plot_dir):
 
     ds_hyd = xr.open_dataset(fname_hyd)
-    ds_iveg = xr.open_dataset(fname_iveg)
     ds_ctl = xr.open_dataset(fname_ctl)
 
     hyd = ds_hyd.TVeg
     ctl = ds_ctl.TVeg
 
-    hyd19 = np.where(ds_iveg["iveg"] == 19, hyd, np.nan)
-    hyd20 = np.where(ds_iveg["iveg"] == 20, hyd, np.nan)
-    hyd21 = np.where(ds_iveg["iveg"] == 21, hyd, np.nan)
-    ctl19 = np.where(ds_iveg["iveg"] == 19, ctl, np.nan)
-    ctl20 = np.where(ds_iveg["iveg"] == 20, ctl, np.nan)
-    ctl21 = np.where(ds_iveg["iveg"] == 21, ctl, np.nan)
+    hyd19 = np.where(ds_hyd["iveg"] == 19, hyd, np.nan)
+    hyd20 = np.where(ds_hyd["iveg"] == 20, hyd, np.nan)
+    hyd21 = np.where(ds_hyd["iveg"] == 21, hyd, np.nan)
+    ctl19 = np.where(ds_hyd["iveg"] == 19, ctl, np.nan)
+    ctl20 = np.where(ds_hyd["iveg"] == 20, ctl, np.nan)
+    ctl21 = np.where(ds_hyd["iveg"] == 21, ctl, np.nan)
 
     ctl19 = np.nanmean(ctl19, axis=(1,2))
     ctl20 = np.nanmean(ctl20, axis=(1,2))
@@ -96,6 +95,6 @@ if __name__ == "__main__":
 
     fname_hyd = "outputs/djf.nc"
     #fname_ctl = "../GSWP3_SE_aus_control/outputs/djf.nc"
-    fname_ctl = "../GSWP3_SE_aus_control_ebf_patch/outputs/djf.nc"
-    fname_iveg = "outputs/iveg.nc"
+    #fname_ctl = "../GSWP3_SE_aus_control_ebf_patch/outputs/djf.nc"
+    fname_ctl = "../AWAP_SE_aus_control_ebf_patch/outputs/djf.nc"
     main(fname_hyd, fname_ctl, fname_iveg, plot_dir)
