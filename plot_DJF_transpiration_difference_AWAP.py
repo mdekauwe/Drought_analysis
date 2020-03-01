@@ -23,6 +23,10 @@ def main(fname_ctl, fname_hyd, plot_dir):
 
     ds_ctl = xr.open_dataset(fname_ctl)
     ds_hyd = xr.open_dataset(fname_hyd)
+    lat = ds_hyd.y.values
+    lon = ds_hyd.x.values
+    bottom, top = lat[0], lat[-1]
+    left, right = lon[0], lon[-1]
 
     fig = plt.figure(figsize=(20, 8))
     plt.rcParams['font.family'] = "sans-serif"
@@ -53,7 +57,8 @@ def main(fname_ctl, fname_hyd, plot_dir):
 
         diff = ds_ctl.TVeg[i,:,:,]-ds_hyd.TVeg[i,:,:,]
         diff = np.where(np.logical_and(diff >= -0.05, diff <= 0.05), np.nan, diff)
-        plims = plot_map(ax, diff, year, cmap, i)
+        plims = plot_map(ax, diff, year, cmap, i, top, bottom,
+                         left, right)
 
         year += 1
 
@@ -65,10 +70,10 @@ def main(fname_ctl, fname_hyd, plot_dir):
     fig.savefig(ofname, dpi=150, bbox_inches='tight',
                 pad_inches=0.1)
 
-def plot_map(ax, var, year, cmap, i):
+def plot_map(ax, var, year, cmap, i, top, bottom, left, right):
     vmin, vmax = -1.0, 1.0
-    top, bottom = 90, -90
-    left, right = -180, 180
+    #top, bottom = 90, -90
+    #left, right = -180, 180
     img = ax.imshow(var, origin='lower',
                     transform=ccrs.PlateCarree(),
                     interpolation='nearest', cmap=cmap,
