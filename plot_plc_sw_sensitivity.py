@@ -75,6 +75,7 @@ def main(plot_dir):
         ds = xr.open_dataset(fname)
         plc_vals = ds["plc"][:,0,:,:].values
 
+        """
         SoilMoist1 = ds["SoilMoist"][:,0,:,:].values * zse[0]
         SoilMoist2 = ds["SoilMoist"][:,1,:,:].values * zse[1]
         SoilMoist3 = ds["SoilMoist"][:,2,:,:].values * zse[2]
@@ -83,6 +84,14 @@ def main(plot_dir):
         SoilMoist6 = ds["SoilMoist"][:,5,:,:].values * zse[5]
         sw = (SoilMoist1 + SoilMoist2 + SoilMoist3 + \
                 SoilMoist4 + SoilMoist5 + SoilMoist6 ) / np.sum(zse)
+        """
+        SoilMoist1 = ds["SoilMoist"][:,0,:,:].values * zse[0]
+        SoilMoist2 = ds["SoilMoist"][:,1,:,:].values * zse[1]
+        SoilMoist3 = ds["SoilMoist"][:,2,:,:].values * zse[2]
+        SoilMoist4 = ds["SoilMoist"][:,3,:,:].values * zse[3]
+
+        sw = (SoilMoist1 + SoilMoist2 + SoilMoist3 + \
+                SoilMoist4 + SoilMoist5 + SoilMoist6 ) / np.sum(zse[0:4])
 
         idx = nyear + cnt
 
@@ -164,33 +173,48 @@ def main(plot_dir):
     ax4 = fig.add_subplot(514)
     ax5 = fig.add_subplot(515)
 
-    ax1.scatter(sw_rf_all, plc_rf_all,  marker=".",
+    ax1.scatter(sw_rf_all, plc_rf_all,  marker=".", s=0.01,
              alpha=0.05, color=colours[0], rasterized=True)
 
-    ax2.scatter(sw_wsf_all, plc_wsf_all, marker=".",
+    #from scipy.stats import gaussian_kde
+    #
+    #x = sw_wsf_all
+    #y = plc_wsf_all
+    #x = x[y>0.0]
+    #y = y[y>0.0]
+    #xy = np.vstack([x,y])
+    #z = gaussian_kde(xy)(xy)
+    #ax2.scatter(x, y, c=z, s=100, edgecolor='')
+    ax2.scatter(sw_wsf_all, plc_wsf_all, marker=".", s=0.01,
              alpha=0.05, color=colours[1], rasterized=True)
 
-    ax3.scatter(sw_dsf_all, plc_dsf_all, marker=".",
+    ax3.scatter(sw_dsf_all, plc_dsf_all, marker=".", s=0.01,
                 alpha=0.05, color=colours[2], rasterized=True)
 
-    ax4.scatter(sw_grw_all, plc_grw_all, marker=".",
+    ax4.scatter(sw_grw_all, plc_grw_all, marker=".", s=0.01,
                 alpha=0.05, color=colours[3], rasterized=True)
 
-    ax5.scatter(sw_saw_all, plc_saw_all, marker=".",
+    ax5.scatter(sw_saw_all, plc_saw_all, marker=".", s=0.01,
                 alpha=0.05, color=colours[4], rasterized=True)
 
+    ax1.axhline(y=88.0, ls="--", lw=1, color="lightgrey", label="$\Psi$$_{crit}$")
+    ax2.axhline(y=88.0, ls="--", lw=1, color="lightgrey")
+    ax3.axhline(y=88.0, ls="--", lw=1, color="lightgrey")
+    ax4.axhline(y=88.0, ls="--", lw=1, color="lightgrey")
+    ax5.axhline(y=88.0, ls="--", lw=1, color="lightgrey")
 
-    ax1.set_ylim(-5, 90)
-    ax2.set_ylim(-5, 90)
-    ax3.set_ylim(-5, 90)
-    ax4.set_ylim(-5, 90)
-    ax5.set_ylim(-5, 90)
 
-    ax1.set_xlim(0.0, 0.4)
-    ax2.set_xlim(0.0, 0.4)
-    ax3.set_xlim(0.0, 0.4)
-    ax4.set_xlim(0.0, 0.4)
-    ax5.set_xlim(0.0, 0.4)
+    ax1.set_ylim(-5, 100)
+    ax2.set_ylim(-5, 100)
+    ax3.set_ylim(-5, 100)
+    ax4.set_ylim(-5, 100)
+    ax5.set_ylim(-5, 100)
+
+    ax1.set_xlim(0.1, 0.3)
+    ax2.set_xlim(0.1, 0.3)
+    ax3.set_xlim(0.1, 0.3)
+    ax4.set_xlim(0.1, 0.3)
+    ax5.set_xlim(0.1, 0.3)
 
     ax3.set_ylabel("Loss of hydraulic\nconductivity (%)")
     ax5.set_xlabel(r"$\theta$ (m$^{3}$ m$^{-3}$)")
