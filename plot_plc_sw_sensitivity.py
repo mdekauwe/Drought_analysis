@@ -90,8 +90,8 @@ def main(plot_dir):
         SoilMoist3 = ds["SoilMoist"][:,2,:,:].values * zse[2]
         SoilMoist4 = ds["SoilMoist"][:,3,:,:].values * zse[3]
 
-        sw = (SoilMoist1 + SoilMoist2 + SoilMoist3 + \
-                SoilMoist4 + SoilMoist5 + SoilMoist6 ) / np.sum(zse[0:4])
+        sw = (SoilMoist1 + SoilMoist2 + \
+              SoilMoist3 + SoilMoist4) / np.sum(zse[0:4])
 
         idx = nyear + cnt
 
