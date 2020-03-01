@@ -170,13 +170,13 @@ def main(plot_dir):
     ax2.scatter(sw_wsf_all, plc_wsf_all, marker=".",
              alpha=0.05, color=colours[1], rasterized=True)
 
-    ax3.scatter(sw_dsf_all[:,i], plc_dsf_all, marker=".",
+    ax3.scatter(sw_dsf_all, plc_dsf_all, marker=".",
                 alpha=0.05, color=colours[2], rasterized=True)
 
-    ax4.scatter(sw_grw_all[:,i], plc_grw_all, marker=".",
+    ax4.scatter(sw_grw_all, plc_grw_all, marker=".",
                 alpha=0.05, color=colours[3], rasterized=True)
 
-    ax5.scatter(sw_saw_all[:,i], plc_saw_all, marker=".",
+    ax5.scatter(sw_saw_all, plc_saw_all, marker=".",
                 alpha=0.05, color=colours[4], rasterized=True)
 
 
