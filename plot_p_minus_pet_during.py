@@ -145,8 +145,8 @@ def plot_map(ax, var, cmap, i, top, bottom, left, right):
     ax.coastlines(resolution='10m', linewidth=1.0, color='black')
     #ax.add_feature(cartopy.feature.OCEAN)
 
-    ax.set_xlim(140, 154)
-    ax.set_ylim(-39.4, -28)
+    ax.set_xlim(140.7, 154)
+    ax.set_ylim(-39.2, -28.1)
 
     if i == 0 or i >= 5:
 
