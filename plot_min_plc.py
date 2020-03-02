@@ -18,8 +18,9 @@ import sys
 import matplotlib.ticker as mticker
 from cartopy.mpl.geoaxes import GeoAxes
 from mpl_toolkits.axes_grid1 import AxesGrid
+import cartopy.io.shapereader as shpreader
 
-def main(fname, lai_fname, plot_dir, plc_type=None):
+def main(fname, lai_fname, plot_dir, adm1_shapes, plc_type=None):
 
     ds = xr.open_dataset(fname)
     lat = ds.y.values
@@ -77,6 +78,16 @@ def main(fname, lai_fname, plot_dir, plc_type=None):
         plims = plot_map(ax, plc, cmap, i, top, bottom, left, right)
         #plims = plot_map(ax, ds.plc[0,0,:,:], cmap, i)
 
+        import cartopy.feature as cfeature
+        states = cfeature.NaturalEarthFeature(category='cultural',
+                                              name='admin_1_states_provinces_lines',
+                                              scale='10m',facecolor='none')
+
+        # plot state border
+        SOURCE = 'Natural Earth'
+        LICENSE = 'public domain'
+        ax.add_feature(states, edgecolor='black', lw=0.5)
+
 
     cbar = axgr.cbar_axes[0].colorbar(plims)
     cbar.ax.set_title("%", fontsize=16)
@@ -104,8 +115,8 @@ def plot_map(ax, var, cmap, i, top, bottom, left, right):
     ax.coastlines(resolution='10m', linewidth=1.0, color='black')
     #ax.add_feature(cartopy.feature.OCEAN)
 
-    ax.set_xlim(140, 154)
-    ax.set_ylim(-39.4, -28)
+    ax.set_xlim(140.7, 154)
+    ax.set_ylim(-39.2, -28.1)
 
     if i == 0 or i >= 5:
 
@@ -141,9 +152,12 @@ if __name__ == "__main__":
     if not os.path.exists(plot_dir):
         os.makedirs(plot_dir)
 
+    shp_fname = '/Users/mdekauwe/Desktop/gadm36_AUS_shp/gadm36_AUS_0.shp'
+    adm1_shapes = list(shpreader.Reader(shp_fname).geometries())
+
     #fname = "outputs/min_plc.nc"
     fname = "outputs/all_yrs_plc.nc"
     lai_fname = "outputs/cable_out_2000.nc"
-    main(fname, lai_fname, plot_dir, plc_type="mean")
-    main(fname, lai_fname, plot_dir, plc_type="max")
+    main(fname, lai_fname, plot_dir, adm1_shapes, plc_type="mean")
+    main(fname, lai_fname, plot_dir, adm1_shapes, plc_type="max")
     #main(fname, lai_fname, plot_dir, plc_type="median")
