@@ -68,14 +68,14 @@ def main(fname1, fname2, plot_dir):
     cbar = axgr.cbar_axes[0].colorbar(plims)
     cbar.ax.set_title("%", fontsize=16)
 
-        ofname = os.path.join(plot_dir, "plc_diff_due_to_soil.png")
+    ofname = os.path.join(plot_dir, "plc_diff_due_to_soil.png")
 
     fig.savefig(ofname, dpi=300, bbox_inches='tight',
                 pad_inches=0.1)
     #plt.show()
 
 def plot_map(ax, var, cmap, i, top, bottom, left, right):
-    vmin, vmax = -10, 10 
+    vmin, vmax = -10, 10
     #top, bottom = 90, -90
     #left, right = -180, 180
     img = ax.imshow(var, origin='lower',
