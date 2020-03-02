@@ -123,9 +123,9 @@ def main(fname, plot_dir):
         SOURCE = 'Natural Earth'
         LICENSE = 'public domain'
         ax.add_feature(states, edgecolor='black', lw=0.5)
-        
+
     cbar = axgr.cbar_axes[0].colorbar(plims)
-    cbar.ax.set_title("P-AET\n(mm yr$^{-1}$)", fontsize=16)
+    cbar.ax.set_title("P-AET\n(mm yr$^{-1}$)", fontsize=16, pad=10)
     cbar.ax.set_yticklabels([' ', '$\minus$40', '$\minus$20', '0', '20', '40-1300'])
 
     ofname = os.path.join(plot_dir, "cmi.png")
