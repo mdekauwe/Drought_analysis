@@ -153,6 +153,7 @@ def main(plot_dir):
     periods = (end_yr - start_yr + 1) * 12
     date = pd.date_range('01/01/%d' % (start_yr), periods=periods, freq ='M')
 
+    """
     for i in range(len(idx_saw)):
         mth_cnt = 1
         for j in range(nyears * nmonths):
@@ -172,6 +173,28 @@ def main(plot_dir):
     ax.set_xlim(2000, 2011)
     odir = "plots"
     plt.savefig(os.path.join(odir, "saw_hist_plc_over_80_when.pdf"),
+                bbox_inches='tight', pad_inches=0.1)
+    """
+
+    for i in range(len(idx_grw)):
+        mth_cnt = 1
+        for j in range(nyears * nmonths):
+            if plc_grw_all[j,i] >= 80:
+                months.append(mth_cnt)
+                dates.append(date[j])
+                years.append(2000 + ((mth_cnt-1) / 12))
+
+            mth_cnt += 1
+
+
+    fig = plt.figure(figsize=(9,6))
+    ax = fig.add_subplot(111)
+    #ax.hist(months)
+    ax.hist(years, bins=132)
+    ax.xaxis.set_ticks(np.arange(start_yr, end_yr+1, 1))
+    ax.set_xlim(2000, 2011)
+    odir = "plots"
+    plt.savefig(os.path.join(odir, "grw_hist_plc_over_80_when.pdf"),
                 bbox_inches='tight', pad_inches=0.1)
 
 
