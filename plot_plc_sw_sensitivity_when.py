@@ -167,7 +167,7 @@ def main(plot_dir):
     fig = plt.figure(figsize=(9,6))
     ax = fig.add_subplot(111)
     #ax.hist(months)
-    ax.hist(years, bins=20)
+    ax.hist(years, bins=132)
     ax.xaxis.set_ticks(np.arange(start_yr, end_yr+1, 1))
     ax.set_xlim(2000, 2011)
     odir = "plots"
