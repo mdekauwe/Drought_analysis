@@ -147,102 +147,31 @@ def main(plot_dir):
     #from matplotlib.pyplot import cm
     #colours = cm.Set2(np.linspace(0, 1, 5))
     #colours = cm.get_cmap('Set2')
+    months = []
+    dates = []
+    years = []
+    periods = (end_yr - start_yr + 1) * 12
+    date = pd.date_range('01/01/%d' % (start_yr), periods=periods, freq ='M')
+
+    for i in range(len(idx_saw)):
+        mth_cnt = 1
+        for j in range(nyears * nmonths):
+            if plc_saw_all[j,i] >= 80:
+                months.append(mth_cnt)
+                dates.append(date[j])
+                years.append(2000 + ((mth_cnt-1) / 12))
+
+            mth_cnt += 1
 
 
-    import seaborn as sns
-    sns.set_style("ticks")
-    colours = sns.color_palette("Set2", 8)
-
-
-    fig = plt.figure(figsize=(6,9))
-    fig.subplots_adjust(hspace=0.1)
-    fig.subplots_adjust(wspace=0.05)
-    plt.rcParams['text.usetex'] = False
-    plt.rcParams['font.family'] = "sans-serif"
-    plt.rcParams['font.sans-serif'] = "Helvetica"
-
-    plt.rcParams['axes.labelsize'] = 14
-    plt.rcParams['font.size'] = 14
-    plt.rcParams['legend.fontsize'] = 12
-    plt.rcParams['xtick.labelsize'] = 14
-    plt.rcParams['ytick.labelsize'] = 14
-
-    ax1 = fig.add_subplot(511)
-    ax2 = fig.add_subplot(512)
-    ax3 = fig.add_subplot(513)
-    ax4 = fig.add_subplot(514)
-    ax5 = fig.add_subplot(515)
-
-    ax1.scatter(sw_rf_all, plc_rf_all,  marker=".", s=0.01,
-             alpha=0.05, color=colours[0], rasterized=True,
-             label="RF")
-
-    #from scipy.stats import gaussian_kde
-    #
-    #x = sw_wsf_all
-    #y = plc_wsf_all
-    #x = x[y>0.0]
-    #y = y[y>0.0]
-    #xy = np.vstack([x,y])
-    #z = gaussian_kde(xy)(xy)
-    #ax2.scatter(x, y, c=z, s=100, edgecolor='')
-    ax2.scatter(sw_wsf_all, plc_wsf_all, marker=".", s=0.01,
-             alpha=0.05, color=colours[1], rasterized=True,
-             label="WSF")
-
-    ax3.scatter(sw_dsf_all, plc_dsf_all, marker=".", s=0.01,
-                alpha=0.05, color=colours[2], rasterized=True,
-                label="DSF")
-    ax4.scatter(sw_grw_all, plc_grw_all, marker=".", s=0.01,
-                alpha=0.05, color=colours[3], rasterized=True,
-                label="GRW")
-
-    ax5.scatter(sw_saw_all, plc_saw_all, marker=".", s=0.01,
-                alpha=0.05, color=colours[4], rasterized=True,
-                label="SAW")
-
-    ax1.axhline(y=88.0, ls="--", lw=1, color="lightgrey", label="$\Psi$$_{crit}$")
-    ax2.axhline(y=88.0, ls="--", lw=1, color="lightgrey")
-    ax3.axhline(y=88.0, ls="--", lw=1, color="lightgrey")
-    ax4.axhline(y=88.0, ls="--", lw=1, color="lightgrey")
-    ax5.axhline(y=88.0, ls="--", lw=1, color="lightgrey")
-
-    ax1.legend(numpoints=1, loc=(0.75, 0.45), ncol=1, frameon=False)
-    ax2.legend(numpoints=1, loc=(0.75, 0.45), ncol=1, frameon=False)
-    ax3.legend(numpoints=1, loc=(0.75, 0.45), ncol=1, frameon=False)
-    ax4.legend(numpoints=1, loc=(0.75, 0.45), ncol=1, frameon=False)
-    ax5.legend(numpoints=1, loc=(0.75, 0.45), ncol=1, frameon=False)
-
-
-    ax1.set_ylim(-5, 100)
-    ax2.set_ylim(-5, 100)
-    ax3.set_ylim(-5, 100)
-    ax4.set_ylim(-5, 100)
-    ax5.set_ylim(-5, 100)
-
-    ax1.set_xlim(0.1, 0.3)
-    ax2.set_xlim(0.1, 0.3)
-    ax3.set_xlim(0.1, 0.3)
-    ax4.set_xlim(0.1, 0.3)
-    ax5.set_xlim(0.1, 0.3)
-
-    ax3.set_ylabel("Loss of hydraulic\nconductivity (%)")
-    ax5.set_xlabel(r"$\theta$ (m$^{3}$ m$^{-3}$)")
-    #ax.legend(numpoints=1, loc=(0.01, 0.65), ncol=1, frameon=False)
-
-
-    plt.setp(ax1.get_xticklabels(), visible=False)
-    plt.setp(ax2.get_xticklabels(), visible=False)
-    plt.setp(ax3.get_xticklabels(), visible=False)
-    plt.setp(ax4.get_xticklabels(), visible=False)
+    fig = plt.figure(figsize=(9,6))
+    ax = fig.add_subplot(111)
+    #ax.hist(months)
+    ax.hist(years)
 
     odir = "plots"
-    plt.savefig(os.path.join(odir, "plc_vs_sw_all.png"), dpi=150,
+    plt.savefig(os.path.join(odir, "saw_hist_plc_over_80_when.pdf"),
                 bbox_inches='tight', pad_inches=0.1)
-
-    #plt.show()
-
-
 
 
 if __name__ == "__main__":
