@@ -109,7 +109,7 @@ def plot_map(ax, var, cmap, i, top, bottom, left, right):
     #left, right = -180, 180
     img = ax.imshow(var, origin='lower',
                     transform=ccrs.PlateCarree(),
-                    interpolation='nearest', cmap=cmap,
+                    interpolation=None, cmap=cmap,
                     extent=(left, right, bottom, top),
                     vmin=vmin, vmax=vmax)
     ax.coastlines(resolution='10m', linewidth=1.0, color='black')

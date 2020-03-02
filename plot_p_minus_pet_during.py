@@ -92,7 +92,7 @@ def main(pet_fname, ppt_fname, plot_dir):
     plt.rcParams['font.size'] = "14"
     plt.rcParams['font.sans-serif'] = "Helvetica"
 
-    cmap = plt.cm.get_cmap('BrBG', 10) # discrete colour map
+    cmap = plt.cm.get_cmap('BrBG', 8) # discrete colour map
 
     projection = ccrs.PlateCarree()
     axes_class = (GeoAxes, dict(map_projection=projection))
@@ -115,9 +115,18 @@ def main(pet_fname, ppt_fname, plot_dir):
         plims = plot_map(ax, cmi, cmap, i, top, bottom, left, right)
         #plims = plot_map(ax, ds.plc[0,0,:,:], cmap, i)
 
+        import cartopy.feature as cfeature
+        states = cfeature.NaturalEarthFeature(category='cultural',
+                                              name='admin_1_states_provinces_lines',
+                                              scale='10m',facecolor='none')
+
+        # plot state border
+        SOURCE = 'Natural Earth'
+        LICENSE = 'public domain'
+        ax.add_feature(states, edgecolor='black', lw=0.5)
 
     cbar = axgr.cbar_axes[0].colorbar(plims)
-    cbar.ax.set_title("P-PET\n(mm y$^{-1}$)", fontsize=16)
+    cbar.ax.set_title("P-PET\n(mm yr$^{-1}$)", fontsize=16)
 
     ofname = os.path.join(plot_dir, "p_minus_pet_during.png")
     fig.savefig(ofname, dpi=300, bbox_inches='tight',
@@ -125,7 +134,7 @@ def main(pet_fname, ppt_fname, plot_dir):
 
 def plot_map(ax, var, cmap, i, top, bottom, left, right):
     print(np.nanmin(var), np.nanmax(var))
-    vmin, vmax = -150, 150
+    vmin, vmax = -160, 160
     #top, bottom = 89.8, -89.8
     #left, right = 0, 359.8
     img = ax.imshow(var, origin='lower',
