@@ -217,7 +217,7 @@ def main(plot_dir):
     ax4.axhline(y=88.0, ls="--", lw=1, color="black")
     ax5.axhline(y=88.0, ls="--", lw=1, color="black")
 
-    ax1.legend(numpoints=1, loc=(0.75, 0.6), ncol=1, frameon=False)
+    ax1.legend(numpoints=1, loc=(0.77, 0.6), ncol=1, frameon=False)
 
 
     ax1.set_ylim(-5, 100)
