@@ -20,7 +20,7 @@ from cartopy.mpl.geoaxes import GeoAxes
 from mpl_toolkits.axes_grid1 import AxesGrid
 import cartopy.io.shapereader as shpreader
 
-def main(fname, lai_fname, plot_dir, adm1_shapes, plc_type=None):
+def main(fname, lai_fname, plot_dir, plc_type=None):
 
     ds = xr.open_dataset(fname)
     lat = ds.y.values
@@ -152,12 +152,10 @@ if __name__ == "__main__":
     if not os.path.exists(plot_dir):
         os.makedirs(plot_dir)
 
-    shp_fname = '/Users/mdekauwe/Desktop/gadm36_AUS_shp/gadm36_AUS_0.shp'
-    adm1_shapes = list(shpreader.Reader(shp_fname).geometries())
 
     #fname = "outputs/min_plc.nc"
     fname = "outputs/all_yrs_plc.nc"
     lai_fname = "outputs/cable_out_2000.nc"
-    main(fname, lai_fname, plot_dir, adm1_shapes, plc_type="mean")
-    main(fname, lai_fname, plot_dir, adm1_shapes, plc_type="max")
+    main(fname, lai_fname, plot_dir, plc_type="mean")
+    main(fname, lai_fname, plot_dir, plc_type="max")
     #main(fname, lai_fname, plot_dir, plc_type="median")

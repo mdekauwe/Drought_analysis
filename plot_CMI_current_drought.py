@@ -28,7 +28,6 @@ def main(fname, plot_dir):
     bottom, top = lat[0], lat[-1]
     left, right = lon[0], lon[-1]
 
-    #"""
     nmonths, nrows, ncols = ds.Rainf.shape
     nyears = 1
     yr_count = 0
@@ -36,23 +35,15 @@ def main(fname, plot_dir):
     ppt = np.zeros((nrows,ncols))
     sec_2_day = 86400.0
     count = 0
-    for year in np.arange(2015, 2019):
+    for year in np.arange(2015, 2020):
         print(year)
         for month in np.arange(1, 13):
 
             days_in_month = monthrange(year, month)[1]
             conv = sec_2_day * days_in_month
 
-            if year == 2017 and month == 12:
-
-                aet[:,:] += ds.Evap[count,:,:] * conv
-                ppt[:,:] += ds.Rainf[count,:,:] * conv
-
-
-            elif year == 2018 and month < 6:
-
-                aet[:,:] += ds.Evap[count,:,:] * conv
-                ppt[:,:] += ds.Rainf[count,:,:] * conv
+            aet[:,:] += ds.Evap[count,:,:] * conv
+            ppt[:,:] += ds.Rainf[count,:,:] * conv
 
             if month == 12:
                 yr_count += 1
@@ -92,21 +83,32 @@ def main(fname, plot_dir):
     for i, ax in enumerate(axgr):
         # add a subplot into the array of plots
         #ax = fig.add_subplot(rows, cols, i+1, projection=ccrs.PlateCarree())
-        plims = plot_map(ax, cmi , cmap, i, top, bottom, left, right)
+        plims = plot_map(ax, cmi / 10, cmap, i, top, bottom, left, right)
         #plims = plot_map(ax, ds.plc[0,0,:,:], cmap, i)
 
+        import cartopy.feature as cfeature
+        states = cfeature.NaturalEarthFeature(category='cultural',
+                                              name='admin_1_states_provinces_lines',
+                                              scale='10m',facecolor='none')
+
+        # plot state border
+        SOURCE = 'Natural Earth'
+        LICENSE = 'public domain'
+        ax.add_feature(states, edgecolor='black', lw=0.5)
 
     cbar = axgr.cbar_axes[0].colorbar(plims)
-    cbar.ax.set_title("P-AET\n(mm y$^{-1}$)", fontsize=16)
-    cbar.ax.set_yticklabels(['-300', '-150', '0', '150', '<=640'])
+    cbar.ax.set_title("P-AET\n(mm yr$^{-1}$)", fontsize=16, pad=10)
+    cbar.ax.set_yticklabels([' ', '$\minus$40', '$\minus$20', '0', '20', '40-800'])
 
-    ofname = os.path.join(plot_dir, "cmi.png")
+    ofname = os.path.join(plot_dir, "cmi_current_drought.png")
     fig.savefig(ofname, dpi=300, bbox_inches='tight',
                 pad_inches=0.1)
 
 def plot_map(ax, var, cmap, i, top, bottom, left, right):
     print(np.nanmin(var), np.nanmax(var))
-    vmin, vmax = -300, 300
+    vmin, vmax = -50, 50
+
+
     #top, bottom = 90, -90
     #left, right = -180, 180
     img = ax.imshow(var, origin='lower',
@@ -117,11 +119,10 @@ def plot_map(ax, var, cmap, i, top, bottom, left, right):
     ax.coastlines(resolution='10m', linewidth=1.0, color='black')
     #ax.add_feature(cartopy.feature.OCEAN)
 
-    ax.set_xlim(140, 154)
-    ax.set_ylim(-39.4, -28)
-    ax.set_title("DJF-MAM - 2017-2018", fontsize=16)
+    ax.set_xlim(140.7, 154)
+    ax.set_ylim(-39.2, -28.1)
 
-    if i <= 5:
+    if i == 0 or i >= 5:
 
         gl = ax.gridlines(crs=ccrs.PlateCarree(), draw_labels=True,
                           linewidth=0.5, color='black', alpha=0.5,
@@ -130,6 +131,11 @@ def plot_map(ax, var, cmap, i, top, bottom, left, right):
         gl = ax.gridlines(crs=ccrs.PlateCarree(), draw_labels=False,
                           linewidth=0.5, color='black', alpha=0.5,
                           linestyle='--')
+
+    #if i < 5:
+    #s    gl.xlabels_bottom = False
+    if i > 5:
+        gl.ylabels_left = False
 
     gl.xlabels_top = False
     gl.ylabels_right = False
@@ -140,17 +146,6 @@ def plot_map(ax, var, cmap, i, top, bottom, left, right):
 
     gl.xlocator = mticker.FixedLocator([141, 145,  149, 153])
     gl.ylocator = mticker.FixedLocator([-29, -32, -35, -38])
-
-
-    if i == 0 :
-        ax.text(-0.1, 0.5, 'Latitude', va='bottom', ha='center',
-                rotation='vertical', rotation_mode='anchor',
-                transform=ax.transAxes, fontsize=16)
-    if i == 0:
-        ax.text(0.5, -0.1, 'Longitude', va='bottom', ha='center',
-                rotation='horizontal', rotation_mode='anchor',
-                transform=ax.transAxes, fontsize=16)
-
 
     return img
 
