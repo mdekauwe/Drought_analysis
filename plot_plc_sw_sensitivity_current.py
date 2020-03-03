@@ -73,6 +73,7 @@ def main(plot_dir):
         print(year)
         fdir = "outputs"
         fname = os.path.join(fdir, "cable_out_%d.nc" % (year))
+    
         ds = xr.open_dataset(fname)
         plc_vals = ds["plc"][:,0,:,:].values
 
