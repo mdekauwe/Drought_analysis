@@ -80,7 +80,7 @@ def main(fname, lai_fname, plot_dir, plc_type=None):
 
         import cartopy.feature as cfeature
         states = cfeature.NaturalEarthFeature(category='cultural',
-                                              name='admin_1_states_provinces_lines',
+                                              name='.in_1_states_provinces_lines',
                                               scale='10m',facecolor='none')
 
         # plot state border
