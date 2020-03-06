@@ -78,15 +78,25 @@ def main(fname, lai_fname, plot_dir, plc_type=None):
         plims = plot_map(ax, plc, cmap, i, top, bottom, left, right)
         #plims = plot_map(ax, ds.plc[0,0,:,:], cmap, i)
 
-        import cartopy.feature as cfeature
-        states = cfeature.NaturalEarthFeature(category='cultural',
-                                              name='.in_1_states_provinces_lines',
-                                              scale='10m',facecolor='none')
+        #import cartopy.feature as cfeature
+        #states = cfeature.NaturalEarthFeature(category='cultural',
+        #                                      name='.in_1_states_provinces_lines',
+        #                                      scale='10m',facecolor='none')
 
         # plot state border
-        SOURCE = 'Natural Earth'
-        LICENSE = 'public domain'
-        ax.add_feature(states, edgecolor='black', lw=0.5)
+        #SOURCE = 'Natural Earth'
+        #LICENSE = 'public domain'
+        #ax.add_feature(states, edgecolor='black', lw=0.5)
+
+        from cartopy.feature import ShapelyFeature
+        from cartopy.io.shapereader import Reader
+        #fname = '/Users/mdekauwe/research/Drought_linkage/Bios2_SWC_1979_2013/AUS_shape/STE11aAust.shp'
+        fname = "/Users/mdekauwe/Dropbox/ne_10m_admin_1_states_provinces_lines/ne_10m_admin_1_states_provinces_lines.shp"
+        shape_feature = ShapelyFeature(Reader(fname).geometries(),
+                                       ccrs.PlateCarree(), edgecolor='black')
+        ax.add_feature(shape_feature, facecolor='none', edgecolor='black',
+                       lw=0.5)
+
 
 
     cbar = axgr.cbar_axes[0].colorbar(plims)
