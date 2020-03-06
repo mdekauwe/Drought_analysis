@@ -35,7 +35,7 @@ def main(fname, plot_dir):
     ppt = np.zeros((nrows,ncols))
     sec_2_day = 86400.0
     count = 0
-    for year in np.arange(2016, 2020):
+    for year in np.arange(2017, 2020):
         print(year, count)
         for month in np.arange(1, 13):
 
@@ -98,7 +98,7 @@ def main(fname, plot_dir):
 
     cbar = axgr.cbar_axes[0].colorbar(plims)
     cbar.ax.set_title("P-AET\n(mm yr$^{-1}$)", fontsize=16, pad=10)
-    cbar.ax.set_yticklabels([' ', '$\minus$40', '$\minus$20', '0', '20', '40-600'])
+    cbar.ax.set_yticklabels([' ', '$\minus$40', '$\minus$20', '0', '20', '40-530'])
 
     ofname = os.path.join(plot_dir, "cmi_current_drought.png")
     fig.savefig(ofname, dpi=300, bbox_inches='tight',
