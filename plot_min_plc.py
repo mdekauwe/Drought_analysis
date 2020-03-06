@@ -97,8 +97,6 @@ def main(fname, lai_fname, plot_dir, plc_type=None):
         ax.add_feature(shape_feature, facecolor='none', edgecolor='black',
                        lw=0.5)
 
-
-
     cbar = axgr.cbar_axes[0].colorbar(plims)
     cbar.ax.set_title("%", fontsize=16)
 

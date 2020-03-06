@@ -46,7 +46,7 @@ def main(plot_dir):
     nmonths = 12
 
     fdir = "outputs"
-    fname = os.path.join(fdir, "cable_out_2000.nc")
+    fname = os.path.join(fdir, "cable_out_2015.nc")
     ds = xr.open_dataset(fname)
     iveg = ds["iveg"][:,:].values
     idx_rf = np.argwhere(iveg == 18.0)
@@ -73,7 +73,6 @@ def main(plot_dir):
         print(year)
         fdir = "outputs"
         fname = os.path.join(fdir, "cable_out_%d.nc" % (year))
-    
         ds = xr.open_dataset(fname)
         plc_vals = ds["plc"][:,0,:,:].values
 
@@ -176,15 +175,15 @@ def main(plot_dir):
     ax4 = fig.add_subplot(234)
     ax5 = fig.add_subplot(235)
 
-    ax1.scatter(sw_rf_all, plc_rf_all,  marker=".", s=0.05,
+    ax1.scatter(sw_rf_all, plc_rf_all,  marker=".", s=0.1,
              alpha=0.05, color=colours[0], rasterized=True)
-    ax2.scatter(sw_wsf_all, plc_wsf_all, marker=".", s=0.05,
+    ax2.scatter(sw_wsf_all, plc_wsf_all, marker=".", s=0.1,
              alpha=0.05, color=colours[0], rasterized=True)
-    ax3.scatter(sw_dsf_all, plc_dsf_all, marker=".", s=0.05,
+    ax3.scatter(sw_dsf_all, plc_dsf_all, marker=".", s=0.1,
                 alpha=0.05, color=colours[0], rasterized=True)
-    ax4.scatter(sw_grw_all, plc_grw_all, marker=".", s=0.05,
+    ax4.scatter(sw_grw_all, plc_grw_all, marker=".", s=0.1,
                 alpha=0.05, color=colours[0], rasterized=True)
-    ax5.scatter(sw_saw_all, plc_saw_all, marker=".", s=0.05,
+    ax5.scatter(sw_saw_all, plc_saw_all, marker=".", s=0.1,
                 alpha=0.05, color=colours[0], rasterized=True)
 
     props = dict(boxstyle='round', facecolor='white', alpha=1.0,
