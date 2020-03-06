@@ -35,7 +35,7 @@ def main(fname, plot_dir):
     ppt = np.zeros((nrows,ncols))
     sec_2_day = 86400.0
     count = 0
-    for year in np.arange(2015, 2020):
+    for year in np.arange(2017, 2020):
         print(year)
         for month in np.arange(1, 13):
 
@@ -86,15 +86,25 @@ def main(fname, plot_dir):
         plims = plot_map(ax, cmi / 10, cmap, i, top, bottom, left, right)
         #plims = plot_map(ax, ds.plc[0,0,:,:], cmap, i)
 
+        """
         import cartopy.feature as cfeature
         states = cfeature.NaturalEarthFeature(category='cultural',
-                                              name='admin_1_states_provinces_lines',
+                                              name='.in_1_states_provinces_lines',
                                               scale='10m',facecolor='none')
 
         # plot state border
         SOURCE = 'Natural Earth'
         LICENSE = 'public domain'
         ax.add_feature(states, edgecolor='black', lw=0.5)
+        """
+        from cartopy.feature import ShapelyFeature
+        from cartopy.io.shapereader import Reader
+        #fname = '/Users/mdekauwe/research/Drought_linkage/Bios2_SWC_1979_2013/AUS_shape/STE11aAust.shp'
+        fname = "/Users/mdekauwe/Dropbox/ne_10m_admin_1_states_provinces_lines/ne_10m_admin_1_states_provinces_lines.shp"
+        shape_feature = ShapelyFeature(Reader(fname).geometries(),
+                                       ccrs.PlateCarree(), edgecolor='black')
+        ax.add_feature(shape_feature, facecolor='none', edgecolor='black',
+                       lw=0.5)
 
     cbar = axgr.cbar_axes[0].colorbar(plims)
     cbar.ax.set_title("P-AET\n(mm yr$^{-1}$)", fontsize=16, pad=10)

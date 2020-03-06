@@ -58,7 +58,7 @@ def main(plot_dir):
     sw_grw_all = np.zeros(0)
     sw_saw_all = np.zeros(0)
 
-    start_yr = 2015
+    start_yr = 2016
     end_yr = 2020
 
     for year in np.arange(start_yr, end_yr):

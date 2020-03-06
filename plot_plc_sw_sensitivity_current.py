@@ -40,13 +40,13 @@ def main(plot_dir):
     sw_grw_all = np.zeros(0)
     sw_saw_all = np.zeros(0)
 
-    start_yr = 2015
-    end_yr = 2019
-    nyears = (end_yr - start_yr) + 1
+    start_yr = 2017
+    end_yr = 2020
+    nyears = (end_yr - start_yr) +1
     nmonths = 12
 
     fdir = "outputs"
-    fname = os.path.join(fdir, "cable_out_2015.nc")
+    fname = os.path.join(fdir, "cable_out_2017.nc")
     ds = xr.open_dataset(fname)
     iveg = ds["iveg"][:,:].values
     idx_rf = np.argwhere(iveg == 18.0)
