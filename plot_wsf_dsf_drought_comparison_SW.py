@@ -243,11 +243,13 @@ if __name__ == "__main__":
     index = np.arange(len(sw_rf_md))
     df = pd.DataFrame(data=sw_rf_md, index=index, columns=["SW"], dtype='float')
     sns.distplot(df.SW, ax=ax1, norm_hist=True,
+                 #kde_kws={"label": "Millennium drought KDE"},
                  label="Millennium drought")
 
     index = np.arange(len(sw_rf_cd))
     df = pd.DataFrame(data=sw_rf_cd, index=index, columns=["SW"], dtype='float')
     sns.distplot(df.SW, ax=ax1, norm_hist=True,
+                 #kde_kws={"label": "Current drought KDE"},
                  label="Current drought")
 
     index = np.arange(len(sw_wsf_md))
