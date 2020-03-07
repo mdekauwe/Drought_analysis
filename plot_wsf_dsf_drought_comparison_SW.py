@@ -220,7 +220,7 @@ if __name__ == "__main__":
     import seaborn as sns
     sns.set_style("ticks")
     colours = sns.color_palette("Set2", 8)
-
+    labels = label_generator('lower', start="(", end=")")
 
     fig = plt.figure(figsize=(6,9))
     fig.subplots_adjust(hspace=0.1)
@@ -254,23 +254,27 @@ if __name__ == "__main__":
 
     index = np.arange(len(sw_wsf_md))
     df = pd.DataFrame(data=sw_wsf_md, index=index, columns=["SW"], dtype='float')
-    sns.distplot(df.SW, ax=ax2, norm_hist=True, )
+    sns.distplot(df.SW, ax=ax2, norm_hist=True)
 
     index = np.arange(len(sw_wsf_cd))
     df = pd.DataFrame(data=sw_wsf_cd, index=index, columns=["SW"], dtype='float')
-    sns.distplot(df.SW, ax=ax2, norm_hist=True, )
+    sns.distplot(df.SW, ax=ax2, norm_hist=True )
 
     index = np.arange(len(sw_dsf_md))
     df = pd.DataFrame(data=sw_dsf_md, index=index, columns=["SW"], dtype='float')
-    sns.distplot(df.SW, ax=ax3, norm_hist=True, )
+    sns.distplot(df.SW, ax=ax3, norm_hist=True)
 
     index = np.arange(len(sw_dsf_cd))
     df = pd.DataFrame(data=sw_dsf_cd, index=index, columns=["SW"], dtype='float')
-    sns.distplot(df.SW, ax=ax3, norm_hist=True, )
+    sns.distplot(df.SW, ax=ax3, norm_hist=True)
 
     ax1.set_xlim(0.1, 0.4)
     ax2.set_xlim(0.1, 0.4)
     ax3.set_xlim(0.1, 0.4)
+
+    ax1.set_ylim(0., 14)
+    ax2.set_ylim(0., 12)
+    ax3.set_ylim(0., 10)
 
     ax1.legend(numpoints=1, loc="best", ncol=1, frameon=False)
 
@@ -303,6 +307,21 @@ if __name__ == "__main__":
     ax1.set_xlabel(" ")
     ax2.set_xlabel(" ")
 
+    props = dict(boxstyle='round', facecolor='white', alpha=1.0,
+                 ec="white")
+
+    fig_label = "%s" % (next(labels))
+    ax1.text(0.92, 0.95, fig_label,
+            transform=ax1.transAxes, fontsize=14, verticalalignment='top',
+            bbox=props)
+    fig_label = "%s" % (next(labels))
+    ax2.text(0.92, 0.95, fig_label,
+            transform=ax2.transAxes, fontsize=14, verticalalignment='top',
+            bbox=props)
+    fig_label = "%s" % (next(labels))
+    ax3.text(0.92, 0.95, fig_label,
+            transform=ax3.transAxes, fontsize=14, verticalalignment='top',
+            bbox=props)
 
 
     odir = "plots"
