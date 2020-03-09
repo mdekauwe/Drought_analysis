@@ -275,14 +275,14 @@ def main(plot_dir):
     ax.xaxis.set_major_locator(MaxNLocator(5))
 
     props = dict(boxstyle='round', facecolor='white', alpha=0.0, ec="white")
-    ax.text(0.95, 0.9, "(c)", transform=ax.transAxes, fontsize=12,
+    ax.text(0.95, 0.95, "(b)", transform=ax.transAxes, fontsize=12,
              verticalalignment='top', bbox=props)
 
     odir = "plots"
-    #plt.savefig(os.path.join(odir, "plc_timeseries.pdf"),
-    #            bbox_inches='tight', pad_inches=0.1)
-    plt.savefig(os.path.join(odir, "plc_timeseries.png"),
+    plt.savefig(os.path.join(odir, "plc_timeseries.pdf"),
                 bbox_inches='tight', pad_inches=0.1)
+    #plt.savefig(os.path.join(odir, "plc_timeseries.png"),
+    #            bbox_inches='tight', pad_inches=0.1)
 
     plt.show()
 
