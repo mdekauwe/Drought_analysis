@@ -270,11 +270,15 @@ def main(plot_dir):
     import datetime
     ax.set_xlim([datetime.date(2000,7,1), datetime.date(2010, 1, 1)])
 
+    props = dict(boxstyle='round', facecolor='white', alpha=0.0, ec="white")
+    ax.text(0.95, 0.95, "(a)", transform=ax.transAxes, fontsize=12,
+             verticalalignment='top', bbox=props)
+
     odir = "plots"
-    #plt.savefig(os.path.join(odir, "plc_timeseries.pdf"),
-    #            bbox_inches='tight', pad_inches=0.1)
-    plt.savefig(os.path.join(odir, "plc_timeseries.png"),
+    plt.savefig(os.path.join(odir, "plc_timeseries.pdf"),
                 bbox_inches='tight', pad_inches=0.1)
+    #plt.savefig(os.path.join(odir, "plc_timeseries.png"),
+    #            bbox_inches='tight', pad_inches=0.1)
 
     plt.show()
 
