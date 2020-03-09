@@ -142,10 +142,6 @@ def main(fname, plot_dir):
     ax.text(0.95, 0.05, "(c)", transform=ax.transAxes, fontsize=12,
              verticalalignment='top', bbox=props)
 
-    props = dict(boxstyle='round', facecolor='white', alpha=0.0, ec="white")
-    ax.text(0.95, 0.05, "(c)", transform=ax.transAxes, fontsize=12,
-             verticalalignment='top', bbox=props)
-
     ofname = os.path.join(plot_dir, "cmi.png")
     fig.savefig(ofname, dpi=300, bbox_inches='tight',
                 pad_inches=0.1)
