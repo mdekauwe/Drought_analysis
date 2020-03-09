@@ -58,11 +58,7 @@ def main(plot_dir):
     sw_grw_all = np.zeros(0)
     sw_saw_all = np.zeros(0)
 
-<<<<<<< HEAD
-    start_yr = 2016
-=======
     start_yr = 2017
->>>>>>> 0acea718b7b5648e9711533ebd9dea59d5518fa9
     end_yr = 2020
 
     for year in np.arange(start_yr, end_yr):
@@ -277,6 +273,10 @@ def main(plot_dir):
 
     from matplotlib.ticker import MaxNLocator
     ax.xaxis.set_major_locator(MaxNLocator(5))
+
+    props = dict(boxstyle='round', facecolor='white', alpha=0.0, ec="white")
+    ax.text(0.95, 0.9, "(c)", transform=ax.transAxes, fontsize=12,
+             verticalalignment='top', bbox=props)
 
     odir = "plots"
     #plt.savefig(os.path.join(odir, "plc_timeseries.pdf"),
