@@ -58,7 +58,11 @@ def main(plot_dir):
     sw_grw_all = np.zeros(0)
     sw_saw_all = np.zeros(0)
 
+<<<<<<< HEAD
     start_yr = 2016
+=======
+    start_yr = 2017
+>>>>>>> 0acea718b7b5648e9711533ebd9dea59d5518fa9
     end_yr = 2020
 
     for year in np.arange(start_yr, end_yr):

@@ -42,11 +42,12 @@ def main(plot_dir):
 
     start_yr = 2017
     end_yr = 2020
-    nyears = (end_yr - start_yr) +1
+
+    nyears = (end_yr - start_yr) + 1
     nmonths = 12
 
     fdir = "outputs"
-    fname = os.path.join(fdir, "cable_out_2017.nc")
+    fname = os.path.join(fdir, "cable_out_%d.nc" % (start_yr))
     ds = xr.open_dataset(fname)
     iveg = ds["iveg"][:,:].values
     idx_rf = np.argwhere(iveg == 18.0)
