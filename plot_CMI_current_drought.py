@@ -117,7 +117,7 @@ def main(fname, plot_dir):
     props = dict(boxstyle='round', facecolor='white', alpha=0.0, ec="white")
     ax.text(0.95, 0.05, "(d)", transform=ax.transAxes, fontsize=12,
              verticalalignment='top', bbox=props)
-             
+
     ofname = os.path.join(plot_dir, "cmi_current_drought.png")
     fig.savefig(ofname, dpi=300, bbox_inches='tight',
                 pad_inches=0.1)
