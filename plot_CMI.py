@@ -128,6 +128,10 @@ def main(fname, plot_dir):
     cbar.ax.set_title("P-AET\n(mm yr$^{-1}$)", fontsize=16, pad=10)
     cbar.ax.set_yticklabels([' ', '$\minus$40', '$\minus$20', '0', '20', '40-1300'])
 
+    props = dict(boxstyle='round', facecolor='white', alpha=0.0, ec="white")
+    ax.text(0.95, 0.05, "(c)", transform=ax.transAxes, fontsize=12,
+             verticalalignment='top', bbox=props)
+
     ofname = os.path.join(plot_dir, "cmi.png")
     fig.savefig(ofname, dpi=300, bbox_inches='tight',
                 pad_inches=0.1)
