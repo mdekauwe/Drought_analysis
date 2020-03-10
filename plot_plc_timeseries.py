@@ -267,8 +267,22 @@ def main(plot_dir):
     ax.set_ylabel("Loss of hydraulic conductivity (%)")
     ax.legend(numpoints=1, loc=(0.01, 0.65), ncol=1, frameon=False)
 
+
+    #ax.set_xlim([datetime.date(2015,7,1), datetime.date(2020, 1, 1)])
+
+    import matplotlib.dates as mdates
+    myFmt = mdates.DateFormatter('%Y')
+    ax.xaxis.set_major_formatter(myFmt)
+
+    #import matplotlib.dates as mdates
+    #date_form = mdates.DateFormatter("%Y-%m")
+    #ax.xaxis.set_major_formatter(date_form)
+
+
+    ax.xaxis.set_major_locator(mdates.YearLocator())
+
     import datetime
-    ax.set_xlim([datetime.date(2000,7,1), datetime.date(2010, 1, 1)])
+    ax.set_xlim([datetime.date(2000,1,1), datetime.date(2009, 12, 31)])
 
     props = dict(boxstyle='round', facecolor='white', alpha=0.0, ec="white")
     ax.text(0.95, 0.95, "(a)", transform=ax.transAxes, fontsize=12,
