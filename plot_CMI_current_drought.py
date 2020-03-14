@@ -20,7 +20,7 @@ from cartopy.mpl.geoaxes import GeoAxes
 from mpl_toolkits.axes_grid1 import AxesGrid
 from calendar import monthrange
 
-def main(fname, plot_dir):
+def main(fname, plot_dir, start_year, end_year):
 
     ds = xr.open_dataset(fname)
     lat = ds.y.values
@@ -29,30 +29,46 @@ def main(fname, plot_dir):
     left, right = lon[0], lon[-1]
 
     nmonths, nrows, ncols = ds.Rainf.shape
-    nyears = 1
+    nyears = (end_year - start_year) + 1
     yr_count = 0
-    aet = np.zeros((nrows,ncols))
-    ppt = np.zeros((nrows,ncols))
+    aet = np.zeros((nyears,nrows,ncols))
+    ppt = np.zeros((nyears,nrows,ncols))
     sec_2_day = 86400.0
     count = 0
-    for year in np.arange(2017, 2020):
-        print(year, count)
+    yr_count = 0
+    mth_count = 1
+
+    if start_year == 2017:
+        # shift the start point onwards...as data starts in 2016
+        for year in np.arange(2016, 2017):
+            for month in np.arange(1, 13):
+                #print(year, month)
+                count += 1
+
+    for year in np.arange(start_year, end_year+1):
+        print(year)
         for month in np.arange(1, 13):
 
             days_in_month = monthrange(year, month)[1]
             conv = sec_2_day * days_in_month
 
-            aet[:,:] += ds.Evap[count,:,:] * conv
-            ppt[:,:] += ds.Rainf[count,:,:] * conv
+            yr_val = str(ds.time[count].values).split("-")[0]
+            print(yr_val)
 
-            if month == 12:
+            aet[yr_count,:,:] += ds.Evap[count,:,:] * conv
+            ppt[yr_count,:,:] += ds.Rainf[count,:,:] * conv
+            mth_count += 1
+
+            if mth_count == 13:
+                mth_count = 1
                 yr_count += 1
-
 
             count += 1
 
+    ppt = np.nanmean(ppt, axis=0)
+    aet = np.nanmean(aet, axis=0)
+    cmi = np.where(~np.isnan(aet), ppt-aet, np.nan)
 
-    cmi = ppt - aet
     #"""
 
     # just keep deficit areas
@@ -82,9 +98,7 @@ def main(fname, plot_dir):
 
     for i, ax in enumerate(axgr):
         # add a subplot into the array of plots
-        #ax = fig.add_subplot(rows, cols, i+1, projection=ccrs.PlateCarree())
-        plims = plot_map(ax, cmi / 10, cmap, i, top, bottom, left, right)
-        #plims = plot_map(ax, ds.plc[0,0,:,:], cmap, i)
+        plims = plot_map(ax, cmi, cmap, i, top, bottom, left, right)
 
         import cartopy.feature as cfeature
         states = cfeature.NaturalEarthFeature(category='cultural',
@@ -98,7 +112,7 @@ def main(fname, plot_dir):
 
     cbar = axgr.cbar_axes[0].colorbar(plims)
     cbar.ax.set_title("P-AET\n(mm yr$^{-1}$)", fontsize=16, pad=10)
-    cbar.ax.set_yticklabels([' ', '$\minus$40', '$\minus$20', '0', '20', '40-530'])
+    #cbar.ax.set_yticklabels([' ', '$\minus$40', '$\minus$20', '0', '20', '40-530'])
 
     ofname = os.path.join(plot_dir, "cmi_current_drought.png")
     fig.savefig(ofname, dpi=300, bbox_inches='tight',
@@ -106,7 +120,7 @@ def main(fname, plot_dir):
 
 def plot_map(ax, var, cmap, i, top, bottom, left, right):
     print(np.nanmin(var), np.nanmax(var))
-    vmin, vmax = -50, 50
+    vmin, vmax = -200, 200
 
 
     #top, bottom = 90, -90
@@ -158,4 +172,4 @@ if __name__ == "__main__":
 
     fname = "outputs/all_yrs_CMI.nc"
 
-    main(fname, plot_dir)
+    main(fname, plot_dir, 2017, 2019)
