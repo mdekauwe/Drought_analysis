@@ -42,6 +42,7 @@ def main(plot_dir):
 
     start_yr = 2017
     end_yr = 2020
+
     nyears = (end_yr - start_yr) + 1
     nmonths = 12
 

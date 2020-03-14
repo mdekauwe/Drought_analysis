@@ -201,9 +201,10 @@ def main(plot_dir):
     #plt.scatter(sw_dsf_all, plc_dsf_all, label="DSF")
     #plt.scatter(sw_grw_all, plc_grw_all, label="GRW")
     #plt.scatter(sw_saw_all, plc_saw_all, label="SAW")
-    periods = (end_yr - start_yr) * 12
-    dates = pd.date_range('01/01/%d' % (start_yr), periods=periods, freq ='M')
-
+    periods = ((end_yr-1 - start_yr) +1) * 12
+    dates = pd.date_range('%d/01/01' % (start_yr), periods=periods, freq ='M')
+    for d in dates:
+        print(d)
     #from matplotlib.pyplot import cm
     #colours = cm.Set2(np.linspace(0, 1, 5))
     #colours = cm.get_cmap('Set2')
@@ -262,7 +263,7 @@ def main(plot_dir):
     ax.set_ylim(-5, 90)
 
     ax.set_ylabel("Loss of hydraulic conductivity (%)")
-    ax.legend(numpoints=1, loc=(0.01, 0.65), ncol=1, frameon=False)
+    #ax.legend(numpoints=1, loc=(0.01, 0.65), ncol=1, frameon=False)
 
     import datetime
     #ax.set_xlim([datetime.date(2015,7,1), datetime.date(2020, 1, 1)])
@@ -271,14 +272,27 @@ def main(plot_dir):
     myFmt = mdates.DateFormatter('%Y')
     ax.xaxis.set_major_formatter(myFmt)
 
-    from matplotlib.ticker import MaxNLocator
-    ax.xaxis.set_major_locator(MaxNLocator(5))
+    #import matplotlib.dates as mdates
+    #date_form = mdates.DateFormatter("%Y-%m")
+    #ax.xaxis.set_major_formatter(date_form)
+    import matplotlib.dates as mdates
+
+    ax.set_xlim([datetime.date(2017,1,1), datetime.date(2019, 12, 31)])
+
+    ax.xaxis.set_major_locator(mdates.YearLocator())
+
+    #from matplotlib.ticker import MaxNLocator
+    #ax.xaxis.set_major_locator(MaxNLocator(5))
+
+    props = dict(boxstyle='round', facecolor='white', alpha=0.0, ec="white")
+    ax.text(0.95, 0.95, "(b)", transform=ax.transAxes, fontsize=12,
+             verticalalignment='top', bbox=props)
 
     odir = "plots"
-    #plt.savefig(os.path.join(odir, "plc_timeseries.pdf"),
-    #            bbox_inches='tight', pad_inches=0.1)
-    plt.savefig(os.path.join(odir, "plc_timeseries.png"),
+    plt.savefig(os.path.join(odir, "plc_timeseries.pdf"),
                 bbox_inches='tight', pad_inches=0.1)
+    #plt.savefig(os.path.join(odir, "plc_timeseries.png"),
+    #            bbox_inches='tight', pad_inches=0.1)
 
     plt.show()
 

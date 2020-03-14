@@ -46,7 +46,6 @@ def main(fname, plot_dir, start_year, end_year):
                 count += 1
 
     for year in np.arange(start_year, end_year+1):
-        print(year)
         for month in np.arange(1, 13):
 
             days_in_month = monthrange(year, month)[1]
@@ -68,11 +67,6 @@ def main(fname, plot_dir, start_year, end_year):
     ppt = np.nanmean(ppt, axis=0)
     aet = np.nanmean(aet, axis=0)
     cmi = np.where(~np.isnan(aet), ppt-aet, np.nan)
-
-    #"""
-
-    # just keep deficit areas
-    #cmi = np.where(cmi >= 300., np.nan, cmi)
 
     fig = plt.figure(figsize=(9, 6))
     plt.rcParams['font.family'] = "sans-serif"
@@ -100,19 +94,37 @@ def main(fname, plot_dir, start_year, end_year):
         # add a subplot into the array of plots
         plims = plot_map(ax, cmi, cmap, i, top, bottom, left, right)
 
+        """
         import cartopy.feature as cfeature
         states = cfeature.NaturalEarthFeature(category='cultural',
-                                              name='admin_1_states_provinces_lines',
+                                              name='.in_1_states_provinces_lines',
                                               scale='10m',facecolor='none')
 
         # plot state border
         SOURCE = 'Natural Earth'
         LICENSE = 'public domain'
         ax.add_feature(states, edgecolor='black', lw=0.5)
+        """
+        from cartopy.feature import ShapelyFeature
+        from cartopy.io.shapereader import Reader
+        #fname = '/Users/mdekauwe/research/Drought_linkage/Bios2_SWC_1979_2013/AUS_shape/STE11aAust.shp'
+        fname = "/Users/mdekauwe/Dropbox/ne_10m_admin_1_states_provinces_lines/ne_10m_admin_1_states_provinces_lines.shp"
+        shape_feature = ShapelyFeature(Reader(fname).geometries(),
+                                       ccrs.PlateCarree(), edgecolor='black')
+        ax.add_feature(shape_feature, facecolor='none', edgecolor='black',
+                       lw=0.5)
 
     cbar = axgr.cbar_axes[0].colorbar(plims)
     cbar.ax.set_title("P-AET\n(mm yr$^{-1}$)", fontsize=16, pad=10)
     #cbar.ax.set_yticklabels([' ', '$\minus$40', '$\minus$20', '0', '20', '40-530'])
+
+    props = dict(boxstyle='round', facecolor='white', alpha=0.0, ec="white")
+    ax.text(0.95, 0.05, "(d)", transform=ax.transAxes, fontsize=12,
+             verticalalignment='top', bbox=props)
+
+    props = dict(boxstyle='round', facecolor='white', alpha=0.0, ec="white")
+    ax.text(0.95, 0.05, "(d)", transform=ax.transAxes, fontsize=12,
+             verticalalignment='top', bbox=props)
 
     ofname = os.path.join(plot_dir, "cmi_current_drought.png")
     fig.savefig(ofname, dpi=300, bbox_inches='tight',

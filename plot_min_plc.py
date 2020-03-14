@@ -98,7 +98,7 @@ def main(fname, lai_fname, plot_dir, plc_type=None):
                        lw=0.5)
 
     cbar = axgr.cbar_axes[0].colorbar(plims)
-    cbar.ax.set_title("%", fontsize=16)
+    cbar.ax.set_title("PLC (%)", fontsize=16, pad=10)
 
     if plc_type == "mean":
         ofname = os.path.join(plot_dir, "plc_mean.png")
@@ -106,6 +106,12 @@ def main(fname, lai_fname, plot_dir, plc_type=None):
         ofname = os.path.join(plot_dir, "plc_max.png")
     elif plc_type == "median":
         ofname = os.path.join(plot_dir, "plc_median.png")
+
+
+    props = dict(boxstyle='round', facecolor='white', alpha=0.0, ec="white")
+    ax.text(0.95, 0.05, "(a)", transform=ax.transAxes, fontsize=12,
+             verticalalignment='top', bbox=props)
+
 
     fig.savefig(ofname, dpi=300, bbox_inches='tight',
                 pad_inches=0.1)
