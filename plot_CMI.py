@@ -20,7 +20,7 @@ from cartopy.mpl.geoaxes import GeoAxes
 from mpl_toolkits.axes_grid1 import AxesGrid
 from calendar import monthrange
 
-def main(fname, plot_dir):
+def main(fname, plot_dir, start_year, end_year):
 
     ds = xr.open_dataset(fname)
     lat = ds.y.values
@@ -28,63 +28,38 @@ def main(fname, plot_dir):
     bottom, top = lat[0], lat[-1]
     left, right = lon[0], lon[-1]
 
-    """
     nmonths, nrows, ncols = ds.Rainf.shape
-
-    cmi = np.zeros((nmonths, nrows, ncols))
-    cnt = 0
-    sec_2_day = 86400.0
-    for year in np.arange(2000, 2010):
-        for month in np.arange(1, 13):
-            days_in_month = monthrange(year, month)[1]
-            conv = sec_2_day * days_in_month
-            cmi[cnt,:,:] = (ds.Rainf[cnt,:,:] * conv) - \
-                            (ds.Evap[cnt,:,:] * conv)
-
-
-            cnt = cnt + 1
-
-    cmi = np.sum(cmi, axis=0)
-
-    #"""
-    nmonths, nrows, ncols = ds.Rainf.shape
-    aet = np.zeros((nrows,ncols))
-    ppt = np.zeros((nrows,ncols))
+    nyears = (end_year - start_year) + 1
+    yr_count = 0
+    aet = np.zeros((nyears,nrows,ncols))
+    ppt = np.zeros((nyears,nrows,ncols))
     sec_2_day = 86400.0
     count = 0
-    for year in np.arange(2000, 2011):
-        print(year)
+    yr_count = 0
+    mth_count = 1
+
+    for year in np.arange(start_year, end_year+1):
         for month in np.arange(1, 13):
 
             days_in_month = monthrange(year, month)[1]
             conv = sec_2_day * days_in_month
 
-            if year == 2000 and month >= 7:
+            yr_val = str(ds.time[count].values).split("-")[0]
+            print(yr_val)
 
-                aet[:,:] += (ds.Evap[count,:,:] * conv)
-                ppt[:,:] += (ds.Rainf[count,:,:] * conv)
+            aet[yr_count,:,:] += ds.Evap[count,:,:] * conv
+            ppt[yr_count,:,:] += ds.Rainf[count,:,:] * conv
+            mth_count += 1
 
-
-            elif year > 2000 and year <= 2009:
-
-                aet[:,:] += ds.Evap[count,:,:] * conv
-                ppt[:,:] += ds.Rainf[count,:,:] * conv
-
-            elif year == 2010 and month <= 6:
-
-                aet[:,:] += ds.Evap[count,:,:] * conv
-                ppt[:,:] += ds.Rainf[count,:,:] * conv
-
-
+            if mth_count == 13:
+                mth_count = 1
+                yr_count += 1
 
             count += 1
 
-
-    cmi = ppt - aet
-    #"""
-
-    # just keep deficit areas
-    #cmi = np.where(cmi >= 300., np.nan, cmi)
+    ppt = np.nanmean(ppt, axis=0)
+    aet = np.nanmean(aet, axis=0)
+    cmi = np.where(~np.isnan(aet), ppt-aet, np.nan)
 
     fig = plt.figure(figsize=(9, 6))
     plt.rcParams['font.family'] = "sans-serif"
@@ -110,9 +85,7 @@ def main(fname, plot_dir):
 
     for i, ax in enumerate(axgr):
         # add a subplot into the array of plots
-        #ax = fig.add_subplot(rows, cols, i+1, projection=ccrs.PlateCarree())
-        plims = plot_map(ax, cmi / 10, cmap, i, top, bottom, left, right)
-        #plims = plot_map(ax, ds.plc[0,0,:,:], cmap, i)
+        plims = plot_map(ax, cmi, cmap, i, top, bottom, left, right)
 
         """
         import cartopy.feature as cfeature
@@ -136,7 +109,7 @@ def main(fname, plot_dir):
 
     cbar = axgr.cbar_axes[0].colorbar(plims)
     cbar.ax.set_title("P-AET\n(mm yr$^{-1}$)", fontsize=16, pad=10)
-    cbar.ax.set_yticklabels([' ', '$\minus$40', '$\minus$20', '0', '20', '40-1300'])
+    cbar.ax.set_yticklabels([' ', '$\minus$40', '$\minus$20', '0', '20', '40-1200'])
 
     props = dict(boxstyle='round', facecolor='white', alpha=0.0, ec="white")
     ax.text(0.95, 0.05, "(c)", transform=ax.transAxes, fontsize=12,
@@ -200,4 +173,4 @@ if __name__ == "__main__":
 
     fname = "outputs/all_yrs_CMI.nc"
 
-    main(fname, plot_dir)
+    main(fname, plot_dir, 2000, 2009)
