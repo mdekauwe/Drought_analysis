@@ -164,11 +164,11 @@ def main(plot_dir):
     plt.rcParams['font.family'] = "sans-serif"
     plt.rcParams['font.sans-serif'] = "Helvetica"
 
-    plt.rcParams['axes.labelsize'] = 14
-    plt.rcParams['font.size'] = 14
-    plt.rcParams['legend.fontsize'] = 14
-    plt.rcParams['xtick.labelsize'] = 14
-    plt.rcParams['ytick.labelsize'] = 14
+    plt.rcParams['axes.labelsize'] = 20
+    plt.rcParams['font.size'] = 20
+    plt.rcParams['legend.fontsize'] = 20
+    plt.rcParams['xtick.labelsize'] = 20
+    plt.rcParams['ytick.labelsize'] = 20
 
     ax1 = fig.add_subplot(231)
     ax2 = fig.add_subplot(232)
@@ -218,7 +218,7 @@ def main(plot_dir):
     ax4.axhline(y=88.0, ls="--", lw=1, color="black")
     ax5.axhline(y=88.0, ls="--", lw=1, color="black")
 
-    ax1.legend(numpoints=1, loc=(0.77, 0.6), ncol=1, frameon=False)
+    ax1.legend(numpoints=1, loc=(0.67, 0.6), ncol=1, frameon=False)
 
 
     ax1.set_ylim(-5, 100)
