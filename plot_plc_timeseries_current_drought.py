@@ -288,8 +288,8 @@ def main(plot_dir):
     ax.text(0.95, 0.95, "(b)", transform=ax.transAxes, fontsize=12,
              verticalalignment='top', bbox=props)
 
-    odir = "plots"
-    plt.savefig(os.path.join(odir, "plc_timeseries.pdf"),
+
+    plt.savefig(os.path.join(plot_dir, "plc_timeseries_current.pdf"),
                 bbox_inches='tight', pad_inches=0.1)
     #plt.savefig(os.path.join(odir, "plc_timeseries.png"),
     #            bbox_inches='tight', pad_inches=0.1)
@@ -301,7 +301,7 @@ def main(plot_dir):
 
 if __name__ == "__main__":
 
-    plot_dir = "plots"
+    plot_dir = "/Users/mdekauwe/Dropbox/Drought_risk_paper/figures/figs"
     if not os.path.exists(plot_dir):
         os.makedirs(plot_dir)
 
