@@ -159,7 +159,7 @@ def main(plot_dir):
 
     fig = plt.figure(figsize=(20,9))
     fig.subplots_adjust(hspace=0.1)
-    fig.subplots_adjust(wspace=0.1)
+    fig.subplots_adjust(wspace=0.15)
     plt.rcParams['text.usetex'] = False
     plt.rcParams['font.family'] = "sans-serif"
     plt.rcParams['font.sans-serif'] = "Helvetica"
@@ -177,15 +177,15 @@ def main(plot_dir):
     ax5 = fig.add_subplot(235)
 
     ax1.scatter(sw_rf_all, plc_rf_all,  marker=".", s=0.1,
-             alpha=0.05, color=colours[0], rasterized=True)
+             alpha=0.08, color=colours[0], rasterized=True)
     ax2.scatter(sw_wsf_all, plc_wsf_all, marker=".", s=0.1,
-             alpha=0.05, color=colours[0], rasterized=True)
+             alpha=0.08, color=colours[0], rasterized=True)
     ax3.scatter(sw_dsf_all, plc_dsf_all, marker=".", s=0.1,
-                alpha=0.05, color=colours[0], rasterized=True)
+                alpha=0.08, color=colours[0], rasterized=True)
     ax4.scatter(sw_grw_all, plc_grw_all, marker=".", s=0.1,
-                alpha=0.05, color=colours[0], rasterized=True)
+                alpha=0.08, color=colours[0], rasterized=True)
     ax5.scatter(sw_saw_all, plc_saw_all, marker=".", s=0.1,
-                alpha=0.05, color=colours[0], rasterized=True)
+                alpha=0.08, color=colours[0], rasterized=True)
 
     props = dict(boxstyle='round', facecolor='white', alpha=1.0,
                  ec="white")
@@ -258,7 +258,7 @@ def main(plot_dir):
     ax4.yaxis.set_major_locator(MaxNLocator(4))
     ax5.xaxis.set_major_locator(MaxNLocator(4))
 
-    plt.savefig(os.path.join(plot_dir, "plc_vs_sw_all_current.pdf"), 
+    plt.savefig(os.path.join(plot_dir, "plc_vs_sw_all_current.pdf"),
                 bbox_inches='tight', pad_inches=0.1)
 
     #plt.show()
