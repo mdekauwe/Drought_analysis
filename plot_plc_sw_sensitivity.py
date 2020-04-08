@@ -257,7 +257,7 @@ def main(plot_dir):
     ax4.yaxis.set_major_locator(MaxNLocator(4))
     ax5.xaxis.set_major_locator(MaxNLocator(4))
 
-    plt.savefig(os.path.join(plot_dir, "plc_vs_sw_all.png"), dpi=300,
+    plt.savefig(os.path.join(plot_dir, "plc_vs_sw_all.pdf"), 
                 bbox_inches='tight', pad_inches=0.1)
 
     #plt.show()
