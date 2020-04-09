@@ -257,7 +257,7 @@ def calc_plc_timeseries_cd():
 
     for year in np.arange(start_yr, end_yr):
 
-        fdir = "outputs"
+        fdir = "../current/outputs"
 
         fname = os.path.join(fdir, "cable_out_%d.nc" % (year))
         ds = xr.open_dataset(fname)
@@ -408,11 +408,11 @@ if __name__ == "__main__":
         os.makedirs(plot_dir)
 
     (plc_rf_md, plc_wsf_md, plc_dsf_md,
-     plc_grw_md, plc_saw_md, dates_md) =  calc_plc_timeseries_md(plot_dir)
+     plc_grw_md, plc_saw_md, dates_md) =  calc_plc_timeseries_md()
 
 
     (plc_rf_cd, plc_wsf_cd, plc_dsf_cd,
-     plc_grw_cd, plc_saw_cd, dates_cd) =  calc_plc_timeseries_cd(plot_dir)
+     plc_grw_cd, plc_saw_cd, dates_cd) =  calc_plc_timeseries_cd()
 
 
 
@@ -456,7 +456,7 @@ if __name__ == "__main__":
     ax2.set_ylim(-5, 90)
 
     ax1.set_ylabel("Loss of hydraulic conductivity (%)", position=(0.5, 0.0))
-    ax1.legend(numpoints=1, loc=(0.01, 0.65), ncol=1, frameon=False)
+    ax1.legend(numpoints=1, loc=(0.01, 0.6), ncol=1, frameon=False)
 
 
     #ax.set_xlim([datetime.date(2015,7,1), datetime.date(2020, 1, 1)])
@@ -466,7 +466,6 @@ if __name__ == "__main__":
     ax1.xaxis.set_major_formatter(myFmt)
     ax2.xaxis.set_major_formatter(myFmt)
 
-    plt.setp(ax1.get_xticklabels(), visible=False)
     #import matplotlib.dates as mdates
     #date_form = mdates.DateFormatter("%Y-%m")
     #ax.xaxis.set_major_formatter(date_form)
